@@ -1,0 +1,7 @@
+PLANO B dos menus da Vela Eterna (Fusão de Fé).
+Plano A: artefatos do Claude. Os chips apontam para fusaolab3d.com.br/m/... (redirecionamentos da Shopify).
+Se o plano A cair: trocar o destino dos redirecionamentos /m/... na Shopify para este site:
+  https://fusaolab3d.github.io/fusao-de-fe-menus/catolico/   (#aparecida, #fatima, #gracas, #santarita, #conceicao, #maos)
+  https://fusaolab3d.github.io/fusao-de-fe-menus/evangelico/ (#pomba, #maos)
+  https://fusaolab3d.github.io/fusao-de-fe-menus/espirita/   (#maos)
+Nunca apagar nem renomear um link /m/ — só redirecionar.

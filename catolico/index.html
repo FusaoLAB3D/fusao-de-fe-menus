@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="author" content="Fusão Lab 3D · Fusão de Fé">
+<title>Vela Eterna — Momento de Oração</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+ /* Mundo "angelical": luz de manhã sobre marfim, ouro velho e um céu claro. Coluna única de celular, cartões em vidro claro. */
+ --sky:#eff9f3; --ivory:#f0faf4; --ink:#2f2a3a; --mute:#7a7184; --gold:#37a364; --gold-soft:#a7e2c0;
+ --line:rgba(55,163,100,.22); --glass:rgba(255,255,255,.72);
+ --display:'Cormorant Garamond',Georgia,serif; --body:'Montserrat',system-ui,-apple-system,sans-serif;
+ color-scheme:light;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{background:var(--ivory)}
+body{max-width:480px;margin:0 auto;padding-bottom:56px;color:var(--ink);font-family:var(--body);min-height:100%;
+ background:
+  radial-gradient(90% 38% at 50% 0%, #ffffff 0%, rgba(255,255,255,0) 70%),
+  radial-gradient(60% 30% at 15% 18%, rgba(203,238,218,.55), rgba(203,238,218,0) 70%),
+  radial-gradient(60% 30% at 88% 30%, rgba(167,226,192,.45), rgba(167,226,192,0) 70%),
+  linear-gradient(180deg, var(--sky) 0%, var(--ivory) 42%, #e1f4e9 100%);
+ position:relative;overflow-x:hidden}
+.rays{position:absolute;inset:0 0 auto 0;height:560px;pointer-events:none;
+ background:repeating-conic-gradient(from 180deg at 50% -8%, rgba(196,248,218,.0) 0deg 7deg, rgba(196,248,218,.38) 8deg 10deg, rgba(196,248,218,0) 11deg 18deg);
+ -webkit-mask:radial-gradient(70% 90% at 50% 0%,#000 30%,transparent 75%);mask:radial-gradient(70% 90% at 50% 0%,#000 30%,transparent 75%);opacity:.9}
+.spark{position:absolute;width:3px;height:3px;border-radius:50%;background:#fff;box-shadow:0 0 8px 2px rgba(170,246,201,.9);opacity:.0;animation:tw 5s ease-in-out infinite}
+@keyframes tw{0%,100%{opacity:0;transform:translateY(0)}50%{opacity:.9;transform:translateY(-8px)}}
+.demo{position:relative;background:rgba(47,42,58,.88);color:#e1f1e8;font-size:11px;text-align:center;padding:7px 12px;letter-spacing:.02em}
+header{position:relative;text-align:center;padding:26px 20px 4px}
+.arch{width:210px;margin:0 auto;border-radius:110px 110px 18px 18px;padding:6px;
+ background:linear-gradient(160deg,#c3f1d6,#52bc7e 45%,#b0edca 70%,#46a86f);box-shadow:0 18px 50px rgba(55,163,100,.28),0 0 90px rgba(151,244,190,.55)}
+.arch img{display:block;width:100%;aspect-ratio:3/4;object-fit:cover;object-position:50% 40%;border-radius:104px 104px 13px 13px}
+.halo{position:absolute;left:50%;top:6px;width:300px;height:300px;margin-left:-150px;border-radius:50%;
+ background:radial-gradient(circle,rgba(196,248,218,.75),rgba(196,248,218,0) 65%);animation:breathe 6s ease-in-out infinite;pointer-events:none}
+@keyframes breathe{0%,100%{transform:scale(.94);opacity:.8}50%{transform:scale(1.04);opacity:1}}
+h1{font-family:var(--display);font-weight:600;font-size:40px;letter-spacing:.03em;margin-top:18px;text-wrap:balance}
+.sub{color:var(--mute);font-size:13px;margin-top:4px;letter-spacing:.02em}
+.voice{margin:18px auto 4px;display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap}
+.voice span{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--mute)}
+.seg{display:inline-flex;background:var(--glass);border:1px solid var(--line);border-radius:30px;padding:3px;backdrop-filter:blur(6px)}
+.seg button{border:none;background:none;font:600 12px var(--body);color:var(--ink);padding:9px 16px;border-radius:26px;cursor:pointer}
+.seg button.on{background:linear-gradient(135deg,#5fc98b,#37a364);color:#fff;box-shadow:0 4px 12px rgba(55,163,100,.35)}
+nav{display:flex;gap:6px;overflow-x:auto;padding:14px 14px 10px;position:sticky;top:0;z-index:5;scrollbar-width:none;
+ background:linear-gradient(rgba(240,250,244,.96) 75%,rgba(240,250,244,0))}
+nav::-webkit-scrollbar{display:none}
+nav button{flex:none;background:var(--glass);border:1px solid var(--line);color:var(--ink);font:600 11px var(--body);letter-spacing:.12em;padding:9px 14px;border-radius:20px;cursor:pointer}
+nav button.on{background:var(--ink);color:#e4f9ed;border-color:var(--ink)}
+button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+section{display:none;padding:12px 18px;position:relative}
+section.on{display:block}
+h2{font-family:var(--display);font-size:28px;font-weight:600;color:var(--ink);margin:6px 0 12px;text-wrap:balance}
+h2 em{color:var(--gold);font-style:italic}
+.card{background:var(--glass);border:1px solid var(--line);border-radius:18px;padding:20px;margin-bottom:12px;
+ box-shadow:0 10px 30px rgba(66,114,86,.08);backdrop-filter:blur(8px)}
+.today{position:relative;overflow:hidden}
+.today::before{content:"";position:absolute;right:-40px;top:-40px;width:160px;height:160px;border-radius:50%;background:radial-gradient(circle,rgba(167,226,192,.6),rgba(167,226,192,0) 70%)}
+.date{display:flex;align-items:baseline;gap:10px;margin-bottom:12px}
+.date b{font-family:var(--display);font-size:44px;line-height:1;color:var(--gold);font-weight:600;font-variant-numeric:tabular-nums}
+.date span{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--mute)}
+.ref{display:inline-block;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);border:1px solid var(--line);border-radius:14px;padding:5px 10px;margin-bottom:10px;background:#f2fdf6}
+.prayer{font-family:var(--display);font-size:22px;line-height:1.55;position:relative}
+.verse{font-family:var(--display);font-style:italic;font-size:23px;line-height:1.5;position:relative}
+.refl{margin-top:12px;font-size:14px;line-height:1.6;color:#4a4356;position:relative}
+.player{display:flex;align-items:center;gap:12px;margin-top:16px;position:relative}
+.play{flex:none;width:52px;height:52px;border-radius:50%;border:none;cursor:pointer;display:grid;place-items:center;
+ background:linear-gradient(135deg,#62cc8e,#2f9b5c);box-shadow:0 8px 18px rgba(55,163,100,.35)}
+.play svg{width:20px;height:20px;fill:#fff}
+.bar{flex:1;height:4px;border-radius:2px;background:rgba(55,163,100,.18);overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#62cc8e,#2f9b5c)}
+.who{font-size:11px;color:var(--mute);letter-spacing:.06em;min-width:68px;text-align:right}
+.days{display:flex;justify-content:space-between;align-items:center;margin-top:14px;position:relative}
+.days button{background:none;border:1px solid var(--line);border-radius:18px;padding:7px 12px;font:600 11px var(--body);color:var(--mute);cursor:pointer;letter-spacing:.06em}
+.days small{font-size:11px;color:var(--mute)}
+.note{color:var(--mute);font-size:12px;line-height:1.55;margin-top:8px}
+details{background:var(--glass);border:1px solid var(--line);border-radius:14px;margin-bottom:8px}
+summary{list-style:none;padding:15px 16px;font-weight:600;font-size:14px;cursor:pointer;display:flex;justify-content:space-between;align-items:center}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";color:var(--gold);font-size:20px;font-weight:400}
+details[open] summary::after{content:"–"}
+details .inner{padding:0 16px 16px}
+details .prayer{font-size:19px;white-space:pre-line}
+.mini{display:inline-flex;align-items:center;gap:8px;margin-top:12px;background:none;border:1px solid var(--line);color:var(--ink);font:600 12px var(--body);padding:9px 14px;border-radius:22px;cursor:pointer}
+.mini svg{width:12px;height:12px;fill:var(--gold)}
+.myst{font-family:var(--display);font-size:24px;line-height:1.3;min-height:62px}
+.step{color:var(--gold);font-size:12px;letter-spacing:.14em;text-transform:uppercase;margin-top:6px}
+.beads{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:16px 0 6px}
+.beads i{width:16px;height:16px;border-radius:50%;border:1.5px solid var(--gold);display:block;background:#fff}
+.beads i.big{width:22px;height:22px}
+.beads i.done{background:radial-gradient(circle at 35% 35%,#a8ebc4,#37a364)}
+.beads i.now{box-shadow:0 0 0 5px rgba(167,226,192,.6);background:#dafbe8}
+.tap{width:100%;margin-top:14px;padding:16px;border:none;border-radius:26px;background:linear-gradient(135deg,#62cc8e,#2f9b5c);color:#fff;font:700 13px var(--body);letter-spacing:.1em;cursor:pointer}
+.row{display:flex;gap:8px;justify-content:center;margin-top:10px}
+.circle{width:210px;height:210px;margin:10px auto;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;position:relative;background:rgba(255,255,255,.5)}
+.circle .breath{position:absolute;inset:30px;border-radius:50%;background:radial-gradient(circle,rgba(140,223,175,.55),rgba(140,223,175,0) 70%);transform:scale(.6);transition:transform 4s ease-in-out}
+.circle .breath.in{transform:scale(1.18)}
+.circle b{font-family:var(--display);font-size:44px;font-weight:600;position:relative;font-variant-numeric:tabular-nums}
+.circle span{position:absolute;bottom:48px;font-size:11px;color:var(--mute);letter-spacing:.2em}
+ul.tips{list-style:none}
+ul.tips li{padding:12px 0;border-bottom:1px solid var(--line);font-size:14px;line-height:1.55;display:flex;gap:12px}
+ul.tips li:last-child{border-bottom:none}
+ul.tips li b{color:var(--gold);min-width:20px;font-family:var(--display);font-size:20px;line-height:1}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.prod{display:block;background:#fff;border-radius:16px;overflow:hidden;text-decoration:none;color:var(--ink);box-shadow:0 10px 26px rgba(66,114,86,.14);border:1px solid var(--line)}
+.prod img{display:block;width:100%;aspect-ratio:1/1;object-fit:cover}
+.prod p{padding:10px 12px 12px;font-family:var(--display);font-size:18px;font-weight:600;line-height:1.15}
+.prod small{display:block;font-family:var(--body);color:var(--mute);font-weight:400;font-size:11px;margin-top:3px}
+.prod.here{grid-column:1/-1;outline:2px solid var(--gold);outline-offset:-2px}
+.prod.here img{aspect-ratio:16/10;object-position:50% 45%}
+.cta{display:block;text-align:center;margin-top:14px;padding:14px;border-radius:26px;background:var(--ink);color:#e4f9ed;text-decoration:none;font:600 12px var(--body);letter-spacing:.12em}
+footer{text-align:center;color:var(--mute);font-size:11px;margin-top:30px;line-height:1.8}
+footer b{color:var(--gold);letter-spacing:.24em;font-weight:600}
+footer a{color:var(--mute)}
+@media (prefers-reduced-motion:reduce){.halo,.spark{animation:none}.circle .breath{transition:none}}
+
+.mq{text-align:center}
+.mq .t{font-family:var(--display);font-size:26px;font-weight:600;line-height:1.1}
+.mq .t small{display:block;font-family:var(--body);font-size:12px;color:var(--mute);font-weight:500;margin-top:6px;letter-spacing:.02em}
+.mq .pl{margin:16px auto 10px;width:66px;height:66px;border-radius:50%;border:0;cursor:pointer;display:grid;place-items:center;background:linear-gradient(135deg,#5fc98b,#37a364);box-shadow:0 8px 22px rgba(55,163,100,.35)}
+.mq .pl i{display:block;width:0;height:0;border-left:18px solid #fff;border-top:11px solid transparent;border-bottom:11px solid transparent;margin-left:5px}
+.mq.on .pl i{width:18px;height:20px;border:0;margin:0;background:linear-gradient(90deg,#fff 0 34%,transparent 34% 66%,#fff 66%)}
+.mq .bar{height:4px;border-radius:3px;background:rgba(55,163,100,.18);overflow:hidden;margin:6px 4px 0}
+.mq .bar i{display:block;height:100%;width:0;background:#37a364}
+.mq .tm{font-size:11px;letter-spacing:.14em;color:var(--mute);margin-top:8px}
+.btns{display:flex;flex-direction:column;gap:8px;margin-top:14px}
+.btn{display:flex;align-items:center;justify-content:center;gap:10px;padding:14px;border-radius:26px;text-decoration:none;font:700 12px var(--body);letter-spacing:.1em;border:none;cursor:pointer;width:100%}
+.btn.dark{background:var(--ink);color:#fff}
+.btn.line{border:1px solid var(--line);color:var(--ink);background:var(--ivory)}
+.btn svg{width:18px;height:18px;fill:currentColor}
+.sp .ic{width:46px;height:46px;margin:0 auto 10px;fill:#1DB954}
+
+/* ---------- Bíblia ---------- */
+.bx-sx{display:flex;gap:8px;margin-top:12px;position:relative;align-items:center}
+.bx-sx .ic{position:absolute;left:14px;top:50%;transform:translateY(-50%);width:18px;height:18px;color:var(--gold);pointer-events:none;display:flex}
+.bx-sx .ic svg{width:18px;height:18px}
+.bx-sx input{flex:1;min-width:0;border:1px solid var(--line);border-radius:22px;padding:11px 14px 11px 40px;font:500 16px var(--body);background:var(--ivory);color:var(--ink)}
+.bx-sx button{border:none;border-radius:22px;padding:0 15px;height:44px;background:var(--ink);color:#fff;font:700 11px var(--body);letter-spacing:.1em;cursor:pointer}
+.bx-ref{font:700 10.5px var(--body);letter-spacing:.16em;color:var(--gold);text-transform:uppercase}
+.bx-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;align-items:center;font-size:11px;color:var(--mute)}
+.bx-chips button{border:1px solid var(--line);background:var(--ivory);border-radius:14px;padding:5px 11px;font:600 11.5px var(--body);color:var(--ink);cursor:pointer}
+#bx-res .tot{font:600 12.5px var(--body);margin:16px 0 2px;line-height:1.5}
+#bx-res .tot small{display:block;font-weight:500;color:var(--mute);font-size:11.5px}
+#bx-res mark,.bd mark{background:rgba(212,170,82,.38);color:inherit;border-radius:3px;padding:0 2px}
+.bx-r{border-top:1px solid var(--line);padding:12px 0 8px}
+.bx-r b.rf{display:inline-block;font:700 10.5px var(--body);letter-spacing:.12em;color:#fff;background:var(--gold);border-radius:10px;padding:3px 9px;margin-bottom:6px}
+.bx-r p{font-family:var(--display);font-size:19px;line-height:1.5}
+.bx-r p sup{font:700 10px var(--body);color:var(--gold);margin-right:3px}
+.bx-r .op{display:block;margin-top:6px;background:none;border:none;color:var(--gold);font:700 11px var(--body);letter-spacing:.12em;cursor:pointer;padding:0}
+#bx-res .more,.bx-btn{width:100%;margin-top:12px;border:1px solid var(--line);background:var(--ivory);border-radius:22px;padding:12px;font:700 11px var(--body);letter-spacing:.1em;color:var(--ink);cursor:pointer}
+.bx-btn.dk{background:var(--ink);color:#fff;border:none}
+.bx-tst{font:700 11px var(--body);letter-spacing:.18em;color:var(--gold);text-transform:uppercase;margin:4px 0 10px}
+.bx-gr{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.bx-gr button{background:var(--ivory);border:1px solid var(--line);border-radius:12px;padding:10px 4px;font:600 12px var(--body);color:var(--ink);cursor:pointer;line-height:1.2}
+.bx-gr button small{display:block;font-weight:500;color:var(--mute);font-size:10px;margin-top:2px}
+.bd{position:fixed;inset:0;z-index:50;background:var(--ivory);display:none;flex-direction:column}
+.bd.on{display:flex}
+.bd .top{display:flex;align-items:center;gap:6px;padding:10px 12px;border-bottom:1px solid var(--line);background:var(--ivory)}
+.bd .top b{flex:1;text-align:center;font:600 13px var(--body);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bd .top button{background:none;border:1px solid var(--line);border-radius:16px;padding:7px 10px;font:700 11px var(--body);color:var(--ink);cursor:pointer;display:flex;align-items:center}
+.bd .top button svg{width:16px;height:16px}
+.bd .body{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch}
+.bd .txt{max-width:640px;margin:0 auto;padding:18px 20px 30px;font-family:var(--display);font-size:calc(20px*var(--fz,1));line-height:1.65;color:var(--ink)}
+.bd .txt h1{font-family:var(--display);font-size:calc(30px*var(--fz,1));font-weight:600;margin:4px 0 14px}
+.bd .txt h1 small{display:block;font:700 10.5px var(--body);letter-spacing:.18em;color:var(--gold);text-transform:uppercase;margin-bottom:4px}
+.bd .txt p{margin:0 0 6px}
+.bd .txt sup{font:700 calc(10px*var(--fz,1)) var(--body);color:var(--gold);margin-right:4px;vertical-align:.45em}
+.bd .txt p.hl{background:rgba(212,170,82,.18);border-radius:6px;box-shadow:0 0 0 4px rgba(212,170,82,.18)}
+.bd .nav2{display:flex;gap:8px;max-width:640px;margin:0 auto;padding:0 20px 40px}
+.bd .nav2 button{flex:1;border:1px solid var(--line);background:var(--glass);border-radius:20px;padding:11px 6px;font:700 10.5px var(--body);letter-spacing:.08em;color:var(--ink);cursor:pointer}
+.bd .nav2 button:disabled{opacity:.35}
+.bd .caps{max-width:640px;margin:0 auto;padding:18px 20px 40px}
+.bd .caps h3{font-family:var(--display);font-size:26px;font-weight:600;margin:0 0 12px}
+.bd .caps .g{display:grid;grid-template-columns:repeat(6,1fr);gap:6px}
+.bd .caps .g button{aspect-ratio:1;border:1px solid var(--line);background:var(--glass);border-radius:10px;font:600 14px var(--body);color:var(--ink);cursor:pointer}
+.bd .caps .g button.cur{background:var(--gold);color:#fff;border-color:var(--gold)}
+</style>
+<style>
+/* ---------- Fusão de Fé · recursos novos (25/11/2026) ---------- */
+.fx-card{background:var(--glass);border:1px solid var(--line);border-radius:22px;padding:18px 16px;margin:0 0 16px;box-shadow:0 10px 28px rgba(47,42,58,.08)}
+.fx-ey{font:700 10.5px var(--body);letter-spacing:.18em;color:var(--gold);text-transform:uppercase}
+.fx-sua{display:grid;grid-template-columns:96px minmax(0,1fr);gap:14px;align-items:center}
+.fx-sua img{width:96px;height:128px;object-fit:cover;border-radius:14px;border:1px solid var(--line)}
+.fx-sua h3{font-family:var(--display);font-size:26px;font-weight:600;line-height:1.05;margin:4px 0 6px}
+.fx-festa{font:500 12.5px var(--body);color:var(--mute);line-height:1.4}
+.fx-festa b{color:var(--gold)}
+.fx-txt{font-family:var(--display);font-size:calc(19px*var(--fz,1));line-height:1.55;margin-top:12px;white-space:pre-line}
+.fx-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.fx-b{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:44px;padding:10px 16px;border-radius:22px;border:1px solid var(--line);background:var(--ivory);color:var(--ink);font:700 11.5px var(--body);letter-spacing:.08em;text-decoration:none;cursor:pointer;flex:1 1 auto}
+.fx-b.dk{background:var(--ink);color:#fff;border-color:var(--ink)}
+.fx-b.au{background:var(--gold);color:#fff;border-color:var(--gold)}
+.fx-b svg{width:16px;height:16px;fill:currentColor;flex:none}
+.fx-card details{border-top:1px solid var(--line);margin-top:12px;padding-top:10px}
+.fx-card summary{cursor:pointer;font:700 11.5px var(--body);letter-spacing:.1em;color:var(--ink);list-style:none;min-height:30px;display:flex;align-items:center}
+.fx-card summary::-webkit-details-marker{display:none}
+.fx-card summary:after{content:'+';margin-left:auto;color:var(--gold);font-size:18px}
+.fx-card details[open] summary:after{content:'–'}
+.fx-hist{font:400 14px/1.6 var(--body);color:var(--ink);margin-top:8px}
+.fx-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.fx-chips button{border:1px solid var(--line);background:var(--ivory);border-radius:16px;padding:8px 12px;min-height:38px;font:600 12px var(--body);color:var(--ink);cursor:pointer}
+.fx-chips button.on{background:var(--gold);border-color:var(--gold);color:#fff}
+.fx-nov{display:grid;grid-template-columns:repeat(9,minmax(0,1fr));gap:5px;margin-top:12px}
+.fx-nov button{aspect-ratio:1;border-radius:50%;border:1px solid var(--line);background:var(--ivory);font:700 13px var(--body);color:var(--ink);cursor:pointer;padding:0}
+.fx-nov button.ok{background:var(--gold);border-color:var(--gold);color:#fff}
+.fx-nov button.cur{outline:2px solid var(--gold);outline-offset:2px}
+.fx-sm{font:500 12px/1.5 var(--body);color:var(--mute);margin-top:8px}
+.fx-ta{width:100%;min-height:88px;border:1px solid var(--line);border-radius:16px;padding:12px 14px;font:500 16px var(--body);color:var(--ink);background:var(--ivory);resize:vertical;margin-top:10px}
+.fx-list{list-style:none;margin:10px 0 0;padding:0}
+.fx-list li{display:flex;gap:10px;align-items:flex-start;border-top:1px solid var(--line);padding:10px 0;font:500 14px/1.45 var(--body)}
+.fx-list li span{flex:1;min-width:0;overflow-wrap:anywhere}
+.fx-list li small{display:block;color:var(--mute);font-size:11px;margin-top:2px}
+.fx-list li.ok span{text-decoration:line-through;color:var(--mute)}
+.fx-list li button{border:1px solid var(--line);background:var(--ivory);border-radius:14px;padding:6px 10px;font:600 11px var(--body);color:var(--ink);cursor:pointer;flex:none}
+.fx-steps{list-style:none;margin:10px 0 0;padding:0;counter-reset:s}
+.fx-steps li{counter-increment:s;position:relative;padding:12px 0 12px 40px;border-top:1px solid var(--line);font:400 14px/1.55 var(--body)}
+.fx-steps li:before{content:counter(s);position:absolute;left:0;top:12px;width:28px;height:28px;border-radius:50%;background:var(--gold);color:#fff;font:700 13px var(--body);display:grid;place-items:center}
+.fx-steps li b{display:block;font-weight:700;margin-bottom:2px}
+.fx-steps .fx-row{margin-top:8px}
+.fx-sal{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:6px;margin-top:12px}
+.fx-sal button{border:1px solid var(--line);background:var(--ivory);border-radius:12px;padding:8px 2px;font:700 12px var(--body);color:var(--ink);cursor:pointer;line-height:1.1}
+.fx-sal button small{display:block;font-weight:500;font-size:9.5px;color:var(--mute);margin-top:2px}
+.fx-sal button.ok{background:var(--gold);color:#fff;border-color:var(--gold)}
+.fx-sal button.ok small{color:#fff}
+.fx-sal button.cur{outline:2px solid var(--gold);outline-offset:1px}
+.fx-home{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px;margin-top:10px}
+.fx-home div{border:1px solid var(--line);border-radius:16px;padding:12px;font:400 13px/1.5 var(--body)}
+.fx-home b{display:block;font:700 11px var(--body);letter-spacing:.12em;color:var(--gold);margin-bottom:4px}
+.fx-gift{display:flex;gap:12px;align-items:center;margin-top:16px;background:var(--ink);color:#fff;border-radius:20px;padding:16px;text-decoration:none}
+.fx-gift b{font-family:var(--display);font-size:22px;font-weight:600;line-height:1.1;display:block}
+.fx-gift small{display:block;font:500 12px/1.4 var(--body);opacity:.85;margin-top:4px}
+.fx-gift i{margin-left:auto;font-style:normal;font:700 11px var(--body);letter-spacing:.1em;background:var(--gold);border-radius:16px;padding:9px 12px;white-space:nowrap}
+.fx-moon{position:fixed;right:14px;bottom:18px;z-index:40;width:52px;height:52px;border-radius:50%;border:1px solid var(--line);background:var(--ink);color:#fff;display:grid;place-items:center;box-shadow:0 10px 26px rgba(0,0,0,.25);cursor:pointer}
+.fx-moon svg{width:22px;height:22px;fill:currentColor}
+.fx-night{position:fixed;inset:0;z-index:80;background:radial-gradient(60% 45% at 50% 42%,#3a2410 0%,#120b06 55%,#050302 100%);color:#f6e7c8;display:none;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px}
+.fx-night.on{display:flex}
+.fx-flame{width:46px;height:78px;border-radius:50% 50% 48% 48%/62% 62% 38% 38%;background:radial-gradient(50% 60% at 50% 70%,#fffbe6 0%,#ffd36b 35%,#ff9a2e 70%,rgba(255,120,30,0) 100%);filter:blur(.5px);box-shadow:0 0 60px 26px rgba(255,170,60,.35);animation:fxf 1.6s ease-in-out infinite alternate;margin-bottom:26px}
+@keyframes fxf{0%{transform:scale(1,1) rotate(-1deg)}50%{transform:scale(.96,1.05) rotate(1.5deg)}100%{transform:scale(1.03,.97) rotate(-.5deg)}}
+@media (prefers-reduced-motion:reduce){.fx-flame{animation:none}}
+.fx-night h3{font-family:var(--display);font-size:30px;font-weight:600;margin-bottom:6px}
+.fx-night p{font:400 13px/1.6 var(--body);opacity:.8;max-width:300px}
+.fx-night .fx-row{justify-content:center;max-width:340px}
+.fx-night .fx-b{background:rgba(255,255,255,.08);border-color:rgba(255,220,160,.3);color:#f6e7c8;flex:0 1 auto}
+.fx-night .fx-b.on{background:#d99a3a;border-color:#d99a3a;color:#1a0f05}
+.fx-night .fx-left{font:600 13px var(--body);letter-spacing:.12em;margin-top:14px;min-height:18px}
+.fx-night .fx-x{position:absolute;top:16px;right:16px}
+.fx-toast{position:fixed;left:50%;bottom:84px;transform:translateX(-50%);background:var(--ink);color:#fff;font:600 12.5px var(--body);padding:10px 16px;border-radius:18px;z-index:90;opacity:0;transition:opacity .3s;pointer-events:none;max-width:86vw;text-align:center}
+.fx-toast.on{opacity:1}
+.fx-card details>div{padding:0 16px 14px}
+.fx-card details>.fx-txt{padding:0 16px 14px}
+
+</style>
+</head>
+<body>
+<div class="rays"></div><i class="spark" style="left:12%;top:90px;animation-delay:0s"></i><i class="spark" style="left:26%;top:40px;animation-delay:1.4s"></i><i class="spark" style="left:78%;top:70px;animation-delay:0.7s"></i><i class="spark" style="left:88%;top:150px;animation-delay:2.2s"></i><i class="spark" style="left:60%;top:30px;animation-delay:3.1s"></i><i class="spark" style="left:40%;top:120px;animation-delay:1.9s"></i><i class="spark" style="left:70%;top:210px;animation-delay:0.3s"></i><i class="spark" style="left:18%;top:230px;animation-delay:2.7s"></i>
+<header>
+ <div class="halo"></div>
+ <div class="arch"><img src="img/vela.jpg" alt="Vela Eterna acesa"></div>
+ <h1>Vela Eterna</h1>
+ <div class="sub">Um momento de luz e oração</div>
+ <div class="voice"><span>Voz</span><div class="seg" role="group" aria-label="Escolha a voz"><button type="button" data-v="k" id="vk">Feminina</button><button type="button" data-v="w" id="vw">Masculina</button></div></div>
+</header>
+<nav><button type="button" data-s="hoje" class="on">HOJE</button><button type="button" data-s="biblia">BÍBLIA</button><button type="button" data-s="oracoes">ORAÇÕES</button><button type="button" data-s="terco">TERÇO</button><button type="button" data-s="silencio">MEDITAÇÃO</button><button type="button" data-s="cuidados">CUIDADOS</button><button type="button" data-s="linha">LINHA DE FÉ</button></nav>
+<section id="hoje" class="on">
+ <h2>Oração <em>do dia</em></h2>
+ <div class="card today">
+  <div class="date"><b id="dNum"></b><span id="dLbl"></span></div>
+  <div class="prayer" id="todayText"></div>
+  <div class="player"><button class="play" type="button" id="listen" aria-label="Ouvir"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button><div class="bar"><i id="bar"></i></div><div class="who" id="whoLbl"></div></div>
+  <div class="days"><button type="button" id="prev">‹ Dia anterior</button><small id="dPos"></small><button type="button" id="nextDay">Próximo dia ›</button></div>
+ </div>
+ <p class="note">Uma oração diferente para cada dia do mês, escrita pela Fusão de Fé. Toque no play para ouvir.</p>
+</section><section id="biblia"><h2>Bíblia <em>Sagrada</em></h2><div class="card" id="bx-lupa"><span class="bx-ref">PROCURAR NA BÍBLIA</span><form class="bx-sx" id="bx-f" role="search"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></svg></span><input id="bx-q" type="search" enterkeyhint="search" autocomplete="off" placeholder="Palavra, tema ou passagem" aria-label="Procurar na Bíblia por palavra, tema ou passagem"><button type="submit">PROCURAR</button></form><div class="bx-chips"><span>Exemplos:</span><button type="button" data-t="Salmo 23">Salmo 23</button><button type="button" data-t="Jo 3,16">Jo 3,16</button><button type="button" data-t="Lc 1,28">Lc 1,28</button><button type="button" data-t="perdão">perdão</button><button type="button" data-t="misericórdia">misericórdia</button></div><div id="bx-res"></div></div><div class="card" id="bx-cont" style="display:none"></div><div class="card"><div class="bx-tst">Antigo Testamento</div><div class="bx-gr" id="bx-at"><p class="note">Carregando…</p></div></div><div class="card"><div class="bx-tst">Novo Testamento</div><div class="bx-gr" id="bx-nt"></div></div><p class="note" id="bx-cr"></p></section><section id="oracoes"><h2>Orações</h2><div id="prayers"></div></section><section id="terco"><h2>Terço <em>guiado</em></h2>
+ <div class="card" style="text-align:center"><div class="step" id="mystDay"></div><div class="myst" id="myst" style="margin-top:10px"></div><div class="step" id="step"></div>
+ <div class="beads" id="beads"></div><button class="tap" type="button" id="next">TOQUE A CADA ORAÇÃO</button><div class="row"><button class="mini" type="button" id="reset">Recomeçar</button></div></div>
+ <p class="note">Toque uma vez a cada oração rezada. A página mostra o mistério do dia e acompanha cada conta.</p></section><section id="silencio"><h2>Momento <em>de meditação</em></h2>
+<div class="card mq" id="mq"><div class="t">Quiet With God<small>Fusão de Fé · música para orar e meditar</small></div><button type="button" class="pl" id="mqB" aria-label="Tocar ou pausar a música"><i></i></button><div class="bar"><i id="mqBar"></i></div><div class="tm" id="mqT">TOQUE PARA OUVIR</div><audio id="mqA" src="aud/musica/quiet-with-god.mp3" preload="none" loop></audio></div>
+<div class="fx-card" style="text-align:center"><div class="fx-ey">Música para a prece</div><h3 style="font-family:var(--display);font-size:26px;font-weight:600;margin:4px 0 2px">Vozes Angelicais</h3><p class="fx-sm" style="margin-top:0">instrumental da Fusão de Fé para oração e meditação · 1 hora</p><div class="fx-row"><a class="fx-b dk" href="https://www.youtube.com/watch?v=QuNumpqMs7c" target="_blank" rel="noopener">OUVIR NO YOUTUBE</a><a class="fx-b" href="https://open.spotify.com/artist/5qDiDGeoLwki83jKmVoGVi" target="_blank" rel="noopener">FUSÃO DE FÉ NO SPOTIFY</a></div></div><div class="card mq sp"><svg class="ic" viewBox="0 0 24 24"><path d="M12 1a11 11 0 1 0 0 22 11 11 0 0 0 0-22zm5 15.9a.7.7 0 0 1-1 .2c-2.7-1.7-6.2-2.1-10.2-1.1a.7.7 0 1 1-.3-1.4c4.4-1 8.2-.6 11.3 1.3.3.2.4.7.2 1zm1.4-3.1a.9.9 0 0 1-1.2.3c-3.1-1.9-7.8-2.4-11.4-1.3a.9.9 0 0 1-.5-1.7c4.1-1.2 9.3-.6 12.8 1.5.4.3.5.8.3 1.2zm.1-3.3C14.8 8.3 8.7 8.1 5.2 9.2a1 1 0 1 1-.6-2c4.1-1.2 10.8-1 15 1.5a1 1 0 0 1-1.1 1.8z"/></svg><div class="t">Fusão de Fé<small>ouça todas as músicas da Fusão de Fé para orar e meditar</small></div><div class="btns"><a class="btn dark" href="https://open.spotify.com/artist/5qDiDGeoLwki83jKmVoGVi" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M12 1a11 11 0 1 0 0 22 11 11 0 0 0 0-22zm5 15.9a.7.7 0 0 1-1 .2c-2.7-1.7-6.2-2.1-10.2-1.1a.7.7 0 1 1-.3-1.4c4.4-1 8.2-.6 11.3 1.3.3.2.4.7.2 1zm1.4-3.1a.9.9 0 0 1-1.2.3c-3.1-1.9-7.8-2.4-11.4-1.3a.9.9 0 0 1-.5-1.7c4.1-1.2 9.3-.6 12.8 1.5.4.3.5.8.3 1.2zm.1-3.3C14.8 8.3 8.7 8.1 5.2 9.2a1 1 0 1 1-.6-2c4.1-1.2 10.8-1 15 1.5a1 1 0 0 1-1.1 1.8z"/></svg>OUVIR NO SPOTIFY</a><a class="btn line" href="https://www.youtube.com/channel/UCjVvzwedxbSRvp_olp1OTIw" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M23 7.2a3 3 0 0 0-2.1-2.1C19 4.6 12 4.6 12 4.6s-7 0-8.9.5A3 3 0 0 0 1 7.2 31 31 0 0 0 .5 12a31 31 0 0 0 .5 4.8 3 3 0 0 0 2.1 2.1c1.9.5 8.9.5 8.9.5s7 0 8.9-.5a3 3 0 0 0 2.1-2.1 31 31 0 0 0 .5-4.8 31 31 0 0 0-.5-4.8zM9.7 15.1V8.9l5.8 3.1z"/></svg>CANAL NO YOUTUBE</a></div></div>
+<div class="card" style="text-align:center">
+ <div class="circle"><div class="breath" id="breath"></div><b id="clock">5:00</b><span id="bt">RESPIRE</span></div>
+ <div class="row"><button class="mini" id="sStart" type="button">COMEÇAR</button><button class="mini" id="sStop" type="button">Parar</button></div>
+</div>
+<p class="note">Ouça a música enquanto ora, ou faça cinco minutos de silêncio com um som suave de fundo. Acompanhe o círculo: ele cresce quando você inspira e diminui quando você solta o ar.</p></section><section id="cuidados"><h2>Cuidados com a <em>sua vela</em></h2><div class="card"><ul class="tips">
+ <li><b>1</b><span>Ligue o cabo USB em um carregador de celular de 5 V. A luz da base acende o corpo e revela a imagem.</span></li>
+ <li><b>2</b><span>A chama do topo é uma velinha LED separada: tire o topo, ligue a velinha e encaixe de novo.</span></li>
+ <li><b>3</b><span>Quando a chama enfraquecer, troque a pilha da velinha. O modelo da pilha vem escrito no fundo dela.</span></li>
+ <li><b>4</b><span>Limpe só com pano seco e macio. Não use álcool nem produtos de limpeza.</span></li>
+ <li><b>5</b><span>Mantenha longe do sol direto e de lugares muito quentes, como o painel do carro.</span></li>
+<li><b>6</b><span>Se a sua vela veio com o anel dourado de apoio, guarde dentro dele a sobra do fio e o interruptor. Para mudar a vela de lugar, levante sempre pela base.</span></li></ul></div><div class="fx-card"><div class="fx-ey">Tenha este menu sempre à mão</div><p class="fx-sm" style="margin-top:4px">Salve esta página na tela do celular para abrir a oração mesmo longe da vela.</p><div class="fx-home"><div><b>IPHONE</b>Toque em Compartilhar (o quadrado com a seta) e depois em <i>Adicionar à Tela de Início</i>.</div><div><b>ANDROID</b>Toque nos três pontinhos do navegador e depois em <i>Adicionar à tela inicial</i>.</div></div></div></section><section id="linha"><h2>Linha <em>de Fé</em></h2><div class="grid"><a class="prod" href="https://fusaolab3d.com.br/products/vela-eterna-nossa-senhora-aparecida" target="_blank" rel="noopener"><img src="img/v-aparecida.jpg" alt="Nossa Senhora Aparecida" loading="lazy"><p>Nossa Senhora Aparecida<small>Vela Eterna · R$ 210</small></p></a><a class="prod" href="https://fusaolab3d.com.br/products/vela-eterna-nossa-senhora-de-fatima" target="_blank" rel="noopener"><img src="img/v-fatima.jpg" alt="Nossa Senhora de Fátima" loading="lazy"><p>Nossa Senhora de Fátima<small>Vela Eterna · R$ 210</small></p></a><a class="prod" href="https://fusaolab3d.com.br/products/vela-eterna-nossa-senhora-das-gracas" target="_blank" rel="noopener"><img src="img/v-gracas.jpg" alt="Nossa Senhora das Graças" loading="lazy"><p>Nossa Senhora das Graças<small>Vela Eterna · R$ 210</small></p></a><a class="prod" href="https://fusaolab3d.com.br/products/vela-eterna-santa-rita-de-cassia" target="_blank" rel="noopener"><img src="img/v-santarita.jpg" alt="Santa Rita de Cássia" loading="lazy"><p>Santa Rita de Cássia<small>Vela Eterna · R$ 210</small></p></a><a class="prod" href="https://fusaolab3d.com.br/products/vela-eterna-nossa-senhora-da-conceicao" target="_blank" rel="noopener"><img src="img/v-conceicao.jpg" alt="Nossa Senhora da Conceição" loading="lazy"><p>Nossa Senhora da Conceição<small>Vela Eterna · R$ 210</small></p></a><a class="prod" href="https://fusaolab3d.com.br/products/vela-eterna-maos-em-oracao" target="_blank" rel="noopener"><img src="img/v-maos.jpg" alt="Mãos em oração" loading="lazy"><p>Mãos em oração<small>Vela Eterna · R$ 210</small></p></a></div><p class="note">Velas com luz, feitas pela Fusão Lab 3D para a Fusão de Fé. Cada uma abre a sua página de oração.</p><a class="fx-gift" href="https://fusaolab3d.com.br/discount/BEMVINDO5?redirect=/collections/fusao-de-fe-catolica" target="_blank" rel="noopener"><div><b>Presenteie alguém</b><small>Uma Vela Eterna para quem você ama, com a página de oração dela. 5% de desconto na 1ª compra, já aplicado no link.</small></div><i>PRESENTEAR</i></a><a class="cta" href="https://fusaolab3d.com.br/collections/fusao-de-fe-catolica" target="_blank" rel="noopener">VER TODAS NO SITE</a></section>
+<div class="bd" id="bd" role="dialog" aria-label="Leitura da Bíblia"><div class="top"><button type="button" id="bd-x">‹ VOLTAR</button><b id="bd-t">Bíblia</b><button type="button" id="bd-f" aria-label="Procurar na Bíblia"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></svg></button><button type="button" id="bd-s" aria-label="Livros">☰</button><button type="button" id="bd-m" aria-label="Letra menor">A−</button><button type="button" id="bd-p" aria-label="Letra maior">A+</button></div><div class="body" id="bd-b"></div></div>
+<footer><b>FUSÃO DE FÉ</b><br>Vela Eterna · versão católica · uma linha da <a href="https://fusaolab3d.com.br" target="_blank" rel="noopener">Fusão Lab 3D</a><br><span style="font-size:10px">Bíblia: Bíblia Portuguesa Mundial (domínio público, eBible.org)</span><br><a href="https://fusaolab3d.com.br">fusaolab3d.com.br</a><br><a href="https://instagram.com/fusaodefe" target="_blank" rel="noopener">Instagram @fusaodefe</a> · <a href="https://www.youtube.com/channel/UCjVvzwedxbSRvp_olp1OTIw" target="_blank" rel="noopener">YouTube</a> · <a href="https://open.spotify.com/artist/5qDiDGeoLwki83jKmVoGVi" target="_blank" rel="noopener">Spotify</a> · <a href="https://wa.me/5521991818387" target="_blank" rel="noopener">WhatsApp</a><br><a href="mailto:fusaodefe@fusaolab3d.com.br">fusaodefe@fusaolab3d.com.br</a></footer>
+<script>
+const D={"kind": "cat", "dia": ["Senhor, neste primeiro dia, eu acendo esta luz e entrego a ti tudo o que vou viver. Que eu comece com fé e termine com gratidão. Amém.", "Senhor, eu te agradeço pelo dom da vida e por mais um amanhecer. Ensina-me a reconhecer os pequenos milagres de cada dia. Amém.", "Senhor, abençoa a minha família. Que nesta casa haja respeito, perdão e muito amor, e que ninguém se sinta sozinho. Amém.", "Senhor, abençoa o meu trabalho e o trabalho das minhas mãos. Dá-me sabedoria nas decisões e honestidade em tudo o que eu fizer. Amém.", "Senhor, eu te peço pela saúde de quem eu amo. Toca com a tua mão quem está doente e fortalece quem cuida dele. Amém.", "Mãe de Deus, olha pelos meus filhos e por todas as crianças. Protege os seus caminhos e guarda o seu coração. Amém.", "Senhor, tira de mim a ansiedade e o medo do amanhã. Que eu viva o dia de hoje confiando que Tu cuidas de tudo. Amém.", "Senhor, ensina-me a perdoar como Tu me perdoas. Cura as feridas antigas e devolve a paz ao meu coração. Amém.", "Senhor, renova a minha esperança. Quando tudo parecer difícil, lembra-me de que nenhuma noite dura para sempre. Amém.", "Santo Anjo do Senhor, fica ao meu lado hoje. Guarda a minha casa, os meus passos e as pessoas que eu amo. Amém.", "Senhor, recebe na tua luz as pessoas que já partiram. Consola a saudade de quem ficou e dá a elas o descanso eterno. Amém.", "Nossa Senhora Aparecida, Mãe do povo brasileiro, cobre esta casa com o teu manto e intercede por nós junto ao teu Filho. Amém.", "Senhor, eu te agradeço pelo pão de cada dia. Que nunca falte alimento nesta mesa, e que eu saiba partilhar com quem tem menos. Amém.", "Senhor, eu te agradeço pelos amigos verdadeiros. Abençoa cada um deles e me ensina a ser fiel, a saber ouvir e a ajudar. Amém.", "Espírito Santo, ilumina as minhas decisões. Dá-me discernimento para escolher o que é bom e coragem para seguir o caminho certo. Amém.", "Senhor, hoje o cansaço pesou. Renova as minhas forças, alivia o peso dos meus ombros e me dá um descanso tranquilo. Amém.", "Senhor, enche o meu coração de alegria. Que eu saiba sorrir, agradecer e levar um pouco de luz a quem estiver triste. Amém.", "Senhor, dá-me paciência com os outros e comigo mesmo. Que eu não responda com pressa nem julgue sem conhecer. Amém.", "Senhor, eu te peço pelos idosos, especialmente os que vivem sozinhos. Que eles se sintam amados, cuidados e lembrados. Amém.", "Senhor, abençoa os jovens. Dá a eles bons sonhos, boas amizades e a coragem de construir um futuro com fé. Amém.", "Senhor, protege quem está viajando hoje. Guarda as estradas, os céus e os mares, e traz cada um de volta para casa em paz. Amém.", "Senhor, lembro dos pobres e de quem passa necessidade. Toca o coração de quem pode ajudar e mostra-me como fazer a minha parte. Amém.", "Senhor, que esta casa seja um lugar de paz. Afasta as brigas e as palavras duras, e que aqui reine a tua presença. Amém.", "Senhor, aumenta a minha fé. Nos dias em que eu duvidar, segura a minha mão e me lembra de que Tu estás comigo. Amém.", "Senhor, ensina-me a ser humilde. Que eu reconheça os meus erros, aprenda com eles e trate todos com o mesmo respeito. Amém.", "Senhor, eu te agradeço pela beleza da tua criação: o céu, o mar, as plantas e os animais. Que eu cuide de tudo com carinho. Amém.", "Senhor, abençoa os meus vizinhos e as pessoas com quem convivo. Que haja entre nós gentileza, ajuda e boa vontade. Amém.", "Senhor, quando eu errar, me dá a graça de recomeçar. Que cada novo dia seja uma nova chance de fazer o bem. Amém.", "Senhor, eu te peço pelos médicos, enfermeiros e por todos que cuidam da vida. Dá a eles força, saúde e sabedoria. Amém.", "Senhor, ao fim deste dia, eu te entrego o meu descanso. Guarda o meu sono e o da minha família, e que amanhã eu acorde em paz. Amém.", "Senhor, eu te agradeço por este mês que termina, pelo que deu certo e pelo que eu aprendi. Que no próximo mês a tua luz continue comigo. Amém."], "pr": [["Pai-Nosso", "Pai Nosso que estais nos céus, santificado seja o vosso nome, venha a nós o vosso reino, seja feita a vossa vontade, assim na terra como no céu. O pão nosso de cada dia nos dai hoje, perdoai-nos as nossas ofensas, assim como nós perdoamos a quem nos tem ofendido, e não nos deixeis cair em tentação, mas livrai-nos do mal. Amém."], ["Ave-Maria", "Ave Maria, cheia de graça, o Senhor é convosco. Bendita sois vós entre as mulheres e bendito é o fruto do vosso ventre, Jesus. Santa Maria, Mãe de Deus, rogai por nós, pecadores, agora e na hora de nossa morte. Amém."], ["Glória ao Pai", "Glória ao Pai, ao Filho e ao Espírito Santo. Como era no princípio, agora e sempre. Amém."], ["Salve-Rainha", "Salve, Rainha, Mãe de misericórdia, vida, doçura e esperança nossa, salve! A vós bradamos, os degredados filhos de Eva. A vós suspiramos, gemendo e chorando neste vale de lágrimas. Eia, pois, advogada nossa, esses vossos olhos misericordiosos a nós volvei. E depois deste desterro mostrai-nos Jesus, bendito fruto do vosso ventre. Ó clemente, ó piedosa, ó doce sempre Virgem Maria. Rogai por nós, santa Mãe de Deus, para que sejamos dignos das promessas de Cristo. Amém."], ["Santo Anjo", "Santo Anjo do Senhor, meu zeloso guardador, se a ti me confiou a piedade divina, sempre me rege, me guarda, me governa e me ilumina. Amém."], ["Oração diante da luz", "Senhora Aparecida, Mãe do povo brasileiro, diante desta luz eu entrego a ti a minha casa e quem eu amo. Cuida de nós, intercede por nós e não nos deixes desanimar. Amém."], ["Ladainha de Nossa Senhora", "Senhor, tende piedade de nós.\nCristo, tende piedade de nós.\nSenhor, tende piedade de nós.\nCristo, ouvi-nos.\nCristo, atendei-nos.\n\nDeus Pai do Céu, tende piedade de nós.\nDeus Filho, Redentor do mundo, tende piedade de nós.\nDeus Espírito Santo, tende piedade de nós.\nSantíssima Trindade, que sois um só Deus, tende piedade de nós.\n\n(A cada invocação, responda: rogai por nós.)\n\nSanta Maria,\nSanta Mãe de Deus,\nSanta Virgem das virgens,\nMãe de Cristo,\nMãe da Igreja,\nMãe da misericórdia,\nMãe da divina graça,\nMãe da esperança,\nMãe puríssima,\nMãe castíssima,\nMãe sempre virgem,\nMãe imaculada,\nMãe amável,\nMãe admirável,\nMãe do bom conselho,\nMãe do Criador,\nMãe do Salvador,\nVirgem prudentíssima,\nVirgem venerável,\nVirgem louvável,\nVirgem poderosa,\nVirgem clemente,\nVirgem fiel,\nEspelho de justiça,\nSede da sabedoria,\nCausa da nossa alegria,\nVaso espiritual,\nVaso honorífico,\nVaso insigne de devoção,\nRosa mística,\nTorre de Davi,\nTorre de marfim,\nCasa de ouro,\nArca da aliança,\nPorta do Céu,\nEstrela da manhã,\nSaúde dos enfermos,\nRefúgio dos pecadores,\nConsolo dos migrantes,\nConsoladora dos aflitos,\nAuxílio dos cristãos,\nRainha dos Anjos,\nRainha dos Patriarcas,\nRainha dos Profetas,\nRainha dos Apóstolos,\nRainha dos Mártires,\nRainha dos Confessores,\nRainha das Virgens,\nRainha de todos os Santos,\nRainha concebida sem pecado original,\nRainha assunta ao Céu,\nRainha do Santíssimo Rosário,\nRainha da família,\nRainha da paz,\n\nCordeiro de Deus, que tirais o pecado do mundo, perdoai-nos, Senhor.\nCordeiro de Deus, que tirais o pecado do mundo, ouvi-nos, Senhor.\nCordeiro de Deus, que tirais o pecado do mundo, tende piedade de nós.\n\nV. Rogai por nós, Santa Mãe de Deus.\nR. Para que sejamos dignos das promessas de Cristo.\n\nOremos: Senhor Deus, concedei a nós, vossos servos, gozar sempre de saúde de alma e de corpo e, pela gloriosa intercessão da bem-aventurada sempre Virgem Maria, ser livres das tristezas desta vida e alcançar as alegrias eternas. Por Cristo, nosso Senhor. Amém."], ["Novena a Nossa Senhora das Graças", "Reze um dia por vez, nove dias seguidos, de preferência com a vela acesa. A festa de Nossa Senhora das Graças (Medalha Milagrosa) é em 27 de novembro: começando no dia 18, a novena termina na véspera da festa.\n\nCOMO REZAR CADA DIA\n1. Sinal da cruz e Oração inicial\n2. Meditação do dia\n3. Súplica\n4. Oração final, jaculatória e três Ave-Marias\n\nORAÇÃO INICIAL\nÓ Virgem Maria, Mãe de Deus e nossa Mãe, que mostrastes as vossas mãos cheias de graças, aqui estou diante desta luz. Abro o meu coração para rezar com confiança e entrego a vós o que trago hoje. Amém.\n\nMEDITAÇÃO DE CADA DIA\n1º dia · Catarina, a jovem que pediu para ver Maria. Em Paris, em 1830, uma noviça simples, Catarina Labouré, rezava com o desejo de ver a Mãe de Deus. Peçamos também nós um coração humilde, que procura Maria com simplicidade.\n\n2º dia · A primeira aparição. Na noite de 18 para 19 de julho de 1830, na capela da Rue du Bac, Maria sentou-se junto a Catarina e conversou com ela como mãe. Lembremos que Maria também se senta ao nosso lado nas horas difíceis.\n\n3º dia · Maria sobre o globo. Em 27 de novembro de 1830, Catarina viu Nossa Senhora de pé sobre o mundo, esmagando a serpente. Confiemos a Maria o mundo inteiro e cada pessoa da nossa família.\n\n4º dia · As mãos cheias de raios. Dos anéis das mãos de Maria saíam raios de luz. Ela explicou que eram as graças que derrama sobre quem lhe pede. Peçamos com fé a graça de que mais precisamos.\n\n5º dia · Os anéis sem luz. Alguns anéis não brilhavam: eram as graças que ninguém pede. Não tenhamos vergonha de pedir; Maria quer dar muito mais do que imaginamos.\n\n6º dia · A oração da medalha. Em volta da imagem estavam escritas as palavras: \"Ó Maria concebida sem pecado, rogai por nós que recorremos a vós\". Façamos desta jaculatória a nossa oração de cada dia.\n\n7º dia · O verso da medalha. A letra M com a cruz, os Corações de Jesus e de Maria e as doze estrelas. Contemplemos o amor do Filho e da Mãe, unidos pela nossa salvação.\n\n8º dia · A medalha milagrosa. Cunhada a pedido de Maria, a medalha se espalhou pelo mundo e muitas graças, curas e conversões foram alcançadas. Agradeçamos as graças que já recebemos.\n\n9º dia · Filhos confiantes. Maria prometeu graças abundantes a quem usar a medalha com fé. Consagremos a ela a nossa vida, a nossa casa e quem nós amamos.\n\nSÚPLICA\nÓ Virgem Maria, Mãe de Deus e nossa Mãe, que derramais graças sobre quem vos pede, olhai para mim com carinho. Alcançai-me, por vossa poderosa intercessão, a graça de que tanto preciso… (faça aqui o seu pedido). Fortalecei a minha fé, aumentai a minha esperança e inflamai o meu amor a Jesus, vosso Filho. Amém.\n\nORAÇÃO FINAL\nSantíssima Virgem, eu creio na vossa Imaculada Conceição e me entrego ao vosso cuidado. Ajudai-me a perseverar no bem e a viver cada dia perto de Jesus. Amém.\n\nJACULATÓRIA\nÓ Maria concebida sem pecado, rogai por nós que recorremos a vós.\n\nPARA CONCLUIR\nReze três Ave-Marias."], ["Ângelus", "O Anjo do Senhor anunciou a Maria.\nE ela concebeu do Espírito Santo.\n(Ave-Maria)\n\nEis aqui a serva do Senhor.\nFaça-se em mim segundo a vossa palavra.\n(Ave-Maria)\n\nE o Verbo se fez carne.\nE habitou entre nós.\n(Ave-Maria)\n\nRogai por nós, santa Mãe de Deus.\nPara que sejamos dignos das promessas de Cristo.\n\nOremos: Infundi, Senhor, como vos pedimos, a vossa graça em nossas almas, para que nós, que pela anunciação do Anjo conhecemos a encarnação de Cristo, vosso Filho, por sua paixão e morte na cruz, sejamos conduzidos à glória da ressurreição. Pelo mesmo Cristo, Senhor nosso. Amém.\n\nTradicionalmente rezado às 6h, ao meio-dia e às 18h."], ["Oração da manhã", "Senhor, obrigado por este novo dia. Antes de tudo, eu entrego a ti os meus pensamentos, as minhas palavras e o meu trabalho. Abençoa a minha família e todos que eu vou encontrar hoje. Dá-me paciência nas dificuldades, alegria nas pequenas coisas e coragem para fazer o bem. Nossa Senhora, minha Mãe, caminha comigo. Santo Anjo do Senhor, guarda-me neste dia. Amém."], ["Oração da noite", "Senhor, ao fim deste dia eu volto para ti. Obrigado por tudo o que vivi, pelo que deu certo e até pelo que não deu. Perdoa as minhas faltas e ajuda-me a perdoar também. Coloco em tuas mãos as pessoas que eu amo e as que me preocupam. Dá-me um sono tranquilo e guarda a minha casa esta noite. Nossa Senhora, cobre-nos com o teu manto. Em tuas mãos, Senhor, entrego o meu espírito. Amém."], ["Consagração a Nossa Senhora", "Ó Senhora minha, ó minha Mãe, eu me ofereço todo a vós, e em prova da minha devoção para convosco vos consagro neste dia os meus olhos, os meus ouvidos, a minha boca, o meu coração e inteiramente todo o meu ser. E porque assim sou vosso, ó incomparável Mãe, guardai-me e defendei-me como coisa e propriedade vossa. Amém."]]};
+const PLAY='<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>',STOP='<svg viewBox="0 0 24 24"><path d="M7 7h10v10H7z"/></svg>';
+let voz='k';try{voz=localStorage.getItem('velaVoz')||'k'}catch(e){}
+function setVoz(v){voz=v;try{localStorage.setItem('velaVoz',v)}catch(e){}document.querySelectorAll('.seg button').forEach(b=>b.classList.toggle('on',b.dataset.v===v));
+ document.getElementById('whoLbl').textContent=v==='k'?'voz feminina':'voz masculina';stopAudio()}
+document.querySelectorAll('.seg button').forEach(b=>b.onclick=()=>setVoz(b.dataset.v));
+// abas
+document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>{
+ document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('on',x===b));
+ document.querySelectorAll('section').forEach(s=>s.classList.toggle('on',s.id===b.dataset.s));
+ if(b.dataset.s!=='silencio')stopSil();stopAudio();window.scrollTo({top:document.querySelector('nav').offsetTop-4,behavior:'smooth'})});
+// áudio
+let AU=null,AB=null,BAR=null,RAF=0;
+function stopAudio(){if(AU){AU.pause();AU=null}if(AB){AB.innerHTML=AB.dataset.l||PLAY;AB=null}if(BAR)BAR.style.width='0';BAR=null;cancelAnimationFrame(RAF)}
+function tick(){if(AU&&BAR&&AU.duration){BAR.style.width=(100*AU.currentTime/AU.duration)+'%'}RAF=requestAnimationFrame(tick)}
+function play(file,btn,bar){const same=AB===btn;stopAudio();if(same)return;AU=new Audio('aud/'+voz+'/'+file+'.mp3');AB=btn;BAR=bar||null;
+ btn.dataset.l=btn.dataset.l||btn.innerHTML;btn.innerHTML=btn.classList.contains('play')?STOP:'■ Parar';AU.onended=stopAudio;
+ AU.play().then(()=>{RAF=requestAnimationFrame(tick)}).catch(()=>{stopAudio()})}
+// dia do mês
+const MES=['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
+const SEM=['domingo','segunda-feira','terça-feira','quarta-feira','quinta-feira','sexta-feira','sábado'];
+const now=new Date();let idx=now.getDate()-1;
+function showDay(){const it=D.dia[idx];const n=String(idx+1).padStart(2,'0');
+ document.getElementById('dNum').textContent=idx+1;
+ document.getElementById('dLbl').textContent=(idx===now.getDate()-1)?'hoje · '+SEM[now.getDay()]+' · '+MES[now.getMonth()]:'dia '+(idx+1)+' do mês';
+ document.getElementById('dPos').textContent=(idx+1)+' de 31';
+ if(D.kind==='cat'){document.getElementById('todayText').textContent=it}
+ else{document.getElementById('todayRef').textContent=it[0];document.getElementById('todayText').textContent='“'+it[1]+'”';document.getElementById('todayRefl').textContent=it[2]}
+ stopAudio()}
+document.getElementById('prev').onclick=()=>{idx=(idx+30)%31;showDay()};
+document.getElementById('nextDay').onclick=()=>{idx=(idx+1)%31;showDay()};
+document.getElementById('listen').onclick=e=>play('d'+String(idx+1).padStart(2,'0'),e.currentTarget,document.getElementById('bar'));
+showDay();setVoz(voz);
+// orações / palavras de força
+const pw=document.getElementById('prayers');const pre=D.kind==='cat'?'t':'p';
+D.pr.forEach(([t,x],i)=>{const au=i<12;const e=document.createElement('details');e.innerHTML='<summary>'+t+'</summary><div class="inner"><div class="prayer"></div>'+(au?'<button class="mini" type="button">'+PLAY+' Ouvir</button>':'')+'</div>';
+ e.querySelector('.prayer').textContent=x;if(au)e.querySelector('button').onclick=ev=>play(pre+(i+1),ev.currentTarget);pw.appendChild(e)});
+if(D.kind==='ev'){document.getElementById('salmoBtn').onclick=e=>play('s',e.currentTarget,document.getElementById('barS'))}
+// terço
+if(D.kind==='cat'){
+ const M={gozosos:['Anunciação do Anjo a Maria','Visita de Maria a Isabel','Nascimento de Jesus','Apresentação de Jesus no Templo','Jesus encontrado no Templo'],
+  dolorosos:['Agonia de Jesus no Horto','Flagelação de Jesus','Coroação de espinhos','Jesus carrega a cruz','Crucifixão e morte de Jesus'],
+  gloriosos:['Ressurreição de Jesus','Ascensão de Jesus ao Céu','Vinda do Espírito Santo','Assunção de Maria','Coroação de Maria'],
+  luminosos:['Batismo de Jesus no Jordão','Bodas de Caná','Anúncio do Reino de Deus','Transfiguração de Jesus','Instituição da Eucaristia']};
+ const POR=['gloriosos','gozosos','dolorosos','gloriosos','luminosos','dolorosos','gozosos'];
+ const NOME={gozosos:'Mistérios Gozosos',dolorosos:'Mistérios Dolorosos',gloriosos:'Mistérios Gloriosos',luminosos:'Mistérios Luminosos'};
+ const set=M[POR[now.getDay()]];document.getElementById('mystDay').textContent=SEM[now.getDay()]+' · '+NOME[POR[now.getDay()]];
+ let pos=0;
+ function drawT(){const dz=Math.min(4,Math.floor(pos/12)),k=pos%12;
+  document.getElementById('myst').textContent=pos>=60?'Terço concluído. Que a paz fique com você.':(dz+1)+'º mistério: '+set[dz];
+  document.getElementById('step').textContent=pos>=60?'':(k===0?'Pai-Nosso':k===11?'Glória ao Pai':'Ave-Maria '+k+' de 10');
+  const b=document.getElementById('beads');b.innerHTML='';
+  for(let i=0;i<12;i++){const e=document.createElement('i');if(i===0||i===11)e.className='big';const g=dz*12+i;
+   if(pos>=60||g<pos)e.classList.add('done');else if(g===pos)e.classList.add('now');b.appendChild(e)}}
+ document.getElementById('next').onclick=()=>{if(pos<60)pos++;drawT()};document.getElementById('reset').onclick=()=>{pos=0;drawT()};drawT()}
+// silêncio
+let ctx,nodes=[],sT=null,left=300,bt=null;
+function tone(){try{ctx=ctx||new (window.AudioContext||window.webkitAudioContext)();ctx.resume();
+ [110,164.8,220,277.2].forEach((f,i)=>{const o=ctx.createOscillator(),g=ctx.createGain();o.type='sine';o.frequency.value=f;g.gain.value=0;g.gain.linearRampToValueAtTime(.025/(i+1),ctx.currentTime+3);o.connect(g).connect(ctx.destination);o.start();nodes.push([o,g])})}catch(e){}}
+function stopSil(){clearInterval(sT);clearInterval(bt);sT=null;nodes.forEach(([o,g])=>{try{g.gain.linearRampToValueAtTime(0,ctx.currentTime+1);o.stop(ctx.currentTime+1.1)}catch(e){}});nodes=[];left=300;
+ document.getElementById('clock').textContent='5:00';document.getElementById('breath').classList.remove('in')}
+document.getElementById('sStart').onclick=()=>{if(sT)return;tone();let inn=true;const br=document.getElementById('breath'),t=document.getElementById('bt');
+ const breathe=()=>{br.classList.toggle('in',inn);t.textContent=inn?'INSPIRE':'SOLTE O AR';inn=!inn};breathe();bt=setInterval(breathe,4000);
+ sT=setInterval(()=>{left--;document.getElementById('clock').textContent=Math.floor(left/60)+':'+String(left%60).padStart(2,'0');if(left<=0){stopSil();document.getElementById('bt').textContent='AMÉM'}},1000)};
+document.getElementById('sStop').onclick=stopSil;
+</script>
+<script>
+(function(){var A=document.getElementById('mqA'),C=document.getElementById('mq'),B=document.getElementById('mqB'),Bar=document.getElementById('mqBar'),T=document.getElementById('mqT');if(!A)return;A.volume=.7;
+function f(s){s=Math.floor(s||0);return Math.floor(s/60)+':'+String(s%60).padStart(2,'0')}
+B.addEventListener('click',function(){if(A.paused){A.play();C.classList.add('on')}else{A.pause();C.classList.remove('on')}});
+A.addEventListener('timeupdate',function(){if(A.duration){Bar.style.width=(A.currentTime/A.duration*100)+'%';T.textContent=f(A.currentTime)+' / '+f(A.duration)}});
+A.addEventListener('pause',function(){C.classList.remove('on')});})();
+</script>
+<script>
+(function(){
+const BX={d:null,p:null,ix:null};const $=id=>document.getElementById(id);
+const S={get(k,d){try{const v=localStorage.getItem(k);return v==null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+const norm=s=>s.normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase();
+const esc=t=>t.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const vs=ch=>ch.map((v,i)=>Array.isArray(v)?v:[i+1,v]);
+function carrega(){if(BX.d)return Promise.resolve(BX.d);if(!BX.p)BX.p=fetch('biblia.json').then(r=>r.json()).then(d=>{BX.d=d;d.nti=d.l.findIndex(b=>b.i===d.nt);monta();return d});return BX.p}
+function monta(){const d=BX.d;const bt=(b,i)=>`<button type="button" data-b="${i}">${esc(b.n)}<small>${b.c.length} cap.</small></button>`;
+ $('bx-at').innerHTML=d.l.slice(0,d.nti).map((b,i)=>bt(b,i)).join('');$('bx-nt').innerHTML=d.l.slice(d.nti).map((b,i)=>bt(b,i+d.nti)).join('');
+ document.querySelectorAll('#bx-at [data-b],#bx-nt [data-b]').forEach(x=>x.onclick=()=>caps(+x.dataset.b));
+ $('bx-cr').textContent='Texto bíblico: '+d.cr+'.';cont()}
+function cont(){const p=S.get('bx-pos',null);const c=$('bx-cont');if(!p||!BX.d||!BX.d.l[p[0]]){c.style.display='none';return}
+ c.style.display='';c.innerHTML=`<span class="bx-ref">CONTINUAR LENDO</span><button type="button" class="bx-btn dk" id="bx-go">${esc(BX.d.l[p[0]].n)} ${p[1]} ›</button>`;$('bx-go').onclick=()=>abre(p[0],p[1])}
+const bd=$('bd'),bdb=$('bd-b');let fz=S.get('bx-fz',1);bd.style.setProperty('--fz',fz);
+function mostra(){bd.classList.add('on');document.body.style.overflow='hidden'}
+function fecha(){bd.classList.remove('on');document.body.style.overflow='';cont()}
+function caps(b){const L=BX.d.l[b];const p=S.get('bx-pos',[-1,0]);$('bd-t').textContent=L.n;
+ bdb.innerHTML=`<div class="caps"><h3>${esc(L.n)}</h3><div class="g">${L.c.map((_,i)=>`<button type="button" data-c="${i+1}"${p[0]===b&&p[1]===i+1?' class="cur"':''}>${i+1}</button>`).join('')}</div></div>`;
+ bdb.querySelectorAll('[data-c]').forEach(x=>x.onclick=()=>abre(b,+x.dataset.c));bdb.scrollTop=0;mostra()}
+function livros(){$('bd-t').textContent='Livros';const d=BX.d;const g=(a,z)=>d.l.slice(a,z).map((b,i)=>`<button type="button" data-b="${i+a}">${esc(b.n)}</button>`).join('');
+ bdb.innerHTML=`<div class="caps"><div class="bx-tst">Antigo Testamento</div><div class="bx-gr">${g(0,d.nti)}</div><div class="bx-tst" style="margin-top:18px">Novo Testamento</div><div class="bx-gr">${g(d.nti,d.l.length)}</div></div>`;
+ bdb.querySelectorAll('[data-b]').forEach(x=>x.onclick=()=>caps(+x.dataset.b));bdb.scrollTop=0;mostra()}
+function abre(b,c,v1,v2,termo){const d=BX.d,L=d.l[b];c=Math.max(1,Math.min(L.c.length,c|0));S.set('bx-pos',[b,c]);$('bd-t').textContent=L.n+' '+c;
+ const re=termo?rx(termo):null;
+ const t=vs(L.c[c-1]).map(([n,x])=>`<p id="bv${n}"${v1&&n>=v1&&n<=(v2||v1)?' class="hl"':''}><sup>${n}</sup>${re?hl(x,re):esc(x)}</p>`).join('');
+ const prv=b>0||c>1,nxt=b<d.l.length-1||c<L.c.length;
+ bdb.innerHTML=`<div class="txt"><h1><small>${esc(L.n)}</small>Capítulo ${c}</h1>${t}</div><div class="nav2"><button type="button" id="bd-a"${prv?'':' disabled'}>‹ ANTERIOR</button><button type="button" id="bd-c">CAPÍTULOS</button><button type="button" id="bd-n"${nxt?'':' disabled'}>PRÓXIMO ›</button></div>`;
+ $('bd-a').onclick=()=>c>1?abre(b,c-1):abre(b-1,d.l[b-1].c.length);$('bd-n').onclick=()=>c<L.c.length?abre(b,c+1):abre(b+1,1);$('bd-c').onclick=()=>caps(b);
+ mostra();bdb.scrollTop=0;const alvo=v1?$('bv'+v1):(termo?bdb.querySelector('mark'):null);if(alvo)setTimeout(()=>alvo.scrollIntoView({block:'center'}),40)}
+function rx(termo){const pat=norm(termo).trim().split(/\s+/).map(w=>w.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')).join('\\s+');const suf=pat.length<3?'':'(?:s|es|a|as|os|is)?';return new RegExp('(^|[^a-z0-9])('+pat+')(?='+suf+'(?:[^a-z0-9]|$))','g')}
+function nmap(t){let o='',m=[];for(let i=0;i<t.length;i++){const c=t[i].normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase();for(const ch of c){o+=ch;m.push(i)}}return [o,m]}
+function hl(t,re){const [o,m]=nmap(t);let out='',last=0,x;re.lastIndex=0;while((x=re.exec(o))){const a0=x.index+x[1].length,a=m[a0],b=m[a0+x[2].length-1]+1;out+=esc(t.slice(last,a))+'<mark>'+esc(t.slice(a,b))+'</mark>';last=b;if(re.lastIndex===x.index)re.lastIndex++}return out+esc(t.slice(last))}
+function indice(){if(BX.ix)return BX.ix;const ix=[];BX.d.l.forEach((L,b)=>L.c.forEach((ch,ci)=>vs(ch).forEach(([n,t])=>ix.push([b,ci+1,n,t,norm(t)]))));BX.ix=ix;
+ const al={};BX.d.l.forEach((L,b)=>{if(L.n==='Jó'){al.job=b;return}const k=[norm(L.n).replace(/\s+/g,''),norm(L.a).replace(/\s+/g,'')];k.forEach(x=>{if(!(x in al))al[x]=b})});
+ const ex={salmo:'sl',sal:'sl',cantico:'ct',canticos:'ct',cantares:'ct',apoc:'ap',atos:'at',eclesiastico:'eclo',siracida:'eclo',evangelhodejoao:'jo'};
+ BX.al=al;BX.ex=ex;return ix}
+function livro(raw){const n=norm(raw).replace(/[.\s]+/g,'');if(!n)return -1;const al=BX.al;
+ if(/j[oó]$/i.test(raw.trim())&&/ó/.test(raw)&&!/^\d/.test(n)){const j=BX.d.l.findIndex(L=>L.n==='Jó');if(j>=0)return j}
+ if(n in al)return al[n];if(BX.ex[n]){const t=norm(BX.ex[n]);const j=BX.d.l.findIndex(L=>norm(L.a).replace(/\s+/g,'')===t||norm(L.n).startsWith(t));if(j>=0)return j}
+ if(n.length>=3){const j=BX.d.l.findIndex(L=>norm(L.n).replace(/\s+/g,'').startsWith(n));if(j>=0)return j}return -1}
+function referencia(q){const m=q.trim().match(/^((?:[1-3]\s*)?[^\d,:]+?)\s*\.?\s*(\d+)\s*(?:[,:.]\s*(\d+)\s*(?:[-–]\s*(\d+))?)?\s*$/);
+ if(m){const b=livro(m[1]);if(b>=0)return [b,+m[2],m[3]?+m[3]:0,m[4]?+m[4]:0]}
+ const b=livro(q);return b>=0?[b,0,0,0]:null}
+function procura(raw){const out=$('bx-res');const q=raw.trim();if(!q){out.innerHTML='';return}out.innerHTML='<p class="note">Procurando…</p>';
+ carrega().then(()=>{indice();const r=referencia(q);
+  if(r){const [b,c,v1,v2]=r;const L=BX.d.l[b];if(!c){out.innerHTML='';caps(b);return}
+   if(c>L.c.length){out.innerHTML=`<p class="note">${esc(L.n)} tem ${L.c.length} capítulos.</p>`;return}
+   if(!v1){out.innerHTML='';abre(b,c);return}
+   const lst=vs(L.c[c-1]).filter(([n])=>n>=v1&&n<=(v2||v1));
+   out.innerHTML=`<div class="bx-r"><b class="rf">${esc(L.a)} ${c},${v1}${v2?'-'+v2:''}</b>${lst.map(([n,t])=>`<p><sup>${n}</sup>${esc(t)}</p>`).join('')||'<p class="note">Versículo não encontrado.</p>'}<button type="button" class="op">LER O CAPÍTULO ›</button></div>`;
+   out.querySelector('.op').onclick=()=>abre(b,c,v1,v2);return}
+  if(norm(q).replace(/[^a-z0-9]/g,'').length<2){out.innerHTML='<p class="note">Digite uma palavra, ou uma passagem como Jo 3,16.</p>';return}
+  const re=rx(q);const R=BX.ix.filter(x=>{re.lastIndex=0;return re.test(x[4])});
+  if(!R.length){out.innerHTML=`<p class="note">Nada encontrado para “${esc(q)}”.</p>`;return}
+  const nl=new Set(R.map(x=>x[0])).size;let k=0;const LOTE=30;
+  out.innerHTML=`<p class="tot">${R.length.toLocaleString('pt-BR')} ${R.length>1?'versículos':'versículo'} com “${esc(q)}”<small>em ${nl} ${nl>1?'livros':'livro'} · na ordem da Bíblia</small></p><div class="lst"></div>`;const lst=out.querySelector('.lst');
+  const mais=()=>{const p=R.slice(k,k+LOTE);k+=p.length;const o=out.querySelector('.more');if(o)o.remove();
+   const dv=document.createElement('div');dv.innerHTML=p.map(([b,c,n,t])=>`<div class="bx-r"><b class="rf">${esc(BX.d.l[b].a)} ${c},${n}</b><p>${hl(t,re)}</p><button type="button" class="op" data-b="${b}" data-c="${c}" data-v="${n}">LER O CAPÍTULO ›</button></div>`).join('');
+   dv.querySelectorAll('.op').forEach(x=>x.onclick=()=>abre(+x.dataset.b,+x.dataset.c,+x.dataset.v,0,q));while(dv.firstChild)lst.appendChild(dv.firstChild);
+   if(k<R.length){const bb=document.createElement('button');bb.type='button';bb.className='more';bb.textContent=`MOSTRAR MAIS ${Math.min(LOTE,R.length-k)} (faltam ${R.length-k})`;bb.onclick=mais;out.appendChild(bb)}};mais()})}
+$('bx-f').onsubmit=e=>{e.preventDefault();const i=$('bx-q');i.blur();procura(i.value)};
+document.querySelectorAll('.bx-chips [data-t]').forEach(b=>b.onclick=()=>{$('bx-q').value=b.dataset.t;procura(b.dataset.t)});
+$('bd-x').onclick=fecha;$('bd-s').onclick=()=>carrega().then(livros);
+$('bd-f').onclick=()=>{fecha();const nb=document.querySelector('nav button[data-s=biblia]');if(nb&&!nb.classList.contains('on'))nb.click();setTimeout(()=>{$('bx-lupa').scrollIntoView({block:'start',behavior:'smooth'});$('bx-q').focus()},60)};
+const fzs=d=>{fz=Math.max(.85,Math.min(1.5,Math.round((fz+d)*100)/100));bd.style.setProperty('--fz',fz);S.set('bx-fz',fz)};$('bd-m').onclick=()=>fzs(-.1);$('bd-p').onclick=()=>fzs(.1);
+const nb=document.querySelector('nav button[data-s=biblia]');if(nb)nb.addEventListener('click',()=>carrega());
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&bd.classList.contains('on'))fecha()});
+})();
+</script>
+<script>window.FXCFG={"kind": "cat", "velas": {"aparecida": {"nome": "Nossa Senhora Aparecida", "curto": "Aparecida", "img": "v-aparecida.jpg", "fm": [10, 12], "hist": "Em outubro de 1717, três pescadores — Domingos Garcia, João Alves e Filipe Pedroso — lançaram a rede no rio Paraíba do Sul, perto de Guaratinguetá (SP), e não pescavam nada. Primeiro veio na rede o corpo de uma pequena imagem de Nossa Senhora da Conceição; depois, a cabeça. A partir daí a pesca foi farta. A imagem, escurecida pelas águas, ganhou o nome de Aparecida e, em 1930, foi proclamada Padroeira do Brasil.", "oracao": "Senhora Aparecida, Mãe do povo brasileiro, que viestes ao encontro dos pescadores nas águas do rio, vinde também ao meu encontro hoje. Diante desta luz eu coloco as minhas redes vazias: o cansaço, as preocupações e tudo aquilo que sozinho eu não consigo. Abençoai a minha casa e a minha família, protegei quem trabalha e quem está longe, consolai quem sofre. Ensinai-me a confiar como os pescadores confiaram e a lançar a rede de novo, sempre na palavra do vosso Filho Jesus. Nossa Senhora Aparecida, rogai por nós. Amém.", "nov": {"ini": "Senhora Aparecida, Mãe e Padroeira do Brasil, aqui estou diante desta luz para rezar convosco. Recebei o meu coração e a intenção que trago nesta novena. Amém.", "dias": ["As redes vazias. Os pescadores trabalharam a noite inteira e nada pescaram. Também nós conhecemos dias de cansaço e de mãos vazias. Entreguemos a Maria o que nos falta.", "A imagem nas águas. Primeiro veio o corpo da imagem, depois a cabeça. Deus age aos poucos, no tempo dele. Peçamos paciência para esperar as graças que pedimos.", "A pesca farta. Depois de encontrar a imagem, as redes se encheram de peixes. Agradeçamos as bênçãos que já recebemos e que às vezes esquecemos.", "A casa simples. A imagem ficou primeiro na casa de um dos pescadores, onde a vizinhança se reunia para rezar. Peçamos que a nossa casa seja um lugar de oração e de paz.", "A Mãe dos pobres. Aparecida sempre acolheu os simples e os que sofrem. Rezemos pelos doentes, pelos desempregados e por quem passa necessidade.", "As velas acesas. Conta a tradição que, numa noite de oração, as velas se apagaram e se acenderam sozinhas de novo. Peçamos que a luz da fé nunca se apague em nós.", "As correntes que caíram. Diz a tradição que as correntes de um escravizado se soltaram diante da imagem. Peçamos a Maria que nos livre de tudo o que nos prende.", "A Padroeira do Brasil. Em 1930, Nossa Senhora Aparecida foi proclamada Padroeira do nosso país. Rezemos pelo Brasil, pelos governantes e pela paz em cada cidade.", "Filhos confiantes. Os pescadores voltaram para casa com as redes cheias e o coração agradecido. Confiemos a Maria a nossa vida, a nossa família e o nosso futuro."], "fim": "Nossa Senhora Aparecida, eu vos agradeço por este momento. Alcançai-me, se for da vontade de Deus, a graça que vos peço nesta novena, e ensinai-me a fazer tudo o que Jesus me disser. Rezemos um Pai-Nosso, uma Ave-Maria e um Glória ao Pai. Amém."}, "url": "https://fusaolab3d.com.br/products/vela-eterna-nossa-senhora-aparecida", "otit": "Oração a Nossa Senhora Aparecida", "ntit": "Novena a Nossa Senhora Aparecida"}, "fatima": {"nome": "Nossa Senhora de Fátima", "curto": "Fátima", "img": "v-fatima.jpg", "fm": [5, 13], "hist": "Em 13 de maio de 1917, na Cova da Iria, em Fátima (Portugal), três pastorinhos — Lúcia, Francisco e Jacinta — viram uma Senhora mais brilhante que o sol. Ela voltou outras cinco vezes, até outubro, e pediu oração, especialmente o terço de todos os dias, pela paz no mundo e pela conversão dos pecadores. Em 13 de outubro, milhares de pessoas viram o chamado milagre do sol. Francisco e Jacinta foram declarados santos em 2017.", "oracao": "Nossa Senhora de Fátima, Mãe da paz, que aparecestes aos três pastorinhos e pedistes oração e conversão, olhai para o mundo e para a minha casa. Diante desta luz eu vos entrego as minhas aflições e as do meu próximo. Ensinai-me a rezar o terço com o coração, a perdoar e a recomeçar. Afastai de nós a guerra, a doença e o desânimo, e guardai cada pessoa da minha família no vosso Imaculado Coração. Nossa Senhora de Fátima, rogai por nós. Amém.", "nov": {"ini": "Nossa Senhora de Fátima, Mãe da paz, aqui estou diante desta luz para rezar convosco. Recebei a intenção que trago nesta novena e apresentai-a a Jesus. Amém.", "dias": ["Os três pastorinhos. Deus escolheu crianças simples para receber a sua Mãe. Peçamos um coração simples, que sabe escutar.", "O Anjo da Paz. Antes de Maria, um anjo preparou as crianças e as ensinou a rezar. Peçamos a proteção do nosso anjo da guarda.", "A Senhora vestida de luz. Em 13 de maio de 1917, Maria apareceu sobre uma pequena azinheira. Acolhamos Maria em nossa casa, como luz que afasta o medo.", "O pedido do terço. Em todas as aparições, Maria pediu que se rezasse o terço todos os dias. Rezemos hoje o terço, ou ao menos uma dezena, pela paz.", "O Imaculado Coração. Maria mostrou o seu coração cercado de espinhos. Consolemos esse coração com o nosso amor e a nossa conversão.", "A oração pelos pecadores. Maria ensinou: Ó meu Jesus, perdoai-nos, livrai-nos do fogo do inferno, levai as almas todas para o céu e socorrei principalmente as que mais precisarem. Rezemos por quem está longe de Deus.", "Francisco e Jacinta. Os dois irmãos ofereceram a vida pequena que tinham e hoje são santos. Rezemos pelas crianças e pelos jovens da nossa família.", "O milagre do sol. Em 13 de outubro de 1917, milhares de pessoas viram o sol girar no céu. Peçamos uma fé que não depende de sinais, mas que confia.", "A paz no mundo. Maria prometeu: por fim, o meu Imaculado Coração triunfará. Confiemos a ela o mundo, o Brasil e a nossa casa."], "fim": "Nossa Senhora de Fátima, obrigado por caminhar comigo. Alcançai-me, se for da vontade de Deus, a graça que vos peço, e fazei de mim uma pessoa de paz. Rezemos um Pai-Nosso, uma Ave-Maria e um Glória ao Pai. Amém."}, "url": "https://fusaolab3d.com.br/products/vela-eterna-nossa-senhora-de-fatima", "otit": "Oração a Nossa Senhora de Fátima", "ntit": "Novena a Nossa Senhora de Fátima"}, "gracas": {"nome": "Nossa Senhora das Graças", "curto": "Graças", "img": "v-gracas.jpg", "fm": [11, 27], "hist": "Em 1830, em Paris, Nossa Senhora apareceu a uma jovem religiosa, Catarina Labouré. Em 27 de novembro, Catarina a viu de pé sobre o mundo, com raios de luz saindo das mãos: eram as graças que ela derrama sobre quem pede. Maria pediu que se fizesse uma medalha com a oração “Ó Maria concebida sem pecado, rogai por nós que recorremos a vós”. Foram tantas as graças alcançadas que ela ficou conhecida como Medalha Milagrosa.", "oracao": "Nossa Senhora das Graças, Mãe de mãos abertas, que derramais luz sobre quem vos pede, olhai para mim neste momento. Diante desta luz eu vos apresento as graças de que preciso, e também aquelas que eu nem sei pedir. Cobri a minha casa com o vosso manto, curai o que está ferido e dai-me um coração agradecido. Ó Maria concebida sem pecado, rogai por nós que recorremos a vós. Amém.", "nov": {"ini": "Ó Virgem Maria, Mãe de Deus e nossa Mãe, que mostrastes as vossas mãos cheias de graças, aqui estou diante desta luz. Abro o meu coração para rezar com confiança e entrego a vós o que trago hoje. Amém.", "dias": ["Catarina, a jovem que pediu para ver Maria. Em Paris, em 1830, uma noviça simples, Catarina Labouré, rezava com o desejo de ver a Mãe de Deus. Peçamos também nós um coração humilde, que procura Maria com simplicidade.", "A primeira aparição. Na noite de 18 para 19 de julho de 1830, na capela das Irmãs, em Paris, Maria sentou-se junto a Catarina e conversou com ela como mãe. Lembremos que Maria também se senta ao nosso lado nas horas difíceis.", "Maria sobre o globo. Em 27 de novembro de 1830, Catarina viu Nossa Senhora de pé sobre o mundo, esmagando a serpente. Confiemos a Maria o mundo inteiro e cada pessoa da nossa família.", "As mãos cheias de raios. Dos anéis das mãos de Maria saíam raios de luz. Ela explicou que eram as graças que derrama sobre quem lhe pede. Peçamos com fé a graça de que mais precisamos.", "Os anéis sem luz. Alguns anéis não brilhavam: eram as graças que ninguém pede. Não tenhamos vergonha de pedir; Maria quer dar muito mais do que imaginamos.", "A oração da medalha. Em volta da imagem estavam escritas as palavras: \"Ó Maria concebida sem pecado, rogai por nós que recorremos a vós\". Façamos desta jaculatória a nossa oração de cada dia.", "O verso da medalha. A letra M com a cruz, os Corações de Jesus e de Maria e as doze estrelas. Contemplemos o amor do Filho e da Mãe, unidos pela nossa salvação.", "A medalha milagrosa. Cunhada a pedido de Maria, a medalha se espalhou pelo mundo e muitas graças, curas e conversões foram alcançadas. Agradeçamos as graças que já recebemos.", "Filhos confiantes. Maria prometeu graças abundantes a quem usar a medalha com fé. Consagremos a ela a nossa vida, a nossa casa e quem nós amamos."], "fim": "Ó Virgem Maria, Mãe de Deus e nossa Mãe, que derramais graças sobre quem vos pede, olhai para mim com carinho. Alcançai-me, por vossa poderosa intercessão, a graça de que tanto preciso… faça aqui o seu pedido. Fortalecei a minha fé, aumentai a minha esperança e inflamai o meu amor a Jesus, vosso Filho. Amém. Santíssima Virgem, eu creio na vossa Imaculada Conceição e me entrego ao vosso cuidado. Ajudai-me a perseverar no bem e a viver cada dia perto de Jesus. Amém. Ó Maria concebida sem pecado, rogai por nós que recorremos a vós. Reze três Ave-Marias."}, "url": "https://fusaolab3d.com.br/products/vela-eterna-nossa-senhora-das-gracas", "otit": "Oração a Nossa Senhora das Graças", "ntit": "Novena a Nossa Senhora das Graças"}, "santarita": {"nome": "Santa Rita de Cássia", "curto": "Santa Rita", "img": "v-santarita.jpg", "fm": [5, 22], "hist": "Rita nasceu por volta de 1381, em Roccaporena, na Itália. Casou-se jovem com um homem violento, rezou por ele até vê-lo mudar de vida e perdoou quem o matou. Viúva, depois de perder também os dois filhos, entrou para o mosteiro das agostinianas em Cássia, onde viveu de oração e caridade. Recebeu na testa a marca de um espinho da coroa de Cristo. No fim da vida, pediu uma rosa em pleno inverno, e a rosa floresceu. É chamada a santa das causas impossíveis.", "oracao": "Santa Rita de Cássia, santa das causas impossíveis, que conhecestes a dor na família, a viuvez e a perda, e mesmo assim escolhestes o perdão, olhai por mim. Diante desta luz eu vos confio a causa que parece não ter saída. Ensinai-me a rezar com perseverança, a perdoar quem me feriu e a esperar com paciência. Fazei florescer rosas onde hoje só vejo espinhos. Santa Rita de Cássia, rogai por nós. Amém.", "nov": {"ini": "Santa Rita de Cássia, amiga de Deus e advogada das causas impossíveis, aqui estou diante desta luz. Acolhei a causa que trago nesta novena e apresentai-a a Jesus. Amém.", "dias": ["A menina de Roccaporena. Rita cresceu numa família simples, que rezava junto. Peçamos pela nossa família e pela fé dentro de casa.", "O casamento difícil. Rita viveu anos ao lado de um marido violento e nunca deixou de rezar por ele. Rezemos pelos casais que passam por crises.", "A conversão do marido. Pela paciência e pela oração de Rita, o marido mudou de vida. Não desistamos de quem amamos.", "O perdão. Quando o marido foi assassinado, Rita perdoou os culpados. Peçamos a graça de perdoar quem nos feriu.", "A mãe que confia. Rita entregou a Deus os dois filhos, com medo de que buscassem vingança. Rezemos pelos filhos e pelos jovens.", "A porta fechada. Viúva, Rita pediu para entrar no mosteiro e foi recusada, mas perseverou até a porta se abrir. Peçamos perseverança nas causas difíceis.", "O galho seco. Por obediência, Rita regou todos os dias um galho seco, que um dia brotou. Peçamos fidelidade nas pequenas coisas.", "O espinho na testa. Rita pediu para participar da dor de Jesus e recebeu a marca de um espinho. Ofereçamos a Deus as nossas dores.", "A rosa no inverno. No fim da vida, Rita pediu uma rosa do jardim em pleno inverno, e ela floresceu. Confiemos que Deus faz florescer o impossível."], "fim": "Santa Rita, obrigado por rezar comigo. Alcançai-me, se for da vontade de Deus, a graça que vos peço, e dai-me paz para aceitar o caminho de Deus. Rezemos um Pai-Nosso, uma Ave-Maria e um Glória ao Pai. Amém."}, "url": "https://fusaolab3d.com.br/products/vela-eterna-santa-rita-de-cassia", "otit": "Oração a Santa Rita de Cássia", "ntit": "Novena a Santa Rita de Cássia"}, "conceicao": {"nome": "Nossa Senhora da Conceição", "curto": "Conceição", "img": "v-conceicao.jpg", "fm": [12, 8], "hist": "Nossa Senhora da Conceição é Maria concebida sem o pecado original, preparada por Deus para ser a Mãe de Jesus. A Igreja proclamou essa verdade de fé em 8 de dezembro de 1854, com o Papa Pio IX. No Brasil, a devoção chegou com os primeiros portugueses, e a Conceição é padroeira de muitas cidades e igrejas. A própria imagem de Aparecida, encontrada no rio em 1717, é uma imagem de Nossa Senhora da Conceição.", "oracao": "Virgem Imaculada, Nossa Senhora da Conceição, toda pura e cheia de graça, eu me coloco diante desta luz e diante de vós. Purificai o meu coração, afastai de mim o que me separa de Deus e ensinai-me a dizer sim, como vós dissestes. Protegei a minha casa, a minha família e todos os que eu amo. Ó Maria concebida sem pecado, rogai por nós que recorremos a vós. Amém.", "nov": {"ini": "Virgem Imaculada, Nossa Senhora da Conceição, aqui estou diante desta luz para rezar convosco. Recebei a intenção que trago nesta novena. Amém.", "dias": ["Escolhida desde o início. Deus preparou Maria desde a sua concepção. Agradeçamos o plano de amor que Deus também tem para cada um de nós.", "Cheia de graça. Assim o anjo saudou Maria. Peçamos que a graça de Deus encha a nossa vida e a nossa casa.", "O sim de Maria. Maria respondeu: faça-se em mim segundo a tua palavra. Peçamos coragem para dizer sim a Deus.", "A humildade. Mesmo cheia de graça, Maria se chamou serva do Senhor. Peçamos um coração humilde e livre do orgulho.", "A pureza do coração. A Imaculada nos ensina a olhar o mundo com olhos limpos. Peçamos a graça de pensamentos e palavras puras.", "A mulher vestida de sol. A Bíblia fala de uma mulher vestida de sol, com a lua debaixo dos pés. Confiemos a Maria as nossas lutas contra o mal.", "A Mãe junto à cruz. Maria permaneceu fiel até o Calvário. Peçamos fidelidade nas horas difíceis.", "A devoção do Brasil. Desde os primeiros tempos, o Brasil reza à Conceição; até a imagem de Aparecida é uma Conceição. Rezemos pelo nosso povo.", "Filhos da Imaculada. Entreguemos a Maria a nossa vida, para que ela nos leve sempre a Jesus."], "fim": "Nossa Senhora da Conceição, obrigado por este momento. Alcançai-me, se for da vontade de Deus, a graça que vos peço, e guardai-me sempre perto de Jesus. Rezemos um Pai-Nosso, uma Ave-Maria e um Glória ao Pai. Amém."}, "url": "https://fusaolab3d.com.br/products/vela-eterna-nossa-senhora-da-conceicao", "otit": "Oração a Nossa Senhora da Conceição", "ntit": "Novena a Nossa Senhora da Conceição"}, "maos": {"nome": "Mãos em oração", "curto": "Mãos em oração", "img": "v-maos.jpg", "fm": null, "hist": "Mãos unidas são o gesto mais antigo da oração: entregar a Deus o que não cabe nas nossas mãos. Ao lado delas, a cruz lembra que Jesus está perto de quem reza, em todos os dias e em todas as horas.", "oracao": "Senhor Jesus, diante desta luz eu uno as minhas mãos e entrego a ti as minhas preocupações. Tu disseste: vinde a mim, todos os que estais cansados. Eu venho. Cuida da minha família, guarda a minha casa e dá-me a tua paz, que vai além de todo entendimento. Que esta luz me lembre da tua presença em cada dia. Amém.", "nov": null, "url": "https://fusaolab3d.com.br/products/vela-eterna-maos-em-oracao", "otit": "Oração diante da cruz", "ntit": ""}}, "chooser": true, "hojeSel": "#hoje", "shareSel": "#todayText", "shareTitle": "Oração do dia", "pedidoSel": "#hoje", "pedidoAfter": ".card.today + .note"};</script>
+<script>
+{
+/* Fusão de Fé · recursos novos dos menus (25/11/2026): a sua vela (#santa), novena, pedido de oração,
+   compartilhar, modo noite, Salmos em 30 dias, roteiro do Evangelho no Lar. CFG vem do bloco acima. */
+const C = window.FXCFG || {};
+const $ = s => document.querySelector(s);
+const esc = t => String(t == null ? '' : t).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const LS = {get(k, d){try{const v = localStorage.getItem(k); return v == null ? d : JSON.parse(v)}catch(e){return d}}, set(k, v){try{localStorage.setItem(k, JSON.stringify(v))}catch(e){}}};
+const PLAY = '<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>';
+const WA = '<svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.3 0 .5l-.3.5-.4.4c-.1.1-.3.3-.1.6.2.3.7 1.2 1.6 1.9 1.1 1 2 1.3 2.3 1.4.3.1.4.1.6-.1l.8-1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.7-.1 1.3z"/></svg>';
+const WAN = '5521991818387';
+let toastT;
+function toast(m){let t = $('.fx-toast'); if(!t){t = document.createElement('div'); t.className = 'fx-toast'; document.body.appendChild(t)} t.textContent = m; t.classList.add('on'); clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('on'), 2600)}
+const vozAtual = () => { try { if (typeof voz !== 'undefined') return voz } catch(e){} return LS.get('lpVoz', null) || (function(){try{return localStorage.getItem('lpVoz') || 'k'}catch(e){return 'k'}})() };
+
+/* ---------- áudio próprio, que conversa com o player de cada menu ---------- */
+let fxA = null, fxBtn = null, fxQ = [];
+function fxStopOwn(){ if (fxA){ try{fxA.pause()}catch(e){} fxA = null } fxQ = []; if (fxBtn){ fxBtn.innerHTML = fxBtn.dataset.l || fxBtn.innerHTML; fxBtn = null } }
+const origStop = window.stopAudio, origLp = window.lpStop;
+if (origStop) window.stopAudio = function(){ fxStopOwn(); return origStop.apply(this, arguments) };
+if (origLp) window.lpStop = function(){ fxStopOwn(); return origLp.apply(this, arguments) };
+function stopOthers(){ try{ origStop && origStop() }catch(e){} try{ origLp && origLp() }catch(e){} document.querySelectorAll('audio').forEach(a => { try{a.pause()}catch(e){} }) }
+function fxPlay(names, btn){
+  const same = fxBtn === btn; fxStopOwn(); if (same) return;
+  stopOthers(); fxQ = names.slice(); fxBtn = btn; btn.dataset.l = btn.dataset.l || btn.innerHTML; btn.innerHTML = '■ Parar';
+  const next = () => { if (!fxQ.length){ fxStopOwn(); return } const n = fxQ.shift(); fxA = new Audio('aud/' + vozAtual() + '/' + n + '.mp3'); fxA.onended = next; fxA.play().catch(() => { toast('Não consegui tocar o áudio. Toque de novo.'); fxStopOwn() }) };
+  next();
+}
+const night = {};
+
+/* ---------- 1. a sua vela (#aparecida, #fatima…) ---------- */
+const V = C.velas || {};
+function festaInfo(fm){
+  if (!fm) return '';
+  const now = new Date(), y = now.getFullYear(), hoje = new Date(y, now.getMonth(), now.getDate());
+  let d = new Date(y, fm[0] - 1, fm[1]); if (d < hoje) d = new Date(y + 1, fm[0] - 1, fm[1]);
+  const dias = Math.round((d - hoje) / 864e5);
+  const MES = ['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
+  const nome = fm[1] + ' de ' + MES[fm[0] - 1];
+  if (dias === 0) return '<b>Hoje é o dia da festa!</b> ' + nome;
+  if (dias <= 30) return 'Festa em ' + nome + ' · <b>falta' + (dias > 1 ? 'm ' + dias + ' dias' : ' 1 dia') + '</b>' + (dias >= 9 && dias <= 12 ? '<br>Comece a novena em ' + (dias === 9 ? 'hoje' : (dias - 9) + ' dia' + (dias - 9 > 1 ? 's' : '')) + ' para terminar na véspera.' : '');
+  return 'Festa em ' + nome;
+}
+function novState(id){ return LS.get('fxNov_' + id, {done: [], cur: 1}) }
+function renderNov(box, id, v){
+  const st = novState(id), n = v.nov;
+  const cur = Math.min(9, Math.max(1, st.cur || 1));
+  const DN = ['Primeiro','Segundo','Terceiro','Quarto','Quinto','Sexto','Sétimo','Oitavo','Nono'];
+  box.innerHTML = '<p class="fx-sm">Reze um dia por vez, nove dias seguidos, de preferência com a vela acesa. O celular guarda em que dia você está.</p>' +
+    '<div class="fx-nov">' + DN.map((_, i) => '<button type="button" data-d="' + (i + 1) + '" class="' + (st.done.includes(i + 1) ? 'ok ' : '') + (i + 1 === cur ? 'cur' : '') + '" aria-label="Dia ' + (i + 1) + '">' + (i + 1) + '</button>').join('') + '</div>' +
+    '<div class="fx-ey" style="margin-top:14px">' + DN[cur - 1] + ' dia</div>' +
+    '<div class="fx-txt">' + esc(n.ini) + '\n\n' + esc(n.dias[cur - 1]) + '\n\n' + esc(n.fim) + '</div>' +
+    '<div class="fx-row"><button type="button" class="fx-b au" data-nplay>' + PLAY + ' OUVIR O ' + (cur) + 'º DIA</button>' +
+    '<button type="button" class="fx-b" data-nok>' + (st.done.includes(cur) ? '✓ REZADO' : 'REZEI HOJE ✓') + '</button></div>' +
+    (st.done.length ? '<button type="button" class="fx-b" data-nreset style="margin-top:8px;width:100%">RECOMEÇAR A NOVENA</button>' : '');
+  box.querySelectorAll('[data-d]').forEach(b => b.onclick = () => { const s = novState(id); s.cur = +b.dataset.d; LS.set('fxNov_' + id, s); renderNov(box, id, v) });
+  box.querySelector('[data-nplay]').onclick = e => fxPlay(['n-' + id + '-i', 'n-' + id + '-' + cur, 'n-' + id + '-f'], e.currentTarget);
+  box.querySelector('[data-nok]').onclick = () => { const s = novState(id); if (!s.done.includes(cur)) s.done.push(cur); s.cur = Math.min(9, cur + 1); LS.set('fxNov_' + id, s); fxStopOwn(); toast(s.done.length >= 9 ? 'Novena concluída. Que a graça venha!' : 'Dia ' + cur + ' rezado. Amanhã, o ' + s.cur + 'º dia.'); renderNov(box, id, v) };
+  const r = box.querySelector('[data-nreset]'); if (r) r.onclick = () => { LS.set('fxNov_' + id, {done: [], cur: 1}); renderNov(box, id, v) };
+}
+function renderSua(){
+  const host = $(C.hojeSel); if (!host) return;
+  let card = $('#fx-sua'); if (!card){ card = document.createElement('div'); card.id = 'fx-sua'; card.className = 'fx-card'; const h2 = host.querySelector('h2'); host.insertBefore(card, h2 ? h2 : host.firstChild) }
+  const id = (location.hash || '').replace('#', '').toLowerCase(), v = V[id];
+  if (!v){
+    if (!C.chooser){ card.remove(); return }
+    card.innerHTML = '<div class="fx-ey">A sua vela</div><p class="fx-sm" style="margin-top:4px">Toque no nome da sua vela para abrir a oração, a história e a novena dela.</p>' +
+      '<div class="fx-chips">' + Object.keys(V).map(k => '<button type="button" data-v="' + k + '">' + esc(V[k].curto) + '</button>').join('') + '</div>';
+    card.querySelectorAll('[data-v]').forEach(b => b.onclick = () => { location.hash = b.dataset.v });
+    return;
+  }
+  try { LS.set('fxVela', id) } catch(e){}
+  card.innerHTML = '<div class="fx-sua"><img src="img/' + esc(v.img) + '" alt="' + esc(v.nome) + '"><div><div class="fx-ey">A sua vela</div><h3>' + esc(v.nome) + '</h3><div class="fx-festa">' + festaInfo(v.fm) + '</div></div></div>' +
+    (v.oracao ? '<div class="fx-row"><button type="button" class="fx-b au" data-oplay>' + PLAY + ' OUVIR A ORAÇÃO</button></div>' +
+      '<details><summary>' + esc(v.otit).toUpperCase() + '</summary><div class="fx-txt">' + esc(v.oracao) + '</div></details>' : '') +
+    '<details><summary>' + (v.nov ? 'A HISTÓRIA' : 'SOBRE ESTA VELA') + '</summary><div class="fx-hist">' + esc(v.hist) + '</div></details>' +
+    (v.nov ? '<details id="fx-novd"' + (novState(id).done.length ? ' open' : '') + '><summary>' + esc(v.ntit).toUpperCase() + '</summary><div id="fx-novb"></div></details>' : '') +
+    '<div class="fx-row"><a class="fx-b" href="' + esc(v.url) + '" target="_blank" rel="noopener">VER O PRODUTO</a>' + (C.chooser ? '<button type="button" class="fx-b" data-troca>TROCAR DE VELA</button>' : '') + '</div>';
+  const op = card.querySelector('[data-oplay]'); if (op) op.onclick = e => fxPlay(['c-' + id], e.currentTarget);
+  const tr = card.querySelector('[data-troca]'); if (tr) tr.onclick = () => { history.replaceState(null, '', location.pathname + location.search); renderSua() };
+  if (v.nov) renderNov(card.querySelector('#fx-novb'), id, v);
+}
+if (Object.keys(V).length){
+  if (!location.hash && C.chooser){ const last = LS.get('fxVela', null); if (last && V[last]) { try{ history.replaceState(null, '', '#' + last) }catch(e){} } }
+  renderSua(); window.addEventListener('hashchange', () => { renderSua(); const nb = document.querySelector('nav button[data-s="' + C.hojeSel.slice(1) + '"]'); if (nb) nb.click(); window.scrollTo({top: 0}) });
+}
+
+/* ---------- 2. compartilhar a oração do dia ---------- */
+if (C.shareSel && $(C.shareSel)){
+  const host = $(C.shareSel).closest('.card');
+  const a = document.createElement('a'); a.className = 'fx-b'; a.target = '_blank'; a.rel = 'noopener'; a.style.marginTop = '12px'; a.style.width = '100%'; a.innerHTML = WA + (C.kind === 'ev' ? ' ENVIAR ESTA PALAVRA NO WHATSAPP' : ' ENVIAR ESTA ORAÇÃO NO WHATSAPP');
+  host.appendChild(a);
+  const upd = () => { const ref = C.shareRef && $(C.shareRef) ? $(C.shareRef).textContent + '\n' : ''; const t = ($(C.shareSel).textContent || '').trim();
+    a.href = 'https://wa.me/?text=' + encodeURIComponent('🕯️ ' + C.shareTitle + '\n\n' + ref + t + '\n\nVela Eterna · Fusão de Fé\nfusaolab3d.com.br/fe') };
+  upd(); new MutationObserver(upd).observe($(C.shareSel), {childList: true, characterData: true, subtree: true});
+}
+
+/* ---------- 3. pedido de oração ---------- */
+if (C.pedidoSel && $(C.pedidoSel)){
+  const sec = $(C.pedidoSel), card = document.createElement('div'); card.className = 'fx-card'; card.id = 'fx-ped';
+  card.innerHTML = '<div class="fx-ey">Pedido de oração</div><p class="fx-sm" style="margin-top:4px">Escreva a sua intenção. Ela fica guardada só neste celular, para você lembrar dela cada vez que acender a vela.</p>' +
+    '<textarea class="fx-ta" id="fx-pt" maxlength="400" placeholder="Por quem ou pelo que você quer rezar?"></textarea>' +
+    '<div class="fx-row"><button type="button" class="fx-b dk" id="fx-ps">GUARDAR</button><a class="fx-b" id="fx-pw" target="_blank" rel="noopener">' + WA + ' PEDIR ORAÇÃO À FUSÃO DE FÉ</a></div><ul class="fx-list" id="fx-pl"></ul>';
+  const after = C.pedidoAfter ? sec.querySelector(C.pedidoAfter) : null;
+  if (after) after.after(card); else sec.appendChild(card);
+  const ta = card.querySelector('#fx-pt'), pw = card.querySelector('#fx-pw');
+  if (!C.pedidoWA) pw.remove();   /* botão do WhatsApp guardado para mais tarde: ligar com pedidoWA:true no FXCFG */
+  const hw = () => { if (!pw.isConnected) return; const v = ta.value.trim() || ((LS.get('fxPed', []).find(p => !p.ok) || {}).t || ''); pw.href = 'https://wa.me/' + WAN + '?text=' + encodeURIComponent('Olá, Fusão de Fé! Gostaria de pedir uma oração' + (v ? ': ' + v : '.') + '\n(Vela Eterna · ' + ({cat:'católica', ev:'evangélica', esp:'espírita'}[C.kind] || '') + ')') };
+  ta.oninput = hw; hw();
+  const draw = () => { const L = LS.get('fxPed', []); const ul = card.querySelector('#fx-pl');
+    ul.innerHTML = L.map((p, i) => '<li class="' + (p.ok ? 'ok' : '') + '"><span>' + esc(p.t) + '<small>' + esc(p.d) + (p.ok ? ' · graça alcançada 🙏' : '') + '</small></span><button type="button" data-ok="' + i + '">' + (p.ok ? 'DESFAZER' : 'GRAÇA ✓') + '</button><button type="button" data-rm="' + i + '" aria-label="Apagar">✕</button></li>').join('');
+    ul.querySelectorAll('[data-ok]').forEach(b => b.onclick = () => { const L = LS.get('fxPed', []); L[+b.dataset.ok].ok = !L[+b.dataset.ok].ok; LS.set('fxPed', L); draw() });
+    ul.querySelectorAll('[data-rm]').forEach(b => b.onclick = () => { const L = LS.get('fxPed', []); L.splice(+b.dataset.rm, 1); LS.set('fxPed', L); draw() }); hw() };
+  card.querySelector('#fx-ps').onclick = () => { const t = ta.value.trim(); if (!t) { toast('Escreva a sua intenção primeiro.'); return } const L = LS.get('fxPed', []); L.unshift({t, d: new Date().toLocaleDateString('pt-BR'), ok: false}); LS.set('fxPed', L.slice(0, 30)); ta.value = ''; hw(); draw(); toast('Intenção guardada neste celular.') };
+  draw();
+}
+
+/* ---------- 4. modo noite ---------- */
+{
+  const mb = document.createElement('button'); mb.type = 'button'; mb.className = 'fx-moon'; mb.setAttribute('aria-label', 'Modo noite');
+  mb.innerHTML = '<svg viewBox="0 0 24 24"><path d="M21 14.5A9 9 0 0 1 9.5 3a9 9 0 1 0 11.5 11.5z"/></svg>'; document.body.appendChild(mb);
+  const ov = document.createElement('div'); ov.className = 'fx-night'; ov.setAttribute('role', 'dialog'); ov.setAttribute('aria-label', 'Modo noite');
+  ov.innerHTML = '<button type="button" class="fx-b fx-x" data-x>SAIR</button><div class="fx-flame"></div><h3>Modo noite</h3><p>Deixe o celular ao lado da vela. A música toca baixinho e para sozinha no tempo que você escolher.</p>' +
+    '<div class="fx-row" style="margin-top:18px"><button type="button" class="fx-b" data-m="15">15 MIN</button><button type="button" class="fx-b" data-m="30">30 MIN</button><button type="button" class="fx-b" data-m="60">1 HORA</button><button type="button" class="fx-b" data-m="0">PARAR</button></div><div class="fx-left" data-left></div>';
+  document.body.appendChild(ov);
+  let tmr = null, end = 0, lock = null;
+  const left = ov.querySelector('[data-left]');
+  function stopN(msg){ clearInterval(tmr); tmr = null; if (night.audio){ const a = night.audio; let v = a.volume; const f = setInterval(() => { v -= .05; if (v <= 0){ clearInterval(f); a.pause() } else a.volume = v }, 150) } ov.querySelectorAll('[data-m]').forEach(b => b.classList.remove('on')); left.textContent = msg || ''; try{ lock && lock.release() }catch(e){} lock = null }
+  ov.querySelectorAll('[data-m]').forEach(b => b.onclick = async () => {
+    const m = +b.dataset.m; if (!m){ stopN('Boa noite. Deus te abençoe.'); return }
+    stopOthers(); fxStopOwn();
+    if (!night.audio){ night.audio = new Audio('aud/musica/quiet-with-god.mp3'); night.audio.loop = true }
+    night.audio.volume = .55; night.audio.play().catch(() => toast('Toque de novo para tocar a música.'));
+    ov.querySelectorAll('[data-m]').forEach(x => x.classList.toggle('on', x === b));
+    end = Date.now() + m * 60000; clearInterval(tmr);
+    const tick = () => { const s = Math.max(0, Math.round((end - Date.now()) / 1000)); left.textContent = 'A MÚSICA PARA EM ' + Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0'); if (s <= 0) stopN('Boa noite. Deus te abençoe.') };
+    tick(); tmr = setInterval(tick, 1000);
+    try { if (navigator.wakeLock) lock = await navigator.wakeLock.request('screen') } catch(e){}
+  });
+  mb.onclick = () => { ov.classList.add('on') };
+  ov.querySelector('[data-x]').onclick = () => { ov.classList.remove('on') };
+}
+
+/* ---------- 5. Salmos em 30 dias (evangélico) ---------- */
+if (C.salmos && $('#palavras')){
+  const card = document.createElement('div'); card.className = 'fx-card'; card.id = 'fx-sal';
+  $('#palavras').appendChild(card);
+  const goRead = n => { const nb = document.querySelector('nav button[data-s="biblia"]'); if (nb) nb.click(); const q = $('#bx-q'), f = $('#bx-f'); if (q && f){ q.value = 'Salmo ' + n; if (f.requestSubmit) f.requestSubmit(); else f.dispatchEvent(new Event('submit', {cancelable: true})) } window.scrollTo({top: 0}) };
+  const draw = sel => { const done = LS.get('fxSal', []); const cur = sel || Math.min(30, (done.length ? Math.max(...done) : 0) + 1);
+    const a = (cur - 1) * 5 + 1, b = cur * 5;
+    card.innerHTML = '<div class="fx-ey">Plano de leitura</div><h3 style="font-family:var(--display);font-size:26px;font-weight:600;margin:4px 0 2px">Salmos em 30 dias</h3><p class="fx-sm" style="margin-top:0">Cinco salmos por dia: em um mês você lê o livro inteiro. Toque no dia para ver a leitura.</p>' +
+      '<div class="fx-sal">' + Array.from({length: 30}, (_, i) => '<button type="button" data-d="' + (i + 1) + '" class="' + (done.includes(i + 1) ? 'ok ' : '') + (i + 1 === cur ? 'cur' : '') + '">' + (i + 1) + '<small>' + ((i * 5) + 1) + '–' + ((i + 1) * 5) + '</small></button>').join('') + '</div>' +
+      '<div class="fx-ey" style="margin-top:14px">Dia ' + cur + ' · Salmos ' + a + ' a ' + b + '</div><div class="fx-row">' + Array.from({length: 5}, (_, i) => '<button type="button" class="fx-b" data-r="' + (a + i) + '">SALMO ' + (a + i) + '</button>').join('') + '</div>' +
+      '<button type="button" class="fx-b ' + (done.includes(cur) ? '' : 'dk') + '" data-ok style="width:100%;margin-top:8px">' + (done.includes(cur) ? '✓ DIA ' + cur + ' LIDO · DESFAZER' : 'MARCAR O DIA ' + cur + ' COMO LIDO') + '</button>';
+    card.querySelectorAll('[data-d]').forEach(x => x.onclick = () => draw(+x.dataset.d));
+    card.querySelectorAll('[data-r]').forEach(x => x.onclick = () => goRead(+x.dataset.r));
+    card.querySelector('[data-ok]').onclick = () => { let d = LS.get('fxSal', []); d = d.includes(cur) ? d.filter(x => x !== cur) : d.concat(cur); LS.set('fxSal', d); draw(d.includes(cur) ? Math.min(30, cur + 1) : cur) };
+  };
+  draw();
+}
+
+/* ---------- 6. roteiro do Evangelho no Lar (espírita) ---------- */
+if (C.roteiro && $('#prece')){
+  const card = document.createElement('div'); card.className = 'fx-card'; card.id = 'fx-ev';
+  const h = $('#prece').querySelector('.voice') || $('#prece').querySelector('h2');
+  card.innerHTML = '<div class="fx-ey">Passo a passo</div><h3 style="font-family:var(--display);font-size:26px;font-weight:600;margin:4px 0 2px">Evangelho no Lar</h3><p class="fx-sm" style="margin-top:0">Uma vez por semana, no mesmo dia e horário, sozinho ou com a família. Leva de 15 a 30 minutos.</p><ol class="fx-steps">' +
+    '<li><b>Prepare o ambiente</b>Acenda a Vela Eterna, desligue a TV e deixe um copo de água sobre a mesa.</li>' +
+    '<li><b>Prece de abertura</b><div class="fx-row"><button type="button" class="fx-b au" data-e="e3">' + PLAY + ' PRECE PARA O EVANGELHO NO LAR</button></div></li>' +
+    '<li><b>Leitura</b>Leia um trecho de <i>O Evangelho Segundo o Espiritismo</i>, em ordem ou abrindo ao acaso. Pode usar também a pergunta do dia de <i>O Livro dos Espíritos</i>.<div class="fx-row"><a class="fx-b" href="' + esc(C.evLink) + '" target="_blank" rel="noopener">ABRIR O EVANGELHO</a><button type="button" class="fx-b" data-livros>PERGUNTA DO DIA</button></div></li>' +
+    '<li><b>Comentário</b>Cada um diz, em poucas palavras, o que entendeu e como levar o ensinamento para a semana. Sem discussões: o tom é de paz.</li>' +
+    '<li><b>Vibrações</b>' + esc(C.vibra) + '<div class="fx-row"><button type="button" class="fx-b au" data-v1>' + PLAY + ' OUVIR AS VIBRAÇÕES</button></div></li>' +
+    '<li><b>Prece de encerramento</b>Agradeça e, ao final, beba a água.<div class="fx-row"><button type="button" class="fx-b au" data-e="e6">' + PLAY + ' PRECE DE GRATIDÃO</button></div></li></ol>';
+  h.parentNode.insertBefore(card, h.nextSibling);
+  card.querySelectorAll('[data-e]').forEach(b => b.onclick = () => { fxStopOwn(); const t = document.querySelector('[data-a="' + b.dataset.e + '"]'); if (t){ t.scrollIntoView({behavior: 'smooth', block: 'center'}); t.click() } });
+  card.querySelector('[data-v1]').onclick = e => fxPlay(['v1'], e.currentTarget);
+  card.querySelector('[data-livros]').onclick = () => { const nb = document.querySelector('nav button[data-s="livros"]'); if (nb) nb.click(); window.scrollTo({top: 0}) };
+}
+}
+
+</script>
+</body>
+</html>

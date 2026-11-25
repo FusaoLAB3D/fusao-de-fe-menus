@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="author" content="Fusão Lab 3D · Fusão de Fé"><title>Fusão de Fé — Luz e Prece (espírita)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+ /* Mundo "angelical": luz de manhã sobre marfim, ouro velho e um céu claro. Coluna única de celular, cartões em vidro claro. */
+ --sky:#eef3fa; --ivory:#eff6fb; --ink:#2f2a3a; --mute:#7a7184; --gold:#2d78ad; --gold-soft:#a2cae7;
+ --line:rgba(45,120,173,.22); --glass:rgba(255,255,255,.72);
+ --display:'Cormorant Garamond',Georgia,serif; --body:'Montserrat',system-ui,-apple-system,sans-serif;
+ color-scheme:light;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{background:var(--ivory)}
+body{max-width:480px;margin:0 auto;padding-bottom:56px;color:var(--ink);font-family:var(--body);min-height:100%;
+ background:
+  radial-gradient(90% 38% at 50% 0%, #ffffff 0%, rgba(255,255,255,0) 70%),
+  radial-gradient(60% 30% at 15% 18%, rgba(198,220,243,.55), rgba(198,220,243,0) 70%),
+  radial-gradient(60% 30% at 88% 30%, rgba(162,202,231,.45), rgba(162,202,231,0) 70%),
+  linear-gradient(180deg, var(--sky) 0%, var(--ivory) 42%, #e0ecf5 100%);
+ position:relative;overflow-x:hidden}
+.rays{position:absolute;inset:0 0 auto 0;height:560px;pointer-events:none;
+ background:repeating-conic-gradient(from 180deg at 50% -8%, rgba(192,228,253,.0) 0deg 7deg, rgba(192,228,253,.38) 8deg 10deg, rgba(192,228,253,0) 11deg 18deg);
+ -webkit-mask:radial-gradient(70% 90% at 50% 0%,#000 30%,transparent 75%);mask:radial-gradient(70% 90% at 50% 0%,#000 30%,transparent 75%);opacity:.9}
+.spark{position:absolute;width:3px;height:3px;border-radius:50%;background:#fff;box-shadow:0 0 8px 2px rgba(162,215,253,.9);opacity:.0;animation:tw 5s ease-in-out infinite}
+@keyframes tw{0%,100%{opacity:0;transform:translateY(0)}50%{opacity:.9;transform:translateY(-8px)}}
+.demo{position:relative;background:rgba(47,42,58,.88);color:#e0ebf2;font-size:11px;text-align:center;padding:7px 12px;letter-spacing:.02em}
+header{position:relative;text-align:center;padding:26px 20px 4px}
+.arch{width:210px;margin:0 auto;border-radius:110px 110px 18px 18px;padding:6px;
+ background:linear-gradient(160deg,#bedff6,#4891c6 45%,#abd4f2 70%,#3d81b1);box-shadow:0 18px 50px rgba(45,120,173,.28),0 0 90px rgba(143,207,252,.55)}
+.arch img{display:block;width:100%;aspect-ratio:3/4;object-fit:cover;object-position:50% 40%;border-radius:104px 104px 13px 13px}
+.halo{position:absolute;left:50%;top:6px;width:300px;height:300px;margin-left:-150px;border-radius:50%;
+ background:radial-gradient(circle,rgba(192,228,253,.75),rgba(192,228,253,0) 65%);animation:breathe 6s ease-in-out infinite;pointer-events:none}
+@keyframes breathe{0%,100%{transform:scale(.94);opacity:.8}50%{transform:scale(1.04);opacity:1}}
+h1{font-family:var(--display);font-weight:600;font-size:40px;letter-spacing:.03em;margin-top:18px;text-wrap:balance}
+.sub{color:var(--mute);font-size:13px;margin-top:4px;letter-spacing:.02em}
+.voice{margin:18px auto 4px;display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap}
+.voice span{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--mute)}
+.seg{display:inline-flex;background:var(--glass);border:1px solid var(--line);border-radius:30px;padding:3px;backdrop-filter:blur(6px)}
+.seg button{border:none;background:none;font:600 12px var(--body);color:var(--ink);padding:9px 16px;border-radius:26px;cursor:pointer}
+.seg button.on{background:linear-gradient(135deg,#559ed3,#2d78ad);color:#fff;box-shadow:0 4px 12px rgba(45,120,173,.35)}
+nav{display:flex;gap:6px;overflow-x:auto;padding:14px 14px 10px;position:sticky;top:0;z-index:5;scrollbar-width:none;
+ background:linear-gradient(rgba(239,246,251,.96) 75%,rgba(239,246,251,0))}
+nav::-webkit-scrollbar{display:none}
+nav button{flex:none;background:var(--glass);border:1px solid var(--line);color:var(--ink);font:600 11px var(--body);letter-spacing:.12em;padding:9px 14px;border-radius:20px;cursor:pointer}
+nav button.on{background:var(--ink);color:#e3f0fa;border-color:var(--ink)}
+button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+section{display:none;padding:12px 18px;position:relative}
+section.on{display:block}
+h2{font-family:var(--display);font-size:28px;font-weight:600;color:var(--ink);margin:6px 0 12px;text-wrap:balance}
+h2 em{color:var(--gold);font-style:italic}
+.card{background:var(--glass);border:1px solid var(--line);border-radius:18px;padding:20px;margin-bottom:12px;
+ box-shadow:0 10px 30px rgba(61,95,118,.08);backdrop-filter:blur(8px)}
+.today{position:relative;overflow:hidden}
+.today::before{content:"";position:absolute;right:-40px;top:-40px;width:160px;height:160px;border-radius:50%;background:radial-gradient(circle,rgba(162,202,231,.6),rgba(162,202,231,0) 70%)}
+.date{display:flex;align-items:baseline;gap:10px;margin-bottom:12px}
+.date b{font-family:var(--display);font-size:44px;line-height:1;color:var(--gold);font-weight:600;font-variant-numeric:tabular-nums}
+.date span{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--mute)}
+.ref{display:inline-block;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);border:1px solid var(--line);border-radius:14px;padding:5px 10px;margin-bottom:10px;background:#f0f9ff}
+.prayer{font-family:var(--display);font-size:22px;line-height:1.55;position:relative}
+.verse{font-family:var(--display);font-style:italic;font-size:23px;line-height:1.5;position:relative}
+.refl{margin-top:12px;font-size:14px;line-height:1.6;color:#4a4356;position:relative}
+.player{display:flex;align-items:center;gap:12px;margin-top:16px;position:relative}
+.play{flex:none;width:52px;height:52px;border-radius:50%;border:none;cursor:pointer;display:grid;place-items:center;
+ background:linear-gradient(135deg,#58a1d6,#2570a5);box-shadow:0 8px 18px rgba(45,120,173,.35)}
+.play svg{width:20px;height:20px;fill:#fff}
+.bar{flex:1;height:4px;border-radius:2px;background:rgba(45,120,173,.18);overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#58a1d6,#2570a5)}
+.who{font-size:11px;color:var(--mute);letter-spacing:.06em;min-width:68px;text-align:right}
+.days{display:flex;justify-content:space-between;align-items:center;margin-top:14px;position:relative}
+.days button{background:none;border:1px solid var(--line);border-radius:18px;padding:7px 12px;font:600 11px var(--body);color:var(--mute);cursor:pointer;letter-spacing:.06em}
+.days small{font-size:11px;color:var(--mute)}
+.note{color:var(--mute);font-size:12px;line-height:1.55;margin-top:8px}
+details{background:var(--glass);border:1px solid var(--line);border-radius:14px;margin-bottom:8px}
+summary{list-style:none;padding:15px 16px;font-weight:600;font-size:14px;cursor:pointer;display:flex;justify-content:space-between;align-items:center}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";color:var(--gold);font-size:20px;font-weight:400}
+details[open] summary::after{content:"–"}
+details .inner{padding:0 16px 16px}
+details .prayer{font-size:19px;white-space:pre-line}
+#prece .voice{margin:0 0 14px}
+#prece .player{margin-top:14px}
+.mini{display:inline-flex;align-items:center;gap:8px;margin-top:12px;background:none;border:1px solid var(--line);color:var(--ink);font:600 12px var(--body);padding:9px 14px;border-radius:22px;cursor:pointer}
+.mini svg{width:12px;height:12px;fill:var(--gold)}
+.myst{font-family:var(--display);font-size:24px;line-height:1.3;min-height:62px}
+.step{color:var(--gold);font-size:12px;letter-spacing:.14em;text-transform:uppercase;margin-top:6px}
+.beads{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:16px 0 6px}
+.beads i{width:16px;height:16px;border-radius:50%;border:1.5px solid var(--gold);display:block;background:#fff}
+.beads i.big{width:22px;height:22px}
+.beads i.done{background:radial-gradient(circle at 35% 35%,#a2d0f1,#2d78ad)}
+.beads i.now{box-shadow:0 0 0 5px rgba(162,202,231,.6);background:#d7eefe}
+.tap{width:100%;margin-top:14px;padding:16px;border:none;border-radius:26px;background:linear-gradient(135deg,#58a1d6,#2570a5);color:#fff;font:700 13px var(--body);letter-spacing:.1em;cursor:pointer}
+.row{display:flex;gap:8px;justify-content:center;margin-top:10px}
+.circle{width:210px;height:210px;margin:10px auto;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;position:relative;background:rgba(255,255,255,.5)}
+.circle .breath{position:absolute;inset:30px;border-radius:50%;background:radial-gradient(circle,rgba(133,190,230,.55),rgba(133,190,230,0) 70%);transform:scale(.6);transition:transform 4s ease-in-out}
+.circle .breath.in{transform:scale(1.18)}
+.circle b{font-family:var(--display);font-size:44px;font-weight:600;position:relative;font-variant-numeric:tabular-nums}
+.circle span{position:absolute;bottom:48px;font-size:11px;color:var(--mute);letter-spacing:.2em}
+ul.tips{list-style:none}
+ul.tips li{padding:12px 0;border-bottom:1px solid var(--line);font-size:14px;line-height:1.55;display:flex;gap:12px}
+ul.tips li:last-child{border-bottom:none}
+ul.tips li b{color:var(--gold);min-width:20px;font-family:var(--display);font-size:20px;line-height:1}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.prod{display:block;background:#fff;border-radius:16px;overflow:hidden;text-decoration:none;color:var(--ink);box-shadow:0 10px 26px rgba(61,95,118,.14);border:1px solid var(--line)}
+.prod img{display:block;width:100%;aspect-ratio:1/1;object-fit:cover}
+.prod p{padding:10px 12px 12px;font-family:var(--display);font-size:18px;font-weight:600;line-height:1.15}
+.prod small{display:block;font-family:var(--body);color:var(--mute);font-weight:400;font-size:11px;margin-top:3px}
+.prod.here{grid-column:1/-1;outline:2px solid var(--gold);outline-offset:-2px}
+.prod.here img{aspect-ratio:16/10;object-position:50% 45%}
+.cta{display:block;text-align:center;margin-top:14px;padding:14px;border-radius:26px;background:var(--ink);color:#e3f0fa;text-decoration:none;font:600 12px var(--body);letter-spacing:.12em}
+footer{text-align:center;color:var(--mute);font-size:11px;margin-top:30px;line-height:1.8}
+footer b{color:var(--gold);letter-spacing:.24em;font-weight:600}
+footer a{color:var(--mute)}
+@media (prefers-reduced-motion:reduce){.halo,.spark{animation:none}.circle .breath{transition:none}}
+
+.book{display:flex;gap:14px;align-items:flex-start}
+.book .cv{flex:none;width:64px;height:88px;border-radius:6px;background:linear-gradient(160deg,#3d3550,#2f2a3a);color:#a2d0f1;display:grid;place-items:center;font-family:var(--display);font-size:11px;text-align:center;line-height:1.1;padding:5px;word-break:break-word;hyphens:auto;box-shadow:0 8px 18px rgba(47,42,58,.25)}
+.book h3{font-family:var(--display);font-size:22px;font-weight:600;line-height:1.15}
+.book p{font-size:13px;line-height:1.55;color:#4a4356;margin-top:6px}
+.btns{display:flex;flex-direction:column;gap:8px;margin-top:14px}
+.btn{display:flex;align-items:center;justify-content:center;gap:10px;padding:14px;border-radius:26px;text-decoration:none;font:700 12px var(--body);letter-spacing:.1em}
+.btn.gold{background:linear-gradient(135deg,#58a1d6,#2570a5);color:#fff;box-shadow:0 8px 18px rgba(45,120,173,.3)}
+.btn.dark{background:var(--ink);color:#e3f0fa}
+.btn.line{border:1px solid var(--line);color:var(--ink);background:#f0f9ff}
+.btn svg{width:18px;height:18px;fill:currentColor}
+.song{font-family:var(--display);font-size:30px;font-weight:600;line-height:1.1}
+.song small{display:block;font-family:var(--body);font-size:12px;color:var(--mute);font-weight:500;margin-top:6px;letter-spacing:.02em}
+.lyric{font-family:var(--display);font-style:italic;font-size:20px;line-height:1.5;margin-top:12px;color:#4a4356}
+
+.qgo{display:flex;gap:8px;margin-top:12px}
+.qgo input{flex:1;min-width:0;border:1px solid var(--line);border-radius:22px;padding:11px 14px;font:500 14px var(--body);background:#f0f9ff;color:var(--ink)}
+.qgo button{border:none;border-radius:22px;padding:0 16px;background:var(--ink);color:#e3f0fa;font:700 11px var(--body);letter-spacing:.1em;cursor:pointer}
+button.btn{border:none;cursor:pointer;width:100%}
+.qa h4{font-family:var(--display);font-size:21px;line-height:1.35;font-weight:600}
+.qa h4 b{color:var(--gold)}
+.qa .ans{font-family:var(--display);font-style:italic;font-size:20px;line-height:1.5;margin-top:8px}
+.qa .com{font-size:13.5px;line-height:1.6;color:#4a4356;margin-top:8px}
+.qa .open{margin-top:10px;background:none;border:none;color:var(--gold);font:700 11px var(--body);letter-spacing:.12em;cursor:pointer;padding:0}
+#bres .r{display:block;width:100%;text-align:left;background:none;border:none;border-bottom:1px solid var(--line);padding:11px 0;cursor:pointer;font:500 13px var(--body);color:var(--ink);line-height:1.45}
+#bres .r small{display:block;color:var(--gold);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:3px}
+#bres mark,.rd mark{background:#a2d0f1;color:inherit;border-radius:3px;padding:0 2px}
+.rd{position:fixed;inset:0;z-index:50;background:var(--ivory);display:none;flex-direction:column}
+.rd.on{display:flex}
+.rd .top{display:flex;align-items:center;gap:8px;padding:10px 12px;border-bottom:1px solid var(--line);background:rgba(239,246,251,.97)}
+.rd .top button{border:1px solid var(--line);background:#f0f9ff;border-radius:18px;padding:8px 12px;font:700 11px var(--body);color:var(--ink);cursor:pointer;letter-spacing:.06em}
+.rd .top b{flex:1;font-family:var(--display);font-size:18px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rd .body{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch}
+.rd .txt{max-width:640px;margin:0 auto;padding:18px 20px 40px;font-size:calc(16px * var(--fz,1));line-height:1.7;color:var(--ink)}
+.rd .txt .pt{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
+.rd .txt h1{font-family:var(--display);font-size:1.9em;line-height:1.15;margin:4px 0 14px;font-weight:600}
+.rd .txt h2{font-family:var(--display);font-size:1.35em;margin:26px 0 10px;color:var(--gold);font-weight:600}
+.rd .txt h3{font-family:var(--body);font-size:.98em;font-weight:700;margin:22px 0 6px;line-height:1.5}
+.rd .txt p{margin:0 0 12px}
+.rd .txt em{font-family:var(--display);font-size:1.16em;line-height:1.5}
+.rd .txt hr{border:none;border-top:1px solid var(--line);margin:18px 0}
+.rd .txt .footnote{font-size:.82em;color:var(--mute)}
+.rd .txt a{color:var(--gold)}
+.rd .nav2{display:flex;gap:8px;max-width:640px;margin:0 auto;padding:0 20px 34px}
+.rd .nav2 button{flex:1;border:1px solid var(--line);background:#f0f9ff;border-radius:22px;padding:12px;font:700 11px var(--body);letter-spacing:.08em;color:var(--ink);cursor:pointer}
+.sum{max-width:640px;margin:0 auto;padding:14px 18px 40px}
+.sum .pt{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin:18px 0 6px}
+.sum button{display:block;width:100%;text-align:left;background:var(--glass);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:6px;font:600 13.5px var(--body);color:var(--ink);cursor:pointer}
+.sum button.cur{border-color:var(--gold);background:#d7eefe}
+
+.mq{text-align:center}
+.mq .t{font-family:var(--display);font-size:26px;font-weight:600;line-height:1.1}
+.mq .t small{display:block;font-family:var(--body);font-size:12px;color:var(--mute);font-weight:500;margin-top:6px;letter-spacing:.02em}
+.mq .pl{margin:16px auto 10px;width:66px;height:66px;border-radius:50%;border:0;cursor:pointer;display:grid;place-items:center;background:linear-gradient(135deg,#559ed3,#2d78ad);box-shadow:0 8px 22px rgba(45,120,173,.35)}
+.mq .pl i{display:block;width:0;height:0;border-left:18px solid #fff;border-top:11px solid transparent;border-bottom:11px solid transparent;margin-left:5px}
+.mq.on .pl i{width:18px;height:20px;border:0;margin:0;background:linear-gradient(90deg,#fff 0 34%,transparent 34% 66%,#fff 66%)}
+.mq .bar{height:4px;border-radius:3px;background:rgba(45,120,173,.18);overflow:hidden;margin:6px 4px 0}
+.mq .bar i{display:block;height:100%;width:0;background:#2d78ad}
+.mq .tm{font-size:11px;letter-spacing:.14em;color:var(--mute);margin-top:8px}
+.mqin{position:relative;margin:6px 0 16px}
+.mqin .pl{margin:6px auto 10px}
+.letra{position:relative;margin:6px 0 16px;text-align:left}
+.letra summary{font-size:12px;letter-spacing:.16em;color:var(--gold)}
+.letra .lt{text-align:center;padding:4px 6px 16px}
+.letra .est{font-family:var(--display);font-size:18px;line-height:1.6;color:#3d3648;margin:0 0 20px}
+.letra .lref{position:relative;margin:4px 0 22px;padding:18px 8px 2px;border-radius:16px;background:linear-gradient(180deg,rgba(162,202,231,.28),rgba(162,202,231,.08));border:1px solid var(--line)}
+.letra .lref span{position:absolute;top:-9px;left:50%;transform:translateX(-50%);background:#2d78ad;color:#fff;font-size:9px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;padding:3px 10px;border-radius:20px}
+.letra .lref .est{font-style:italic;font-weight:600;color:#2d5f86}
+.letra .fim{font-style:italic;color:#2d78ad;font-weight:600}
+.letra .aut{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute)}
+
+.sx{position:relative;align-items:center}
+.sx .ic{position:absolute;left:14px;top:50%;transform:translateY(-50%);width:18px;height:18px;color:var(--gold);pointer-events:none;display:flex}
+.sx .ic svg{width:18px;height:18px}
+.sx input{padding-left:40px!important;font-size:16px!important}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;align-items:center;font-size:11px;color:var(--mute)}
+.chips button{border:1px solid var(--line);background:#f0f9ff;border-radius:14px;padding:5px 11px;font:600 11.5px var(--body);color:var(--ink);cursor:pointer}
+#bres .tot{font:600 12.5px var(--body);color:var(--ink);margin:16px 0 2px;line-height:1.5}
+#bres .tot small{display:block;font-weight:500;color:var(--mute);font-size:11.5px}
+.res{border-top:1px solid var(--line);padding:14px 0 8px}
+.res .pn{display:inline-block;font:700 10px var(--body);letter-spacing:.14em;color:#fff;background:var(--gold);border-radius:10px;padding:3px 9px;margin-bottom:7px;text-transform:uppercase}
+.res h4{font-size:19px}
+.res .ans{font-size:18px}
+.res .hid{display:none}
+.res.all .hid{display:block}
+.res.all .snip{display:none}
+.res .mais{display:block;margin-top:8px;background:none;border:none;color:var(--mute);font:700 10.5px var(--body);letter-spacing:.12em;cursor:pointer;padding:0}
+.res .open{display:block}
+#bres .more{width:100%;margin-top:14px;border:1px solid var(--line);background:#f0f9ff;border-radius:22px;padding:12px;font:700 11px var(--body);letter-spacing:.1em;color:var(--ink);cursor:pointer}
+#rd-f svg{width:17px;height:17px;display:block}
+</style><style>
+/* ---------- Fusão de Fé · recursos novos (25/11/2026) ---------- */
+.fx-card{background:var(--glass);border:1px solid var(--line);border-radius:22px;padding:18px 16px;margin:0 0 16px;box-shadow:0 10px 28px rgba(47,42,58,.08)}
+.fx-ey{font:700 10.5px var(--body);letter-spacing:.18em;color:var(--gold);text-transform:uppercase}
+.fx-sua{display:grid;grid-template-columns:96px minmax(0,1fr);gap:14px;align-items:center}
+.fx-sua img{width:96px;height:128px;object-fit:cover;border-radius:14px;border:1px solid var(--line)}
+.fx-sua h3{font-family:var(--display);font-size:26px;font-weight:600;line-height:1.05;margin:4px 0 6px}
+.fx-festa{font:500 12.5px var(--body);color:var(--mute);line-height:1.4}
+.fx-festa b{color:var(--gold)}
+.fx-txt{font-family:var(--display);font-size:calc(19px*var(--fz,1));line-height:1.55;margin-top:12px;white-space:pre-line}
+.fx-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.fx-b{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:44px;padding:10px 16px;border-radius:22px;border:1px solid var(--line);background:var(--ivory);color:var(--ink);font:700 11.5px var(--body);letter-spacing:.08em;text-decoration:none;cursor:pointer;flex:1 1 auto}
+.fx-b.dk{background:var(--ink);color:#fff;border-color:var(--ink)}
+.fx-b.au{background:var(--gold);color:#fff;border-color:var(--gold)}
+.fx-b svg{width:16px;height:16px;fill:currentColor;flex:none}
+.fx-card details{border-top:1px solid var(--line);margin-top:12px;padding-top:10px}
+.fx-card summary{cursor:pointer;font:700 11.5px var(--body);letter-spacing:.1em;color:var(--ink);list-style:none;min-height:30px;display:flex;align-items:center}
+.fx-card summary::-webkit-details-marker{display:none}
+.fx-card summary:after{content:'+';margin-left:auto;color:var(--gold);font-size:18px}
+.fx-card details[open] summary:after{content:'–'}
+.fx-hist{font:400 14px/1.6 var(--body);color:var(--ink);margin-top:8px}
+.fx-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.fx-chips button{border:1px solid var(--line);background:var(--ivory);border-radius:16px;padding:8px 12px;min-height:38px;font:600 12px var(--body);color:var(--ink);cursor:pointer}
+.fx-chips button.on{background:var(--gold);border-color:var(--gold);color:#fff}
+.fx-nov{display:grid;grid-template-columns:repeat(9,minmax(0,1fr));gap:5px;margin-top:12px}
+.fx-nov button{aspect-ratio:1;border-radius:50%;border:1px solid var(--line);background:var(--ivory);font:700 13px var(--body);color:var(--ink);cursor:pointer;padding:0}
+.fx-nov button.ok{background:var(--gold);border-color:var(--gold);color:#fff}
+.fx-nov button.cur{outline:2px solid var(--gold);outline-offset:2px}
+.fx-sm{font:500 12px/1.5 var(--body);color:var(--mute);margin-top:8px}
+.fx-ta{width:100%;min-height:88px;border:1px solid var(--line);border-radius:16px;padding:12px 14px;font:500 16px var(--body);color:var(--ink);background:var(--ivory);resize:vertical;margin-top:10px}
+.fx-list{list-style:none;margin:10px 0 0;padding:0}
+.fx-list li{display:flex;gap:10px;align-items:flex-start;border-top:1px solid var(--line);padding:10px 0;font:500 14px/1.45 var(--body)}
+.fx-list li span{flex:1;min-width:0;overflow-wrap:anywhere}
+.fx-list li small{display:block;color:var(--mute);font-size:11px;margin-top:2px}
+.fx-list li.ok span{text-decoration:line-through;color:var(--mute)}
+.fx-list li button{border:1px solid var(--line);background:var(--ivory);border-radius:14px;padding:6px 10px;font:600 11px var(--body);color:var(--ink);cursor:pointer;flex:none}
+.fx-steps{list-style:none;margin:10px 0 0;padding:0;counter-reset:s}
+.fx-steps li{counter-increment:s;position:relative;padding:12px 0 12px 40px;border-top:1px solid var(--line);font:400 14px/1.55 var(--body)}
+.fx-steps li:before{content:counter(s);position:absolute;left:0;top:12px;width:28px;height:28px;border-radius:50%;background:var(--gold);color:#fff;font:700 13px var(--body);display:grid;place-items:center}
+.fx-steps li b{display:block;font-weight:700;margin-bottom:2px}
+.fx-steps .fx-row{margin-top:8px}
+.fx-sal{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:6px;margin-top:12px}
+.fx-sal button{border:1px solid var(--line);background:var(--ivory);border-radius:12px;padding:8px 2px;font:700 12px var(--body);color:var(--ink);cursor:pointer;line-height:1.1}
+.fx-sal button small{display:block;font-weight:500;font-size:9.5px;color:var(--mute);margin-top:2px}
+.fx-sal button.ok{background:var(--gold);color:#fff;border-color:var(--gold)}
+.fx-sal button.ok small{color:#fff}
+.fx-sal button.cur{outline:2px solid var(--gold);outline-offset:1px}
+.fx-home{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px;margin-top:10px}
+.fx-home div{border:1px solid var(--line);border-radius:16px;padding:12px;font:400 13px/1.5 var(--body)}
+.fx-home b{display:block;font:700 11px var(--body);letter-spacing:.12em;color:var(--gold);margin-bottom:4px}
+.fx-gift{display:flex;gap:12px;align-items:center;margin-top:16px;background:var(--ink);color:#fff;border-radius:20px;padding:16px;text-decoration:none}
+.fx-gift b{font-family:var(--display);font-size:22px;font-weight:600;line-height:1.1;display:block}
+.fx-gift small{display:block;font:500 12px/1.4 var(--body);opacity:.85;margin-top:4px}
+.fx-gift i{margin-left:auto;font-style:normal;font:700 11px var(--body);letter-spacing:.1em;background:var(--gold);border-radius:16px;padding:9px 12px;white-space:nowrap}
+.fx-moon{position:fixed;right:14px;bottom:18px;z-index:40;width:52px;height:52px;border-radius:50%;border:1px solid var(--line);background:var(--ink);color:#fff;display:grid;place-items:center;box-shadow:0 10px 26px rgba(0,0,0,.25);cursor:pointer}
+.fx-moon svg{width:22px;height:22px;fill:currentColor}
+.fx-night{position:fixed;inset:0;z-index:80;background:radial-gradient(60% 45% at 50% 42%,#3a2410 0%,#120b06 55%,#050302 100%);color:#f6e7c8;display:none;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px}
+.fx-night.on{display:flex}
+.fx-flame{width:46px;height:78px;border-radius:50% 50% 48% 48%/62% 62% 38% 38%;background:radial-gradient(50% 60% at 50% 70%,#fffbe6 0%,#ffd36b 35%,#ff9a2e 70%,rgba(255,120,30,0) 100%);filter:blur(.5px);box-shadow:0 0 60px 26px rgba(255,170,60,.35);animation:fxf 1.6s ease-in-out infinite alternate;margin-bottom:26px}
+@keyframes fxf{0%{transform:scale(1,1) rotate(-1deg)}50%{transform:scale(.96,1.05) rotate(1.5deg)}100%{transform:scale(1.03,.97) rotate(-.5deg)}}
+@media (prefers-reduced-motion:reduce){.fx-flame{animation:none}}
+.fx-night h3{font-family:var(--display);font-size:30px;font-weight:600;margin-bottom:6px}
+.fx-night p{font:400 13px/1.6 var(--body);opacity:.8;max-width:300px}
+.fx-night .fx-row{justify-content:center;max-width:340px}
+.fx-night .fx-b{background:rgba(255,255,255,.08);border-color:rgba(255,220,160,.3);color:#f6e7c8;flex:0 1 auto}
+.fx-night .fx-b.on{background:#d99a3a;border-color:#d99a3a;color:#1a0f05}
+.fx-night .fx-left{font:600 13px var(--body);letter-spacing:.12em;margin-top:14px;min-height:18px}
+.fx-night .fx-x{position:absolute;top:16px;right:16px}
+.fx-toast{position:fixed;left:50%;bottom:84px;transform:translateX(-50%);background:var(--ink);color:#fff;font:600 12.5px var(--body);padding:10px 16px;border-radius:18px;z-index:90;opacity:0;transition:opacity .3s;pointer-events:none;max-width:86vw;text-align:center}
+.fx-toast.on{opacity:1}
+.fx-card details>div{padding:0 16px 14px}
+.fx-card details>.fx-txt{padding:0 16px 14px}
+
+</style>
+</head><body>
+<div class="rays"></div><i class="spark" style="left:12%;top:90px"></i><i class="spark" style="left:30%;top:40px;animation-delay:1.4s"></i><i class="spark" style="left:78%;top:70px;animation-delay:.7s"></i><i class="spark" style="left:88%;top:150px;animation-delay:2.2s"></i><i class="spark" style="left:58%;top:30px;animation-delay:3.1s"></i>
+<header><div class="halo"></div><div class="arch"><img src="img/hero.jpg" alt="Vela Eterna acesa: mãos em oração com a cruz"></div>
+<h1>Luz e Prece</h1><div class="sub">Música, leitura e um momento de paz</div></header>
+<nav><button type="button" data-s="musica" class="on">MÚSICA</button><button type="button" data-s="prece">PRECE</button><button type="button" data-s="livros">LIVROS</button><button type="button" data-s="silencio">SILÊNCIO</button><button type="button" data-s="pecas">PRODUTOS</button></nav>
+<section id="musica" class="on"><h2>Abraço <em>de Luz</em></h2>
+<div class="card today"><div class="song">Abraço de Luz<small>Música feita para a mentora Joanna de Ângelis · Fusão de Fé</small></div>
+<p class="lyric">"Tua luz nos guia, estrela da paz…"</p>
+<div class="mq mqin" id="ab"><button type="button" class="pl" id="abB" aria-label="Tocar ou pausar Abraço de Luz"><i></i></button><div class="bar"><i id="abBar"></i></div><div class="tm" id="abT">TOQUE PARA OUVIR AQUI</div><audio id="abA" class="musA" src="aud/musica/abraco-de-luz.mp3" preload="none"></audio></div>
+<details class="letra"><summary>LETRA DA MÚSICA</summary><div class="lt"><p class="est">Quando eu cruzo a porta desta casa,<br>deixo lá fora o peso da dor.<br>Sinto a calma que aqui me abraça<br>e o silêncio falando de amor.</p><p class="est">É um refúgio pra minha alma aflita<br>onde o Mestre Jesus<br>nos convida a mudar.<br>Sinto a brisa suave soprar<br>trazendo consolo, vindo me curar…</p><div class="lref"><span>Refrão</span><p class="est">Tua luz nos guia, estrela da paz,<br>o teu nome, Joanna, esperança nos traz.<br>Mentora amiga, flor do jardim,<br>ensina o amor que não tem fim.</p></div><p class="est">No CEJA encontrei o meu lugar,<br>tua mão estendida a me levantar.<br>Nos caminhos do bem,<br>na caridade e na fé,<br>seguimos os passos<br>do Homem de Nazaré.<br>Com a tua presença a nos orientar…</p><div class="lref"><span>Refrão</span><p class="est">Tua luz nos guia, estrela da paz,<br>o teu nome, Joanna, esperança nos traz.<br>Mentora amiga, flor do jardim,<br>ensina o amor que não tem fim.</p></div><p class="est fim">Obrigado, Joanna, por cuidar de mim.<br>Obrigado, Joanna, por cuidar de mim.</p><p class="aut">Abraço de Luz · Fusão de Fé · para Joanna de Ângelis e o CEJA</p></div></details>
+<div class="btns"><a class="btn gold" href="https://www.youtube.com/watch?v=6YILMHlJL6A" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M23 7.2a3 3 0 0 0-2.1-2.1C19 4.6 12 4.6 12 4.6s-7 0-8.9.5A3 3 0 0 0 1 7.2 31 31 0 0 0 .5 12a31 31 0 0 0 .5 4.8 3 3 0 0 0 2.1 2.1c1.9.5 8.9.5 8.9.5s7 0 8.9-.5a3 3 0 0 0 2.1-2.1 31 31 0 0 0 .5-4.8 31 31 0 0 0-.5-4.8zM9.7 15.1V8.9l5.8 3.1z"/></svg>OUVIR NO YOUTUBE</a><a class="btn dark" href="https://open.spotify.com/track/3860L8ZL4edxFsAEO1oDD0" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M12 1a11 11 0 1 0 0 22 11 11 0 0 0 0-22zm5 15.9a.7.7 0 0 1-1 .2c-2.7-1.7-6.2-2.1-10.2-1.1a.7.7 0 1 1-.3-1.4c4.4-1 8.2-.6 11.3 1.3.3.2.4.7.2 1zm1.4-3.1a.9.9 0 0 1-1.2.3c-3.1-1.9-7.8-2.4-11.4-1.3a.9.9 0 0 1-.5-1.7c4.1-1.2 9.3-.6 12.8 1.5.4.3.5.8.3 1.2zm.1-3.3C14.8 8.3 8.7 8.1 5.2 9.2a1 1 0 1 1-.6-2c4.1-1.2 10.8-1 15 1.5a1 1 0 0 1-1.1 1.8z"/></svg>OUVIR NO SPOTIFY</a><a class="btn line" href="https://www.youtube.com/watch?v=S7Orr_ZIX08" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M23 7.2a3 3 0 0 0-2.1-2.1C19 4.6 12 4.6 12 4.6s-7 0-8.9.5A3 3 0 0 0 1 7.2 31 31 0 0 0 .5 12a31 31 0 0 0 .5 4.8 3 3 0 0 0 2.1 2.1c1.9.5 8.9.5 8.9.5s7 0 8.9-.5a3 3 0 0 0 2.1-2.1 31 31 0 0 0 .5-4.8 31 31 0 0 0-.5-4.8zM9.7 15.1V8.9l5.8 3.1z"/></svg>VERSÃO VOZ E VIOLÃO (YOUTUBE)</a></div></div>
+<div class="card mq" id="mq"><div class="t">Quiet With God<small>Fusão de Fé · música para orar e meditar</small></div><button type="button" class="pl" id="mqB" aria-label="Tocar ou pausar a música"><i></i></button><div class="bar"><i id="mqBar"></i></div><div class="tm" id="mqT">TOQUE PARA OUVIR</div><audio id="mqA" class="musA" src="aud/musica/quiet-with-god.mp3" preload="none" loop></audio></div>
+<div class="card"><div class="song" style="font-size:24px">Música para a prece<small>Vozes Angelicais · instrumental para oração e meditação · 1 hora</small></div>
+<div class="btns"><a class="btn gold" href="https://www.youtube.com/watch?v=QuNumpqMs7c" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M23 7.2a3 3 0 0 0-2.1-2.1C19 4.6 12 4.6 12 4.6s-7 0-8.9.5A3 3 0 0 0 1 7.2 31 31 0 0 0 .5 12a31 31 0 0 0 .5 4.8 3 3 0 0 0 2.1 2.1c1.9.5 8.9.5 8.9.5s7 0 8.9-.5a3 3 0 0 0 2.1-2.1 31 31 0 0 0 .5-4.8 31 31 0 0 0-.5-4.8zM9.7 15.1V8.9l5.8 3.1z"/></svg>OUVIR NO YOUTUBE</a><a class="btn dark" href="https://open.spotify.com/artist/5qDiDGeoLwki83jKmVoGVi" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M12 1a11 11 0 1 0 0 22 11 11 0 0 0 0-22zm5 15.9a.7.7 0 0 1-1 .2c-2.7-1.7-6.2-2.1-10.2-1.1a.7.7 0 1 1-.3-1.4c4.4-1 8.2-.6 11.3 1.3.3.2.4.7.2 1zm1.4-3.1a.9.9 0 0 1-1.2.3c-3.1-1.9-7.8-2.4-11.4-1.3a.9.9 0 0 1-.5-1.7c4.1-1.2 9.3-.6 12.8 1.5.4.3.5.8.3 1.2zm.1-3.3C14.8 8.3 8.7 8.1 5.2 9.2a1 1 0 1 1-.6-2c4.1-1.2 10.8-1 15 1.5a1 1 0 0 1-1.1 1.8z"/></svg>OUVIR NO SPOTIFY</a></div></div>
+<div class="btns"><a class="btn dark" href="https://open.spotify.com/artist/5qDiDGeoLwki83jKmVoGVi" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M12 1a11 11 0 1 0 0 22 11 11 0 0 0 0-22zm5 15.9a.7.7 0 0 1-1 .2c-2.7-1.7-6.2-2.1-10.2-1.1a.7.7 0 1 1-.3-1.4c4.4-1 8.2-.6 11.3 1.3.3.2.4.7.2 1zm1.4-3.1a.9.9 0 0 1-1.2.3c-3.1-1.9-7.8-2.4-11.4-1.3a.9.9 0 0 1-.5-1.7c4.1-1.2 9.3-.6 12.8 1.5.4.3.5.8.3 1.2zm.1-3.3C14.8 8.3 8.7 8.1 5.2 9.2a1 1 0 1 1-.6-2c4.1-1.2 10.8-1 15 1.5a1 1 0 0 1-1.1 1.8z"/></svg>FUSÃO DE FÉ NO SPOTIFY</a><a class="btn line" href="https://www.youtube.com/channel/UCjVvzwedxbSRvp_olp1OTIw" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M23 7.2a3 3 0 0 0-2.1-2.1C19 4.6 12 4.6 12 4.6s-7 0-8.9.5A3 3 0 0 0 1 7.2 31 31 0 0 0 .5 12a31 31 0 0 0 .5 4.8 3 3 0 0 0 2.1 2.1c1.9.5 8.9.5 8.9.5s7 0 8.9-.5a3 3 0 0 0 2.1-2.1 31 31 0 0 0 .5-4.8 31 31 0 0 0-.5-4.8zM9.7 15.1V8.9l5.8 3.1z"/></svg>CANAL FUSÃO DE FÉ</a></div>
+</section>
+<section id="prece"><h2>Hora <em>da prece</em></h2><div class="voice"><span>Voz</span><div class="seg" role="group" aria-label="Escolha a voz"><button type="button" data-v="k">Feminina</button><button type="button" data-v="w">Masculina</button></div></div><details><summary>Pai-Nosso</summary><div class="inner"><div class="prayer">Pai nosso, que estais nos céus,
+santificado seja o vosso nome;
+venha a nós o vosso reino;
+seja feita a vossa vontade,
+assim na Terra como no céu.
+O pão nosso de cada dia nos dai hoje;
+perdoai as nossas ofensas,
+assim como nós perdoamos a quem nos tem ofendido;
+e não nos deixeis cair em tentação,
+mas livrai-nos do mal.
+Assim seja.</div><div class="player"><button class="play" type="button" data-a="e1" aria-label="Ouvir Pai-Nosso"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button><div class="bar"><i></i></div><div class="who">ouvir</div></div></div></details><details><summary>Prece de Cáritas</summary><div class="inner"><div class="prayer">Deus, nosso Pai, que sois todo poder e bondade, dai a força àquele que passa pela provação, dai a luz àquele que procura a verdade, ponde no coração do homem a compaixão e a caridade.
+Deus, dai ao viajor a estrela guia, ao aflito a consolação, ao doente o repouso.
+Pai, dai ao culpado o arrependimento, ao espírito a verdade, à criança o guia, ao órfão o pai.
+Senhor, que a vossa bondade se estenda sobre tudo o que criastes.
+Piedade, Senhor, para aqueles que vos não conhecem; esperança para aqueles que sofrem. Que a vossa bondade permita aos espíritos consoladores derramarem por toda parte a paz, a esperança e a fé.
+Deus, um raio, uma faísca do vosso amor pode abrasar a Terra; deixai-nos beber nas fontes dessa bondade fecunda e infinita, e todas as lágrimas secarão, todas as dores se acalmarão. Um só coração, um só pensamento subirá até vós, como um grito de reconhecimento e de amor.
+Como Moisés sobre a montanha, nós vos esperamos com os braços abertos, ó Bondade, ó Beleza, ó Perfeição, e queremos de alguma sorte merecer a vossa misericórdia.
+Deus, dai-nos a força de ajudar o progresso, a fim de subirmos até vós; dai-nos a caridade pura; dai-nos a fé e a razão; dai-nos a simplicidade que fará de nossas almas o espelho onde se refletirá a vossa imagem.</div><div class="player"><button class="play" type="button" data-a="e2" aria-label="Ouvir Prece de Cáritas"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button><div class="bar"><i></i></div><div class="who">ouvir</div></div></div></details><details><summary>Prece para o Evangelho no Lar</summary><div class="inner"><div class="prayer">Senhor Deus, Pai de amor e de bondade,
+reunidos em teu nome, abrimos as portas da nossa casa e do nosso coração.
+Pedimos a Jesus, nosso Mestre, e aos bons espíritos que nos acompanham, que estejam conosco neste momento de estudo e de prece.
+Que a leitura do Evangelho ilumine o nosso entendimento,
+acalme as nossas aflições
+e nos ensine a viver com mais paciência, perdão e caridade.
+Abençoa este lar, cada um de nós e também aqueles que amamos e que estão longe.
+Que a paz que aqui buscamos se estenda pelos dias da semana.
+Assim seja.</div><div class="player"><button class="play" type="button" data-a="e3" aria-label="Ouvir Prece para o Evangelho no Lar"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button><div class="bar"><i></i></div><div class="who">ouvir</div></div></div></details><details><summary>Prece ao espírito protetor</summary><div class="inner"><div class="prayer">Espírito amigo e protetor, que me acompanhas desde o meu nascimento,
+agradeço o teu cuidado silencioso, mesmo quando não o percebo.
+Inspira os meus pensamentos, para que eu escolha o bem;
+fortalece a minha vontade nas horas difíceis;
+afasta de mim o orgulho, a impaciência e o desânimo.
+Quando eu errar, ajuda-me a reconhecer o erro e a recomeçar.
+Que eu saiba ouvir a tua voz na consciência
+e caminhar contigo, com fé e com coragem, na direção de Deus.
+Assim seja.</div><div class="player"><button class="play" type="button" data-a="e4" aria-label="Ouvir Prece ao espírito protetor"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button><div class="bar"><i></i></div><div class="who">ouvir</div></div></div></details><details><summary>Prece pelos que partiram</summary><div class="inner"><div class="prayer">Pai de infinita misericórdia,
+entregamos ao teu amor aqueles que partiram antes de nós.
+Que eles encontrem, na vida espiritual, a luz, o repouso e o amparo dos bons espíritos.
+Que a nossa saudade chegue até eles como um abraço de carinho, e não como um peso de tristeza.
+Que saibam que não foram esquecidos e que a nossa prece os acompanha.
+E a nós, que ficamos, dá a serenidade de confiar no reencontro,
+porque a vida continua, e o amor não termina.
+Assim seja.</div><div class="player"><button class="play" type="button" data-a="e5" aria-label="Ouvir Prece pelos que partiram"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button><div class="bar"><i></i></div><div class="who">ouvir</div></div></div></details><details><summary>Prece de gratidão</summary><div class="inner"><div class="prayer">Senhor, ao final deste momento, o nosso coração se volta para ti em gratidão.
+Obrigado pela vida, pela oportunidade de aprender e de recomeçar a cada dia.
+Obrigado pelos amigos espirituais que nos amparam
+e pelas pessoas que caminham conosco.
+Que as intuições recebidas permaneçam em nós
+e se transformem em gestos de bondade.
+Vibramos, com amor, por todos os que sofrem, pelos doentes, pelos que estão sozinhos e pela paz no mundo.
+Assim seja.</div><div class="player"><button class="play" type="button" data-a="e6" aria-label="Ouvir Prece de gratidão"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button><div class="bar"><i></i></div><div class="who">ouvir</div></div></div></details><p class="note">Escolha a prece, toque em ouvir e acompanhe o texto. Para o Evangelho no Lar: abra com a Prece para o Evangelho no Lar, leia um trecho de O Evangelho Segundo o Espiritismo (aba LIVROS) e encerre com a Prece de gratidão.</p></section>
+<section id="livros"><h2>Leitura <em>espírita</em></h2>
+<div class="card lupa" id="lupa"><span class="ref">PROCURAR NO LIVRO DOS ESPÍRITOS</span><form class="qgo sx" id="busca" role="search"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></svg></span><input id="bq" type="search" enterkeyhint="search" autocomplete="off" placeholder="Palavra, tema ou nº da pergunta" aria-label="Procurar no livro por palavra, tema ou número da pergunta"><button type="submit">PROCURAR</button></form><div class="chips"><span>Exemplos:</span><button type="button" data-t="alma">alma</button><button type="button" data-t="caridade">caridade</button><button type="button" data-t="perdão">perdão</button><button type="button" data-t="reencarnação">reencarnação</button><button type="button" data-t="223">223</button></div><div id="bres"></div></div>
+
+<div class="card"><div class="book"><div class="cv">O Livro dos Espíritos</div><div><h3>O Livro dos Espíritos</h3>
+<p>Allan Kardec (1857): as 1.019 perguntas e respostas sobre Deus, a alma, a vida depois da morte e as leis morais. Completo, para ler aqui mesmo.</p></div></div>
+<div class="btns"><button type="button" class="btn gold" id="le-ler"><svg viewBox="0 0 24 24"><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v17H6.5a1.5 1.5 0 0 0 0 3H20v0H6.5A2.5 2.5 0 0 1 4 19.5z"/></svg>LER O LIVRO</button><button type="button" class="btn line" id="le-sum">SUMÁRIO</button></div></div>
+<div class="card today" id="pdia"><span class="ref">PERGUNTA DO DIA</span><div id="pdia-c"><p class="note">Carregando…</p></div>
+</div>
+<div class="card"><div class="book"><div class="cv">O Evangelho Segundo o Espiritismo</div><div><h3>O Evangelho Segundo o Espiritismo</h3>
+<p>Allan Kardec (1864): os ensinos morais de Jesus explicados à luz do Espiritismo. O livro do Evangelho no Lar.</p></div></div>
+<div class="btns"><a class="btn gold" href="https://kardecpedia.com/obras-de-kardec/o-evangelho-segundo-o-espiritismo/federacao-espirita-brasileira/download/47" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v17H6.5a1.5 1.5 0 0 0 0 3H20v0H6.5A2.5 2.5 0 0 1 4 19.5z"/></svg>LER O LIVRO</a></div>
+<p class="note">Por enquanto abre no Kardecpedia, do Instituto de Divulgação Espírita Allan Kardec (IDEAK). Em breve, também dentro desta página.</p></div>
+</section>
+<section id="silencio"><h2>Momento <em>de silêncio</em></h2><div class="card" style="text-align:center">
+<div class="circle"><div class="breath" id="br"></div><b id="tm">5:00</b><span id="st">RESPIRE</span></div>
+<button class="tap" id="go" type="button">COMEÇAR</button></div>
+<p class="note">Cinco minutos para a prece. Acompanhe o círculo: ele cresce quando você inspira e diminui quando você solta o ar.</p></section>
+<section id="pecas"><h2>Linha <em>espírita</em></h2><div class="grid"><a class="prod here" href="https://fusaolab3d.com.br/products/vela-eterna-maos-em-oracao-espirita" target="_blank" rel="noopener"><img src="img/v-maos.jpg" alt="Vela Eterna Mãos em prece" loading="lazy"><p>Vela Eterna · Mãos em prece<small>R$ 210 · com esta página de prece</small></p></a><a class="prod" href="https://fusaolab3d.com.br" target="_blank" rel="noopener"><img src="img/marcador_v01.jpg" alt="Marcador Inteligente" loading="lazy"><p>Marcador Inteligente<small>QR Code e chip NFC</small></p></a><a class="prod" href="https://fusaolab3d.com.br" target="_blank" rel="noopener"><img src="img/retrato.jpg" alt="Retrato de Luz" loading="lazy"><p>Retrato de Luz<small>Joanna de Ângelis</small></p></a><a class="prod" href="https://fusaolab3d.com.br" target="_blank" rel="noopener"><img src="img/suporte.jpg" alt="Suporte para O Evangelho" loading="lazy"><p>Suporte para O Evangelho<small>leitura no altar de casa</small></p></a><a class="prod" href="https://fusaolab3d.com.br" target="_blank" rel="noopener"><img src="img/plaquinha.jpg" alt="Plaquinha Abraço de Luz" loading="lazy"><p>Plaquinha Abraço de Luz<small>um presente de luz</small></p></a></div>
+<p class="note">Produtos da Fusão Lab 3D. Todas abrem esta mesma página ao encostar o celular ou ler o QR Code.</p><a class="cta" href="https://fusaolab3d.com.br" target="_blank" rel="noopener">CONHEÇA NO SITE</a><a class="fx-gift" href="https://fusaolab3d.com.br/discount/BEMVINDO5?redirect=/collections/fusao-de-fe-espirita" target="_blank" rel="noopener"><div><b>Presenteie alguém</b><small>Um produto de luz para quem você ama. 5% de desconto na 1ª compra, já aplicado no link.</small></div><i>PRESENTEAR</i></a><div class="fx-card"><div class="fx-ey">Tenha este menu sempre à mão</div><p class="fx-sm" style="margin-top:4px">Salve esta página na tela do celular para abrir a oração mesmo longe da vela.</p><div class="fx-home"><div><b>IPHONE</b>Toque em Compartilhar (o quadrado com a seta) e depois em <i>Adicionar à Tela de Início</i>.</div><div><b>ANDROID</b>Toque nos três pontinhos do navegador e depois em <i>Adicionar à tela inicial</i>.</div></div></div></section>
+<div class="rd" id="rd" role="dialog" aria-label="Leitura de O Livro dos Espíritos"><div class="top"><button type="button" id="rd-x">‹ VOLTAR</button><b id="rd-t">O Livro dos Espíritos</b><button type="button" id="rd-f" aria-label="Procurar no livro"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21"/></svg></button><button type="button" id="rd-s" aria-label="Sumário">☰</button><button type="button" id="rd-m" aria-label="Letra menor">A−</button><button type="button" id="rd-p" aria-label="Letra maior">A+</button></div><div class="body" id="rd-b"></div></div>
+<footer><b>FUSÃO DE FÉ</b><br>uma linha da <a href="https://fusaolab3d.com.br" target="_blank" rel="noopener">Fusão Lab 3D</a> · imagens ilustrativas<br><a href="https://instagram.com/fusaodefe" target="_blank" rel="noopener">Instagram @fusaodefe</a> · <a href="https://www.youtube.com/channel/UCjVvzwedxbSRvp_olp1OTIw" target="_blank" rel="noopener">YouTube</a> · <a href="https://open.spotify.com/artist/5qDiDGeoLwki83jKmVoGVi" target="_blank" rel="noopener">Spotify</a> · <a href="https://wa.me/5521991818387" target="_blank" rel="noopener">WhatsApp</a><br><a href="mailto:fusaodefe@fusaolab3d.com.br">fusaodefe@fusaolab3d.com.br</a></footer>
+<script>
+document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>{document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('on',x===b));document.querySelectorAll('section').forEach(s=>s.classList.toggle('on',s.id===b.dataset.s));window.scrollTo({top:0,behavior:'smooth'});});
+let T=null;const go=document.getElementById('go'),tm=document.getElementById('tm'),st=document.getElementById('st'),br=document.getElementById('br');
+go.onclick=()=>{if(T){clearInterval(T);T=null;go.textContent='COMEÇAR';tm.textContent='5:00';st.textContent='RESPIRE';br.classList.remove('in');return;}
+let s=300,k=0;go.textContent='PARAR';const tick=()=>{const m=Math.floor(s/60),ss=String(s%60).padStart(2,'0');tm.textContent=m+':'+ss;
+if(k%4===0){const inn=(k/4)%2===0;br.classList.toggle('in',inn);st.textContent=inn?'INSPIRE':'SOLTE O AR';}k++;
+if(s--<=0){clearInterval(T);T=null;go.textContent='COMEÇAR';st.textContent='PAZ';br.classList.remove('in');}};tick();T=setInterval(tick,1000);};
+
+/* ---------- O Livro dos Espíritos ---------- */
+const LS={get(k,d){try{const v=localStorage.getItem(k);return v==null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+let LE=null,leP=null;const rd=document.getElementById('rd'),rdb=document.getElementById('rd-b'),rdt=document.getElementById('rd-t');
+let cur=LS.get('le-cap',0),fz=LS.get('le-fz',1);rd.style.setProperty('--fz',fz);
+function carrega(){if(LE)return Promise.resolve(LE);if(!leP)leP=fetch('le.json').then(r=>r.json()).then(d=>(LE=d));return leP;}
+const strip=h=>{const d=document.createElement('div');d.innerHTML=h;return d.textContent||''};
+function qCap(n){n=Math.max(1,Math.min(1019,n|0));for(let i=n;i>0;i--){if(LE.q[i]!=null)return [LE.q[i],i]}return [2,1]}
+function abre(i,alvo,termo){cur=Math.max(0,Math.min(LE.caps.length-1,i));LS.set('le-cap',cur);const c=LE.caps[cur];
+ rdt.textContent=c.t;rdb.innerHTML=`<div class="txt">${c.p?`<div class="pt">${c.p}</div>`:''}<h1>${c.t}</h1>${c.h}</div><div class="nav2"><button type="button" id="ant"${cur?'':' disabled'}>‹ ANTERIOR</button><button type="button" id="sum2">SUMÁRIO</button><button type="button" id="prx"${cur<LE.caps.length-1?'':' disabled'}>PRÓXIMO ›</button></div>`;
+ rd.classList.add('on');document.body.style.overflow='hidden';
+ rdb.querySelector('#ant').onclick=()=>abre(cur-1);rdb.querySelector('#prx').onclick=()=>abre(cur+1);rdb.querySelector('#sum2').onclick=sumario;
+ rdb.querySelectorAll('a[href^="#"]').forEach(a=>a.onclick=e=>{e.preventDefault();const t=rdb.querySelector(CSS.escape?('#'+CSS.escape(a.getAttribute('href').slice(1))):a.getAttribute('href'));if(t)t.scrollIntoView({block:'center'})});
+ rdb.scrollTop=0;
+ if(alvo){const t=rdb.querySelector('#'+alvo);if(t){const h=t.closest('h3')||t;setTimeout(()=>h.scrollIntoView({block:'start'}),30)}}
+ else if(termo){marca(termo)}
+ else{const sc=LS.get('le-sc',null);if(sc&&sc[0]===cur)setTimeout(()=>{rdb.scrollTop=sc[1]},30)}}
+function marca(termo){const w=document.createTreeWalker(rdb.querySelector('.txt'),NodeFilter.SHOW_TEXT);const q=norm(termo);let n;
+ while((n=w.nextNode())){const i=norm(n.nodeValue).indexOf(q);if(i>=0){const r=document.createRange();r.setStart(n,i);r.setEnd(n,i+termo.length);const m=document.createElement('mark');try{r.surroundContents(m)}catch(e){}setTimeout(()=>m.scrollIntoView({block:'center'}),30);return}}}
+const norm=s=>s.normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase();
+function sumario(){rd.classList.add('on');document.body.style.overflow='hidden';rdt.textContent='Sumário';let p=null,h='<div class="sum">';
+ LE.caps.forEach((c,i)=>{if(c.p!==p){p=c.p;if(p)h+=`<div class="pt">${p}</div>`;else if(i)h+='<div class="pt">&nbsp;</div>'}h+=`<button type="button" data-c="${i}"${i===cur?' class="cur"':''}>${c.t}</button>`});
+ rdb.innerHTML=h+'</div>';rdb.scrollTop=0;rdb.querySelectorAll('[data-c]').forEach(b=>b.onclick=()=>abre(+b.dataset.c));}
+rdb.addEventListener('scroll',()=>{if(rdb.querySelector('.txt'))LS.set('le-sc',[cur,rdb.scrollTop])},{passive:true});
+document.getElementById('rd-x').onclick=()=>{rd.classList.remove('on');document.body.style.overflow=''};
+document.getElementById('rd-s').onclick=sumario;
+const fzSet=d=>{fz=Math.max(.85,Math.min(1.5,Math.round((fz+d)*100)/100));rd.style.setProperty('--fz',fz);LS.set('le-fz',fz)};
+document.getElementById('rd-m').onclick=()=>fzSet(-.1);document.getElementById('rd-p').onclick=()=>fzSet(.1);
+document.getElementById('le-ler').onclick=()=>carrega().then(()=>abre(cur));
+document.getElementById('le-sum').onclick=()=>carrega().then(sumario);
+function qa(n){const [ci,nn]=qCap(n);const d=document.createElement('div');d.innerHTML=LE.caps[ci].h;const sp=d.querySelector('#q'+nn);if(!sp)return null;const h=sp.closest('h3');
+ const q=h.textContent.replace(/^\d+\s*—\s*/,'');let ans='',com=[];let e=h.nextElementSibling;
+ while(e&&!/^H[1-3]$/.test(e.tagName)){const t=e.textContent.trim();if(t){if(!ans&&e.querySelector('em')&&t.startsWith('—'))ans=t.replace(/^—\s*/,'');else if(!e.classList.contains('footnote')&&com.length<2&&!/^As perguntas feitas/.test(t))com.push(t)}e=e.nextElementSibling}
+ return {n:nn,ci,q,ans,com}}
+function mostraQ(n){const x=qa(n);const box=document.getElementById('pdia-c');if(!x){box.innerHTML='<p class="note">Pergunta não encontrada.</p>';return}
+ box.innerHTML=`<div class="qa"><h4><b>${x.n}.</b> ${x.q}</h4>${x.ans?`<p class="ans">“${x.ans}”</p>`:''}${x.com.map(c=>`<p class="com">${c}</p>`).join('')}<button type="button" class="open">LER NO LIVRO ›</button></div>`;
+ box.querySelector('.open').onclick=()=>abre(x.ci,'q'+x.n);}
+function doDia(){const qs=Object.keys(LE.q).map(Number).sort((a,b)=>a-b);const t=new Date();const dia=Math.floor((Date.UTC(t.getFullYear(),t.getMonth(),t.getDate())-Date.UTC(2026,0,1))/864e5);
+ return qs[((dia*37)%qs.length+qs.length)%qs.length]}
+/* ---------- Procurar no livro (palavra, tema ou nº da pergunta) ---------- */
+const esc=t=>t.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+let SEG=null;
+function segs(){if(SEG)return SEG;SEG=[];const tpl=document.createElement('template');
+ LE.caps.forEach((c,ci)=>{tpl.innerHTML=c.h;let cur=null,sec=c.t;const push=()=>{if(cur&&(cur.n||cur.ps.length))SEG.push(cur)};
+  [...tpl.content.children].forEach(e=>{
+   const sp=e.tagName==='H3'&&e.querySelector('span[id^="q"]');
+   if(sp){push();cur={n:+sp.id.slice(1),ci,tit:e.textContent.replace(/^\s*\d+\s*—\s*/,'').trim(),ps:[]};return}
+   if(/^H[1-6]$/.test(e.tagName)){push();sec=e.textContent.trim()||c.t;cur=null;return}
+   const tx=e.textContent.replace(/\s+/g,' ').trim();if(!tx)return;
+   if(!cur)cur={n:null,ci,tit:sec,ps:[]};
+   cur.ps.push({tx,ans:!!(cur.n&&e.querySelector('em')&&tx.startsWith('—')),nt:norm(tx)});});
+  push();});
+ SEG.forEach(x=>{x.tn=norm(x.tit)});return SEG}
+function nmap(t){let o='',m=[];for(let i=0;i<t.length;i++){const c=t[i].normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase();for(const ch of c){o+=ch;m.push(i)}}return [o,m]}
+function hl(t,re){if(!re)return esc(t);const [o,m]=nmap(t);let out='',last=0,x;re.lastIndex=0;
+ while((x=re.exec(o))){const a0=x.index+x[1].length,a=m[a0],b=m[a0+x[2].length-1]+1;out+=esc(t.slice(last,a))+'<mark>'+esc(t.slice(a,b))+'</mark>';last=b;if(re.lastIndex===x.index)re.lastIndex++}
+ return out+esc(t.slice(last))}
+const tem=(nt,re)=>{re.lastIndex=0;return re.test(nt)};
+function trecho(t,re){const [o,m]=nmap(t);re.lastIndex=0;const x=re.exec(o);if(!x)return hl(t,re);const a=m[x.index+x[1].length];
+ let i=Math.max(0,a-140),j=Math.min(t.length,a+240);if(i>0){const sp=t.indexOf(' ',i);if(sp>0&&sp<a)i=sp+1}if(j<t.length){const sp=t.lastIndexOf(' ',j);if(sp>a)j=sp}
+ return (i>0?'… ':'')+hl(t.slice(i,j),re)+(j<t.length?' …':'')}
+function cartao(x,re,todo){const cap=LE.caps[x.ci];
+ const ps=x.ps.map((p,k)=>{const m=re&&!p.ans&&tem(p.nt,re);const vis=todo||!re||p.ans||m;
+  const full=`<p class="${p.ans?'ans':'com'}${vis?'':' hid'}">${p.ans?'“'+hl(p.tx.replace(/^—\s*/,''),re)+'”':hl(p.tx,re)}</p>`;
+  if(todo||!m||p.tx.length<=380)return full;
+  const sn=trecho(p.tx,re);return `<p class="com snip">${sn}</p>`+full.replace('<p class="com"','<p class="com hid"')});
+ const esc_=ps.some(p=>p.includes(' hid"'));
+ return `<div class="qa res${todo?' all':''}"><span class="pn">${x.n?'Pergunta '+x.n:esc(cap.t.replace(/\s*Livro\s+\S+$/,''))}</span><h4>${x.n?'<b>'+x.n+'.</b> ':''}${hl(x.tit,re)}</h4>${ps.join('')}${esc_?'<button type="button" class="mais">VER O TEXTO COMPLETO ⌄</button>':''}<button type="button" class="open" data-ci="${x.ci}" data-n="${x.n||''}">LER NO LIVRO ›</button></div>`}
+function liga(box,termo){box.querySelectorAll('.mais').forEach(b=>b.onclick=()=>{b.closest('.res').classList.add('all');b.remove()});
+ box.querySelectorAll('.open').forEach(b=>b.onclick=()=>{const n=b.dataset.n;abre(+b.dataset.ci,n?'q'+n:null,n?null:termo)})}
+function procura(raw){const out=document.getElementById('bres');const termo=raw.trim();if(!termo){out.innerHTML='';return}
+ const num=termo.match(/^(?:p(?:ergunta)?\.?\s*|n[ºo°]?\.?\s*)?(\d{1,4})$/i);
+ if(num){const n=+num[1];if(n<1||n>1019){out.innerHTML='<p class="note">As perguntas vão de 1 a 1019.</p>';return}
+  out.innerHTML='<p class="note">Procurando…</p>';
+  carrega().then(()=>{const S=segs();let x=S.find(y=>y.n===n);if(!x){const qs=S.filter(y=>y.n&&y.n<=n);x=qs[qs.length-1]}
+   out.innerHTML=x?`<p class="tot">Pergunta ${n}</p>`+cartao(x,null,true):'<p class="note">Pergunta não encontrada.</p>';liga(out,termo)});return}
+ if(norm(termo).replace(/[^a-z0-9]/g,'').length<3){out.innerHTML='<p class="note">Digite ao menos 3 letras ou o número da pergunta.</p>';return}
+ out.innerHTML='<p class="note">Procurando…</p>';
+ carrega().then(()=>{const S=segs();const pat=norm(termo).trim().split(/\s+/).map(w=>w.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')).join('\\s+');
+  const re=new RegExp('(^|[^a-z0-9])('+pat+')','g');
+  const R0=S.filter(x=>tem(x.tn,re)||x.ps.some(p=>tem(p.nt,re)));const R=R0.filter(x=>x.n).concat(R0.filter(x=>!x.n));
+  if(!R.length){out.innerHTML=`<p class="note">Nada encontrado para “${esc(termo)}”. Tente outra palavra ou o número da pergunta.</p>`;return}
+  const nq=R.filter(x=>x.n).length;let vez=0;const LOTE=25;
+  out.innerHTML=`<p class="tot">${R.length} ${R.length>1?'trechos':'trecho'} com “${esc(termo)}”<small>${nq} ${nq===1?'pergunta':'perguntas'} com resposta${R.length>nq?' · '+(R.length-nq)+' '+((R.length-nq)>1?'textos':'texto')+' de introdução e comentários no fim':''} · na ordem do livro</small></p><div class="lst"></div>`;
+  const lst=out.querySelector('.lst');
+  const mais=()=>{const p=R.slice(vez,vez+LOTE);vez+=p.length;const old=out.querySelector('.more');if(old)old.remove();
+   const d=document.createElement('div');d.innerHTML=p.map(x=>cartao(x,re,false)).join('');liga(d,termo);while(d.firstChild)lst.appendChild(d.firstChild);
+   if(vez<R.length){const b=document.createElement('button');b.type='button';b.className='more';b.textContent=`MOSTRAR MAIS ${Math.min(LOTE,R.length-vez)} (faltam ${R.length-vez})`;b.onclick=mais;out.appendChild(b)}};
+  mais();});}
+document.getElementById('busca').onsubmit=e=>{e.preventDefault();const i=document.getElementById('bq');i.blur();procura(i.value)};
+document.querySelectorAll('.chips [data-t]').forEach(b=>b.onclick=()=>{document.getElementById('bq').value=b.dataset.t;procura(b.dataset.t)});
+document.getElementById('rd-f').onclick=()=>{rd.classList.remove('on');document.body.style.overflow='';const nb=document.querySelector('nav button[data-s=livros]');if(!nb.classList.contains('on'))nb.click();
+ setTimeout(()=>{document.getElementById('lupa').scrollIntoView({block:'start',behavior:'smooth'});document.getElementById('bq').focus()},60)};
+document.querySelector('nav button[data-s=livros]').addEventListener('click',()=>{carrega().then(()=>{if(!document.querySelector('#pdia-c .qa'))mostraQ(doDia())})});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&rd.classList.contains('on')){rd.classList.remove('on');document.body.style.overflow=''}});
+</script><script>
+(function(){function f(s){s=Math.floor(s||0);return Math.floor(s/60)+':'+String(s%60).padStart(2,'0')}
+function mus(id,cardId,ini){var A=document.getElementById(id+'A'),C=document.getElementById(cardId),B=document.getElementById(id+'B'),Bar=document.getElementById(id+'Bar'),T=document.getElementById(id+'T');if(!A)return;A.volume=.7;
+B.addEventListener('click',function(){if(A.paused){if(window.lpStop)window.lpStop();document.querySelectorAll('audio').forEach(function(o){if(o!==A&&!o.paused)o.pause()});A.play();C.classList.add('on')}else{A.pause();C.classList.remove('on')}});
+A.addEventListener('timeupdate',function(){if(A.duration){Bar.style.width=(A.currentTime/A.duration*100)+'%';T.textContent=f(A.currentTime)+' / '+f(A.duration)}});
+A.addEventListener('pause',function(){C.classList.remove('on')});
+A.addEventListener('ended',function(){C.classList.remove('on');Bar.style.width='0';T.textContent=ini})}
+mus('ab','ab','TOQUE PARA OUVIR AQUI');mus('mq','mq','TOQUE PARA OUVIR');})();
+</script>
+<script>
+(function(){var V='k';try{V=localStorage.getItem('lpVoz')||'k'}catch(e){}
+var A=null,B=null;function stop(){if(A){A.pause();A=null}if(B){var p=B.closest('.player');p.querySelector('.bar i').style.width='0';p.querySelector('.who').textContent='ouvir';B.innerHTML='<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>';B=null}}window.lpStop=stop;
+function setV(v){V=v;try{localStorage.setItem('lpVoz',v)}catch(e){}document.querySelectorAll('#prece .seg button').forEach(function(b){b.classList.toggle('on',b.dataset.v===v)});stop()}
+document.querySelectorAll('#prece .seg button').forEach(function(b){b.onclick=function(){setV(b.dataset.v)}});setV(V);
+document.querySelectorAll('#prece .play').forEach(function(b){b.onclick=function(){var same=B===b;stop();if(same)return;
+ document.querySelectorAll('audio.musA').forEach(function(m){if(!m.paused)m.pause()});
+ A=new Audio('aud/'+V+'/'+b.dataset.a+'.mp3');B=b;var p=b.closest('.player'),bar=p.querySelector('.bar i'),who=p.querySelector('.who');
+ b.innerHTML='<svg viewBox="0 0 24 24"><path d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg>';who.textContent=V==='k'?'voz feminina':'voz masculina';
+ A.ontimeupdate=function(){if(A&&A.duration)bar.style.width=(A.currentTime/A.duration*100)+'%'};A.onended=stop;A.play().catch(stop)}});
+document.querySelectorAll('nav button').forEach(function(n){n.addEventListener('click',function(){if(n.dataset.s!=='prece')stop()})});
+})();
+</script>
+<script>window.FXCFG={"kind": "esp", "velas": {"maos": {"nome": "Mãos em prece", "curto": "Mãos em prece", "img": "v-maos.jpg", "fm": null, "hist": "A prece é o pensamento que se eleva a Deus e aos bons Espíritos. Mãos unidas e a cruz lembram o exemplo de Jesus, o guia e modelo. Acenda a vela, escolha uma prece e reserve alguns minutos de silêncio.", "oracao": "", "nov": null, "url": "https://fusaolab3d.com.br/products/vela-eterna-maos-em-oracao-espirita", "otit": "", "ntit": ""}}, "chooser": false, "hojeSel": "#musica", "pedidoSel": "#prece", "roteiro": true, "evLink": "https://kardecpedia.com/obras-de-kardec/o-evangelho-segundo-o-espiritismo/federacao-espirita-brasileira/download/47", "vibra": "Vibremos agora, em silêncio e com amor. Pela paz no mundo e entre as nações. Pelos doentes, nos hospitais e em suas casas. Pelos que sofrem de solidão, de fome ou de tristeza. Pelos que partiram e por quem sente saudade. Por quem nos magoou e por quem nós magoamos. Pelo nosso lar, para que nele morem a paz, o respeito e o amor. E por nós mesmos, para que tenhamos força de seguir no bem. Que os bons Espíritos levem estas vibrações a quem delas precisar. Assim seja."};</script>
+<script>
+{
+/* Fusão de Fé · recursos novos dos menus (25/11/2026): a sua vela (#santa), novena, pedido de oração,
+   compartilhar, modo noite, Salmos em 30 dias, roteiro do Evangelho no Lar. CFG vem do bloco acima. */
+const C = window.FXCFG || {};
+const $ = s => document.querySelector(s);
+const esc = t => String(t == null ? '' : t).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const LS = {get(k, d){try{const v = localStorage.getItem(k); return v == null ? d : JSON.parse(v)}catch(e){return d}}, set(k, v){try{localStorage.setItem(k, JSON.stringify(v))}catch(e){}}};
+const PLAY = '<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>';
+const WA = '<svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.3 0 .5l-.3.5-.4.4c-.1.1-.3.3-.1.6.2.3.7 1.2 1.6 1.9 1.1 1 2 1.3 2.3 1.4.3.1.4.1.6-.1l.8-1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.7-.1 1.3z"/></svg>';
+const WAN = '5521991818387';
+let toastT;
+function toast(m){let t = $('.fx-toast'); if(!t){t = document.createElement('div'); t.className = 'fx-toast'; document.body.appendChild(t)} t.textContent = m; t.classList.add('on'); clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('on'), 2600)}
+const vozAtual = () => { try { if (typeof voz !== 'undefined') return voz } catch(e){} return LS.get('lpVoz', null) || (function(){try{return localStorage.getItem('lpVoz') || 'k'}catch(e){return 'k'}})() };
+
+/* ---------- áudio próprio, que conversa com o player de cada menu ---------- */
+let fxA = null, fxBtn = null, fxQ = [];
+function fxStopOwn(){ if (fxA){ try{fxA.pause()}catch(e){} fxA = null } fxQ = []; if (fxBtn){ fxBtn.innerHTML = fxBtn.dataset.l || fxBtn.innerHTML; fxBtn = null } }
+const origStop = window.stopAudio, origLp = window.lpStop;
+if (origStop) window.stopAudio = function(){ fxStopOwn(); return origStop.apply(this, arguments) };
+if (origLp) window.lpStop = function(){ fxStopOwn(); return origLp.apply(this, arguments) };
+function stopOthers(){ try{ origStop && origStop() }catch(e){} try{ origLp && origLp() }catch(e){} document.querySelectorAll('audio').forEach(a => { try{a.pause()}catch(e){} }) }
+function fxPlay(names, btn){
+  const same = fxBtn === btn; fxStopOwn(); if (same) return;
+  stopOthers(); fxQ = names.slice(); fxBtn = btn; btn.dataset.l = btn.dataset.l || btn.innerHTML; btn.innerHTML = '■ Parar';
+  const next = () => { if (!fxQ.length){ fxStopOwn(); return } const n = fxQ.shift(); fxA = new Audio('aud/' + vozAtual() + '/' + n + '.mp3'); fxA.onended = next; fxA.play().catch(() => { toast('Não consegui tocar o áudio. Toque de novo.'); fxStopOwn() }) };
+  next();
+}
+const night = {};
+
+/* ---------- 1. a sua vela (#aparecida, #fatima…) ---------- */
+const V = C.velas || {};
+function festaInfo(fm){
+  if (!fm) return '';
+  const now = new Date(), y = now.getFullYear(), hoje = new Date(y, now.getMonth(), now.getDate());
+  let d = new Date(y, fm[0] - 1, fm[1]); if (d < hoje) d = new Date(y + 1, fm[0] - 1, fm[1]);
+  const dias = Math.round((d - hoje) / 864e5);
+  const MES = ['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
+  const nome = fm[1] + ' de ' + MES[fm[0] - 1];
+  if (dias === 0) return '<b>Hoje é o dia da festa!</b> ' + nome;
+  if (dias <= 30) return 'Festa em ' + nome + ' · <b>falta' + (dias > 1 ? 'm ' + dias + ' dias' : ' 1 dia') + '</b>' + (dias >= 9 && dias <= 12 ? '<br>Comece a novena em ' + (dias === 9 ? 'hoje' : (dias - 9) + ' dia' + (dias - 9 > 1 ? 's' : '')) + ' para terminar na véspera.' : '');
+  return 'Festa em ' + nome;
+}
+function novState(id){ return LS.get('fxNov_' + id, {done: [], cur: 1}) }
+function renderNov(box, id, v){
+  const st = novState(id), n = v.nov;
+  const cur = Math.min(9, Math.max(1, st.cur || 1));
+  const DN = ['Primeiro','Segundo','Terceiro','Quarto','Quinto','Sexto','Sétimo','Oitavo','Nono'];
+  box.innerHTML = '<p class="fx-sm">Reze um dia por vez, nove dias seguidos, de preferência com a vela acesa. O celular guarda em que dia você está.</p>' +
+    '<div class="fx-nov">' + DN.map((_, i) => '<button type="button" data-d="' + (i + 1) + '" class="' + (st.done.includes(i + 1) ? 'ok ' : '') + (i + 1 === cur ? 'cur' : '') + '" aria-label="Dia ' + (i + 1) + '">' + (i + 1) + '</button>').join('') + '</div>' +
+    '<div class="fx-ey" style="margin-top:14px">' + DN[cur - 1] + ' dia</div>' +
+    '<div class="fx-txt">' + esc(n.ini) + '\n\n' + esc(n.dias[cur - 1]) + '\n\n' + esc(n.fim) + '</div>' +
+    '<div class="fx-row"><button type="button" class="fx-b au" data-nplay>' + PLAY + ' OUVIR O ' + (cur) + 'º DIA</button>' +
+    '<button type="button" class="fx-b" data-nok>' + (st.done.includes(cur) ? '✓ REZADO' : 'REZEI HOJE ✓') + '</button></div>' +
+    (st.done.length ? '<button type="button" class="fx-b" data-nreset style="margin-top:8px;width:100%">RECOMEÇAR A NOVENA</button>' : '');
+  box.querySelectorAll('[data-d]').forEach(b => b.onclick = () => { const s = novState(id); s.cur = +b.dataset.d; LS.set('fxNov_' + id, s); renderNov(box, id, v) });
+  box.querySelector('[data-nplay]').onclick = e => fxPlay(['n-' + id + '-i', 'n-' + id + '-' + cur, 'n-' + id + '-f'], e.currentTarget);
+  box.querySelector('[data-nok]').onclick = () => { const s = novState(id); if (!s.done.includes(cur)) s.done.push(cur); s.cur = Math.min(9, cur + 1); LS.set('fxNov_' + id, s); fxStopOwn(); toast(s.done.length >= 9 ? 'Novena concluída. Que a graça venha!' : 'Dia ' + cur + ' rezado. Amanhã, o ' + s.cur + 'º dia.'); renderNov(box, id, v) };
+  const r = box.querySelector('[data-nreset]'); if (r) r.onclick = () => { LS.set('fxNov_' + id, {done: [], cur: 1}); renderNov(box, id, v) };
+}
+function renderSua(){
+  const host = $(C.hojeSel); if (!host) return;
+  let card = $('#fx-sua'); if (!card){ card = document.createElement('div'); card.id = 'fx-sua'; card.className = 'fx-card'; const h2 = host.querySelector('h2'); host.insertBefore(card, h2 ? h2 : host.firstChild) }
+  const id = (location.hash || '').replace('#', '').toLowerCase(), v = V[id];
+  if (!v){
+    if (!C.chooser){ card.remove(); return }
+    card.innerHTML = '<div class="fx-ey">A sua vela</div><p class="fx-sm" style="margin-top:4px">Toque no nome da sua vela para abrir a oração, a história e a novena dela.</p>' +
+      '<div class="fx-chips">' + Object.keys(V).map(k => '<button type="button" data-v="' + k + '">' + esc(V[k].curto) + '</button>').join('') + '</div>';
+    card.querySelectorAll('[data-v]').forEach(b => b.onclick = () => { location.hash = b.dataset.v });
+    return;
+  }
+  try { LS.set('fxVela', id) } catch(e){}
+  card.innerHTML = '<div class="fx-sua"><img src="img/' + esc(v.img) + '" alt="' + esc(v.nome) + '"><div><div class="fx-ey">A sua vela</div><h3>' + esc(v.nome) + '</h3><div class="fx-festa">' + festaInfo(v.fm) + '</div></div></div>' +
+    (v.oracao ? '<div class="fx-row"><button type="button" class="fx-b au" data-oplay>' + PLAY + ' OUVIR A ORAÇÃO</button></div>' +
+      '<details><summary>' + esc(v.otit).toUpperCase() + '</summary><div class="fx-txt">' + esc(v.oracao) + '</div></details>' : '') +
+    '<details><summary>' + (v.nov ? 'A HISTÓRIA' : 'SOBRE ESTA VELA') + '</summary><div class="fx-hist">' + esc(v.hist) + '</div></details>' +
+    (v.nov ? '<details id="fx-novd"' + (novState(id).done.length ? ' open' : '') + '><summary>' + esc(v.ntit).toUpperCase() + '</summary><div id="fx-novb"></div></details>' : '') +
+    '<div class="fx-row"><a class="fx-b" href="' + esc(v.url) + '" target="_blank" rel="noopener">VER O PRODUTO</a>' + (C.chooser ? '<button type="button" class="fx-b" data-troca>TROCAR DE VELA</button>' : '') + '</div>';
+  const op = card.querySelector('[data-oplay]'); if (op) op.onclick = e => fxPlay(['c-' + id], e.currentTarget);
+  const tr = card.querySelector('[data-troca]'); if (tr) tr.onclick = () => { history.replaceState(null, '', location.pathname + location.search); renderSua() };
+  if (v.nov) renderNov(card.querySelector('#fx-novb'), id, v);
+}
+if (Object.keys(V).length){
+  if (!location.hash && C.chooser){ const last = LS.get('fxVela', null); if (last && V[last]) { try{ history.replaceState(null, '', '#' + last) }catch(e){} } }
+  renderSua(); window.addEventListener('hashchange', () => { renderSua(); const nb = document.querySelector('nav button[data-s="' + C.hojeSel.slice(1) + '"]'); if (nb) nb.click(); window.scrollTo({top: 0}) });
+}
+
+/* ---------- 2. compartilhar a oração do dia ---------- */
+if (C.shareSel && $(C.shareSel)){
+  const host = $(C.shareSel).closest('.card');
+  const a = document.createElement('a'); a.className = 'fx-b'; a.target = '_blank'; a.rel = 'noopener'; a.style.marginTop = '12px'; a.style.width = '100%'; a.innerHTML = WA + (C.kind === 'ev' ? ' ENVIAR ESTA PALAVRA NO WHATSAPP' : ' ENVIAR ESTA ORAÇÃO NO WHATSAPP');
+  host.appendChild(a);
+  const upd = () => { const ref = C.shareRef && $(C.shareRef) ? $(C.shareRef).textContent + '\n' : ''; const t = ($(C.shareSel).textContent || '').trim();
+    a.href = 'https://wa.me/?text=' + encodeURIComponent('🕯️ ' + C.shareTitle + '\n\n' + ref + t + '\n\nVela Eterna · Fusão de Fé\nfusaolab3d.com.br/fe') };
+  upd(); new MutationObserver(upd).observe($(C.shareSel), {childList: true, characterData: true, subtree: true});
+}
+
+/* ---------- 3. pedido de oração ---------- */
+if (C.pedidoSel && $(C.pedidoSel)){
+  const sec = $(C.pedidoSel), card = document.createElement('div'); card.className = 'fx-card'; card.id = 'fx-ped';
+  card.innerHTML = '<div class="fx-ey">Pedido de oração</div><p class="fx-sm" style="margin-top:4px">Escreva a sua intenção. Ela fica guardada só neste celular, para você lembrar dela cada vez que acender a vela.</p>' +
+    '<textarea class="fx-ta" id="fx-pt" maxlength="400" placeholder="Por quem ou pelo que você quer rezar?"></textarea>' +
+    '<div class="fx-row"><button type="button" class="fx-b dk" id="fx-ps">GUARDAR</button><a class="fx-b" id="fx-pw" target="_blank" rel="noopener">' + WA + ' PEDIR ORAÇÃO À FUSÃO DE FÉ</a></div><ul class="fx-list" id="fx-pl"></ul>';
+  const after = C.pedidoAfter ? sec.querySelector(C.pedidoAfter) : null;
+  if (after) after.after(card); else sec.appendChild(card);
+  const ta = card.querySelector('#fx-pt'), pw = card.querySelector('#fx-pw');
+  if (!C.pedidoWA) pw.remove();   /* botão do WhatsApp guardado para mais tarde: ligar com pedidoWA:true no FXCFG */
+  const hw = () => { if (!pw.isConnected) return; const v = ta.value.trim() || ((LS.get('fxPed', []).find(p => !p.ok) || {}).t || ''); pw.href = 'https://wa.me/' + WAN + '?text=' + encodeURIComponent('Olá, Fusão de Fé! Gostaria de pedir uma oração' + (v ? ': ' + v : '.') + '\n(Vela Eterna · ' + ({cat:'católica', ev:'evangélica', esp:'espírita'}[C.kind] || '') + ')') };
+  ta.oninput = hw; hw();
+  const draw = () => { const L = LS.get('fxPed', []); const ul = card.querySelector('#fx-pl');
+    ul.innerHTML = L.map((p, i) => '<li class="' + (p.ok ? 'ok' : '') + '"><span>' + esc(p.t) + '<small>' + esc(p.d) + (p.ok ? ' · graça alcançada 🙏' : '') + '</small></span><button type="button" data-ok="' + i + '">' + (p.ok ? 'DESFAZER' : 'GRAÇA ✓') + '</button><button type="button" data-rm="' + i + '" aria-label="Apagar">✕</button></li>').join('');
+    ul.querySelectorAll('[data-ok]').forEach(b => b.onclick = () => { const L = LS.get('fxPed', []); L[+b.dataset.ok].ok = !L[+b.dataset.ok].ok; LS.set('fxPed', L); draw() });
+    ul.querySelectorAll('[data-rm]').forEach(b => b.onclick = () => { const L = LS.get('fxPed', []); L.splice(+b.dataset.rm, 1); LS.set('fxPed', L); draw() }); hw() };
+  card.querySelector('#fx-ps').onclick = () => { const t = ta.value.trim(); if (!t) { toast('Escreva a sua intenção primeiro.'); return } const L = LS.get('fxPed', []); L.unshift({t, d: new Date().toLocaleDateString('pt-BR'), ok: false}); LS.set('fxPed', L.slice(0, 30)); ta.value = ''; hw(); draw(); toast('Intenção guardada neste celular.') };
+  draw();
+}
+
+/* ---------- 4. modo noite ---------- */
+{
+  const mb = document.createElement('button'); mb.type = 'button'; mb.className = 'fx-moon'; mb.setAttribute('aria-label', 'Modo noite');
+  mb.innerHTML = '<svg viewBox="0 0 24 24"><path d="M21 14.5A9 9 0 0 1 9.5 3a9 9 0 1 0 11.5 11.5z"/></svg>'; document.body.appendChild(mb);
+  const ov = document.createElement('div'); ov.className = 'fx-night'; ov.setAttribute('role', 'dialog'); ov.setAttribute('aria-label', 'Modo noite');
+  ov.innerHTML = '<button type="button" class="fx-b fx-x" data-x>SAIR</button><div class="fx-flame"></div><h3>Modo noite</h3><p>Deixe o celular ao lado da vela. A música toca baixinho e para sozinha no tempo que você escolher.</p>' +
+    '<div class="fx-row" style="margin-top:18px"><button type="button" class="fx-b" data-m="15">15 MIN</button><button type="button" class="fx-b" data-m="30">30 MIN</button><button type="button" class="fx-b" data-m="60">1 HORA</button><button type="button" class="fx-b" data-m="0">PARAR</button></div><div class="fx-left" data-left></div>';
+  document.body.appendChild(ov);
+  let tmr = null, end = 0, lock = null;
+  const left = ov.querySelector('[data-left]');
+  function stopN(msg){ clearInterval(tmr); tmr = null; if (night.audio){ const a = night.audio; let v = a.volume; const f = setInterval(() => { v -= .05; if (v <= 0){ clearInterval(f); a.pause() } else a.volume = v }, 150) } ov.querySelectorAll('[data-m]').forEach(b => b.classList.remove('on')); left.textContent = msg || ''; try{ lock && lock.release() }catch(e){} lock = null }
+  ov.querySelectorAll('[data-m]').forEach(b => b.onclick = async () => {
+    const m = +b.dataset.m; if (!m){ stopN('Boa noite. Deus te abençoe.'); return }
+    stopOthers(); fxStopOwn();
+    if (!night.audio){ night.audio = new Audio('aud/musica/quiet-with-god.mp3'); night.audio.loop = true }
+    night.audio.volume = .55; night.audio.play().catch(() => toast('Toque de novo para tocar a música.'));
+    ov.querySelectorAll('[data-m]').forEach(x => x.classList.toggle('on', x === b));
+    end = Date.now() + m * 60000; clearInterval(tmr);
+    const tick = () => { const s = Math.max(0, Math.round((end - Date.now()) / 1000)); left.textContent = 'A MÚSICA PARA EM ' + Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0'); if (s <= 0) stopN('Boa noite. Deus te abençoe.') };
+    tick(); tmr = setInterval(tick, 1000);
+    try { if (navigator.wakeLock) lock = await navigator.wakeLock.request('screen') } catch(e){}
+  });
+  mb.onclick = () => { ov.classList.add('on') };
+  ov.querySelector('[data-x]').onclick = () => { ov.classList.remove('on') };
+}
+
+/* ---------- 5. Salmos em 30 dias (evangélico) ---------- */
+if (C.salmos && $('#palavras')){
+  const card = document.createElement('div'); card.className = 'fx-card'; card.id = 'fx-sal';
+  $('#palavras').appendChild(card);
+  const goRead = n => { const nb = document.querySelector('nav button[data-s="biblia"]'); if (nb) nb.click(); const q = $('#bx-q'), f = $('#bx-f'); if (q && f){ q.value = 'Salmo ' + n; if (f.requestSubmit) f.requestSubmit(); else f.dispatchEvent(new Event('submit', {cancelable: true})) } window.scrollTo({top: 0}) };
+  const draw = sel => { const done = LS.get('fxSal', []); const cur = sel || Math.min(30, (done.length ? Math.max(...done) : 0) + 1);
+    const a = (cur - 1) * 5 + 1, b = cur * 5;
+    card.innerHTML = '<div class="fx-ey">Plano de leitura</div><h3 style="font-family:var(--display);font-size:26px;font-weight:600;margin:4px 0 2px">Salmos em 30 dias</h3><p class="fx-sm" style="margin-top:0">Cinco salmos por dia: em um mês você lê o livro inteiro. Toque no dia para ver a leitura.</p>' +
+      '<div class="fx-sal">' + Array.from({length: 30}, (_, i) => '<button type="button" data-d="' + (i + 1) + '" class="' + (done.includes(i + 1) ? 'ok ' : '') + (i + 1 === cur ? 'cur' : '') + '">' + (i + 1) + '<small>' + ((i * 5) + 1) + '–' + ((i + 1) * 5) + '</small></button>').join('') + '</div>' +
+      '<div class="fx-ey" style="margin-top:14px">Dia ' + cur + ' · Salmos ' + a + ' a ' + b + '</div><div class="fx-row">' + Array.from({length: 5}, (_, i) => '<button type="button" class="fx-b" data-r="' + (a + i) + '">SALMO ' + (a + i) + '</button>').join('') + '</div>' +
+      '<button type="button" class="fx-b ' + (done.includes(cur) ? '' : 'dk') + '" data-ok style="width:100%;margin-top:8px">' + (done.includes(cur) ? '✓ DIA ' + cur + ' LIDO · DESFAZER' : 'MARCAR O DIA ' + cur + ' COMO LIDO') + '</button>';
+    card.querySelectorAll('[data-d]').forEach(x => x.onclick = () => draw(+x.dataset.d));
+    card.querySelectorAll('[data-r]').forEach(x => x.onclick = () => goRead(+x.dataset.r));
+    card.querySelector('[data-ok]').onclick = () => { let d = LS.get('fxSal', []); d = d.includes(cur) ? d.filter(x => x !== cur) : d.concat(cur); LS.set('fxSal', d); draw(d.includes(cur) ? Math.min(30, cur + 1) : cur) };
+  };
+  draw();
+}
+
+/* ---------- 6. roteiro do Evangelho no Lar (espírita) ---------- */
+if (C.roteiro && $('#prece')){
+  const card = document.createElement('div'); card.className = 'fx-card'; card.id = 'fx-ev';
+  const h = $('#prece').querySelector('.voice') || $('#prece').querySelector('h2');
+  card.innerHTML = '<div class="fx-ey">Passo a passo</div><h3 style="font-family:var(--display);font-size:26px;font-weight:600;margin:4px 0 2px">Evangelho no Lar</h3><p class="fx-sm" style="margin-top:0">Uma vez por semana, no mesmo dia e horário, sozinho ou com a família. Leva de 15 a 30 minutos.</p><ol class="fx-steps">' +
+    '<li><b>Prepare o ambiente</b>Acenda a Vela Eterna, desligue a TV e deixe um copo de água sobre a mesa.</li>' +
+    '<li><b>Prece de abertura</b><div class="fx-row"><button type="button" class="fx-b au" data-e="e3">' + PLAY + ' PRECE PARA O EVANGELHO NO LAR</button></div></li>' +
+    '<li><b>Leitura</b>Leia um trecho de <i>O Evangelho Segundo o Espiritismo</i>, em ordem ou abrindo ao acaso. Pode usar também a pergunta do dia de <i>O Livro dos Espíritos</i>.<div class="fx-row"><a class="fx-b" href="' + esc(C.evLink) + '" target="_blank" rel="noopener">ABRIR O EVANGELHO</a><button type="button" class="fx-b" data-livros>PERGUNTA DO DIA</button></div></li>' +
+    '<li><b>Comentário</b>Cada um diz, em poucas palavras, o que entendeu e como levar o ensinamento para a semana. Sem discussões: o tom é de paz.</li>' +
+    '<li><b>Vibrações</b>' + esc(C.vibra) + '<div class="fx-row"><button type="button" class="fx-b au" data-v1>' + PLAY + ' OUVIR AS VIBRAÇÕES</button></div></li>' +
+    '<li><b>Prece de encerramento</b>Agradeça e, ao final, beba a água.<div class="fx-row"><button type="button" class="fx-b au" data-e="e6">' + PLAY + ' PRECE DE GRATIDÃO</button></div></li></ol>';
+  h.parentNode.insertBefore(card, h.nextSibling);
+  card.querySelectorAll('[data-e]').forEach(b => b.onclick = () => { fxStopOwn(); const t = document.querySelector('[data-a="' + b.dataset.e + '"]'); if (t){ t.scrollIntoView({behavior: 'smooth', block: 'center'}); t.click() } });
+  card.querySelector('[data-v1]').onclick = e => fxPlay(['v1'], e.currentTarget);
+  card.querySelector('[data-livros]').onclick = () => { const nb = document.querySelector('nav button[data-s="livros"]'); if (nb) nb.click(); window.scrollTo({top: 0}) };
+}
+}
+
+</script>
+</body></html>
