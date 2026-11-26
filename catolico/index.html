@@ -186,6 +186,7 @@ footer a{color:var(--mute)}
 .fx-sua h3{font-family:var(--display);font-size:26px;font-weight:600;line-height:1.05;margin:4px 0 6px}
 .fx-festa{font:500 12.5px var(--body);color:var(--mute);line-height:1.4}
 .fx-festa b{color:var(--gold)}
+.fx-tr{margin-top:10px;display:inline-flex;align-items:center;gap:6px;min-height:36px;padding:7px 14px;border-radius:18px;border:1px solid var(--gold);background:transparent;color:var(--gold);font:700 11.5px var(--body);letter-spacing:.06em;cursor:pointer}
 .fx-txt{font-family:var(--display);font-size:calc(19px*var(--fz,1));line-height:1.55;margin-top:12px;white-space:pre-line}
 .fx-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
 .fx-b{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:44px;padding:10px 16px;border-radius:22px;border:1px solid var(--line);background:var(--ivory);color:var(--ink);font:700 11.5px var(--body);letter-spacing:.08em;text-decoration:none;cursor:pointer;flex:1 1 auto}
@@ -548,7 +549,7 @@ function renderSua(){
     return;
   }
   try { LS.set('fxVela', id) } catch(e){}
-  card.innerHTML = '<div class="fx-sua"><img src="img/' + esc(v.img) + '" alt="' + esc(v.nome) + '"><div><div class="fx-ey">A sua vela</div><h3>' + esc(v.nome) + '</h3>' + (v.pad ? '<div class="fx-pad">' + esc(v.pad) + '</div>' : '') + '<div class="fx-festa">' + festaInfo(v.fm) + '</div></div></div>' +
+  card.innerHTML = '<div class="fx-sua"><img src="img/' + esc(v.img) + '" alt="' + esc(v.nome) + '"><div><div class="fx-ey">A sua vela</div><h3>' + esc(v.nome) + '</h3>' + (v.pad ? '<div class="fx-pad">' + esc(v.pad) + '</div>' : '') + '<div class="fx-festa">' + festaInfo(v.fm) + '</div>' + (C.chooser ? '<button type="button" class="fx-tr" data-troca>&#8644; Trocar de vela</button>' : '') + '</div></div>' +
     (v.oracao ? '<div class="fx-row"><button type="button" class="fx-b au" data-oplay>' + PLAY + ' OUVIR A ORAÇÃO</button></div>' +
       '<details><summary>' + esc(v.otit).toUpperCase() + '</summary><div class="fx-txt">' + esc(v.oracao) + '</div></details>' : '') +
     (v.nov ? '<details id="fx-novd"' + (novState(id).done.length ? ' open' : '') + '><summary>' + esc(v.ntit).toUpperCase() + '</summary><div id="fx-novb"></div></details>' : '') +
@@ -559,7 +560,7 @@ function renderSua(){
     infoSec('ONDE A DEVOÇÃO É MAIS FORTE', (v.san || []).map(t => '<li><b>' + esc(t[0]) + '</b> — ' + esc(t[1]) + '</li>')) +
     '<div class="fx-row"><a class="fx-b" href="' + esc(v.url) + '" target="_blank" rel="noopener">VER O PRODUTO</a>' + (C.chooser ? '<button type="button" class="fx-b" data-troca>TROCAR DE VELA</button>' : '') + '</div>';
   const op = card.querySelector('[data-oplay]'); if (op) op.onclick = e => fxPlay(['c-' + id], e.currentTarget);
-  const tr = card.querySelector('[data-troca]'); if (tr) tr.onclick = () => { history.replaceState(null, '', location.pathname + location.search); renderSua() };
+  card.querySelectorAll('[data-troca]').forEach(tr => tr.onclick = () => { history.replaceState(null, '', location.pathname + location.search); renderSua(); const c = $('#fx-sua'); if (c) c.scrollIntoView({behavior: 'smooth', block: 'start'}) });
   if (v.nov) renderNov(card.querySelector('#fx-novb'), id, v);
   renderCal();
 }

@@ -186,6 +186,7 @@ footer a{color:var(--mute)}
 .fx-sua h3{font-family:var(--display);font-size:26px;font-weight:600;line-height:1.05;margin:4px 0 6px}
 .fx-festa{font:500 12.5px var(--body);color:var(--mute);line-height:1.4}
 .fx-festa b{color:var(--gold)}
+.fx-tr{margin-top:10px;display:inline-flex;align-items:center;gap:6px;min-height:36px;padding:7px 14px;border-radius:18px;border:1px solid var(--gold);background:transparent;color:var(--gold);font:700 11.5px var(--body);letter-spacing:.06em;cursor:pointer}
 .fx-txt{font-family:var(--display);font-size:calc(19px*var(--fz,1));line-height:1.55;margin-top:12px;white-space:pre-line}
 .fx-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
 .fx-b{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:44px;padding:10px 16px;border-radius:22px;border:1px solid var(--line);background:var(--ivory);color:var(--ink);font:700 11.5px var(--body);letter-spacing:.08em;text-decoration:none;cursor:pointer;flex:1 1 auto}
@@ -249,6 +250,20 @@ footer a{color:var(--mute)}
 .fx-toast.on{opacity:1}
 .fx-card details>div{padding:0 16px 14px}
 .fx-card details>.fx-txt{padding:0 16px 14px}
+
+.fx-pad{font:600 12px var(--body);color:var(--gold);letter-spacing:.02em;margin:2px 0 4px}
+.fx-info{list-style:none;margin:6px 0 0;padding:0}
+.fx-info li{border-top:1px solid var(--line);padding:10px 0;font:400 14px/1.55 var(--body);color:var(--ink)}
+.fx-info li:first-child{border-top:0;padding-top:2px}
+.fx-info b{font-weight:700}
+.fx-cal{list-style:none;margin:10px 0 0;padding:0}
+.fx-cal li{display:flex;gap:12px;align-items:flex-start;border-top:1px solid var(--line);padding:10px 6px;font:500 14px/1.4 var(--body);color:var(--ink);cursor:pointer;border-radius:10px}
+.fx-cal li span{flex:1;min-width:0}
+.fx-cal li .dt{flex:0 0 92px;font:700 11.5px/1.35 var(--body);letter-spacing:.04em;color:var(--gold);text-transform:uppercase;padding-top:2px}
+.fx-cal li small{display:block;color:var(--mute);font-size:11.5px;margin-top:2px}
+.fx-cal li.fe span:not(.dt){font-weight:700}
+.fx-cal li.nx{background:var(--ivory);border:1px solid var(--gold);margin-bottom:4px}
+.fx-cal li.nx small{color:var(--gold);font-weight:700}
 
 </style>
 </head>
@@ -432,7 +447,7 @@ const nb=document.querySelector('nav button[data-s=biblia]');if(nb)nb.addEventLi
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&bd.classList.contains('on'))fecha()});
 })();
 </script>
-<script>window.FXCFG={"kind": "ev", "velas": {"pomba": {"nome": "Espírito Santo", "curto": "Espírito Santo", "img": "v-pomba.jpg", "fm": null, "hist": "No batismo de Jesus, o Espírito de Deus desceu sobre ele como uma pomba (Mateus 3:16). A Bíblia aberta lembra que Deus continua falando com quem lê a sua Palavra e a guarda no coração.", "oracao": "Espírito Santo de Deus, assim como desceste sobre Jesus no rio Jordão, desce também sobre a minha vida. Abre os meus olhos para entender a tua Palavra e o meu coração para obedecer. Dá-me o teu fruto: amor, alegria, paz, paciência, amabilidade, bondade, fidelidade, mansidão e domínio próprio. Que a minha casa seja cheia da tua presença. Em nome de Jesus, amém.", "nov": null, "url": "https://fusaolab3d.com.br/products/vela-eterna-espirito-santo", "otit": "Oração ao Espírito Santo", "ntit": ""}, "maos": {"nome": "Mãos em oração", "curto": "Mãos em oração", "img": "v-maos.jpg", "fm": null, "hist": "Mãos unidas são o gesto de quem entrega tudo a Deus. A Palavra diz: não andem ansiosos por coisa alguma; em tudo, apresentem a Deus os seus pedidos, com oração e gratidão (Filipenses 4:6).", "oracao": "Senhor Jesus, diante desta luz eu uno as minhas mãos e entrego a ti as minhas preocupações. Tu disseste: vinde a mim, todos os que estais cansados. Eu venho. Cuida da minha família, guarda a minha casa e dá-me a tua paz, que vai além de todo entendimento. Que esta luz me lembre da tua presença em cada dia. Em nome de Jesus, amém.", "nov": null, "url": "https://fusaolab3d.com.br/products/vela-eterna-maos-em-oracao-evangelica", "otit": "Oração de entrega", "ntit": ""}}, "chooser": true, "hojeSel": "#hoje", "shareSel": "#todayText", "shareRef": "#todayRef", "shareTitle": "Palavra do dia", "pedidoSel": "#hoje", "pedidoAfter": ".card.today + .note", "salmos": true};</script>
+<script>window.FXCFG={"kind": "ev", "velas": {"pomba": {"nome": "Espírito Santo", "curto": "Espírito Santo", "img": "v-pomba.jpg", "fm": null, "hist": "No batismo de Jesus, o Espírito de Deus desceu sobre ele como uma pomba (Mateus 3:16). A Bíblia aberta lembra que Deus continua falando com quem lê a sua Palavra e a guarda no coração.", "oracao": "Espírito Santo de Deus, assim como desceste sobre Jesus no rio Jordão, desce também sobre a minha vida. Abre os meus olhos para entender a tua Palavra e o meu coração para obedecer. Dá-me o teu fruto: amor, alegria, paz, paciência, amabilidade, bondade, fidelidade, mansidão e domínio próprio. Que a minha casa seja cheia da tua presença. Em nome de Jesus, amém.", "nov": null, "url": "https://fusaolab3d.com.br/products/vela-eterna-espirito-santo", "otit": "Oração ao Espírito Santo", "ntit": "", "pad": "", "fes": [], "cur": [], "sim": [], "san": []}, "maos": {"nome": "Mãos em oração", "curto": "Mãos em oração", "img": "v-maos.jpg", "fm": null, "hist": "Mãos unidas são o gesto de quem entrega tudo a Deus. A Palavra diz: não andem ansiosos por coisa alguma; em tudo, apresentem a Deus os seus pedidos, com oração e gratidão (Filipenses 4:6).", "oracao": "Senhor Jesus, diante desta luz eu uno as minhas mãos e entrego a ti as minhas preocupações. Tu disseste: vinde a mim, todos os que estais cansados. Eu venho. Cuida da minha família, guarda a minha casa e dá-me a tua paz, que vai além de todo entendimento. Que esta luz me lembre da tua presença em cada dia. Em nome de Jesus, amém.", "nov": null, "url": "https://fusaolab3d.com.br/products/vela-eterna-maos-em-oracao-evangelica", "otit": "Oração de entrega", "ntit": "", "pad": "", "fes": [], "cur": [], "sim": [], "san": []}}, "chooser": true, "hojeSel": "#hoje", "shareSel": "#todayText", "shareRef": "#todayRef", "shareTitle": "Palavra do dia", "pedidoSel": "#hoje", "pedidoAfter": ".card.today + .note", "salmos": true};</script>
 <script>
 {
 /* Fusão de Fé · recursos novos dos menus (25/11/2026): a sua vela (#santa), novena, pedido de oração,
@@ -493,6 +508,32 @@ function renderNov(box, id, v){
   box.querySelector('[data-nok]').onclick = () => { const s = novState(id); if (!s.done.includes(cur)) s.done.push(cur); s.cur = Math.min(9, cur + 1); LS.set('fxNov_' + id, s); fxStopOwn(); toast(s.done.length >= 9 ? 'Novena concluída. Que a graça venha!' : 'Dia ' + cur + ' rezado. Amanhã, o ' + s.cur + 'º dia.'); renderNov(box, id, v) };
   const r = box.querySelector('[data-nreset]'); if (r) r.onclick = () => { LS.set('fxNov_' + id, {done: [], cur: 1}); renderNov(box, id, v) };
 }
+function infoSec(t, items){ return items.length ? '<details><summary>' + t + '</summary><div><ul class="fx-info">' + items.join('') + '</ul></div></details>' : '' }
+const MESC = ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
+function renderCal(){
+  if (!C.cal) return;
+  const sua = $('#fx-sua'); if (!sua) return;
+  let card = $('#fx-cal'); if (!card){ card = document.createElement('div'); card.id = 'fx-cal'; card.className = 'fx-card'; sua.after(card) }
+  const now = new Date(), y = now.getFullYear(), hoje = new Date(y, now.getMonth(), now.getDate());
+  const it = [];
+  const add = (m, d, m2, d2, k, t, festa) => {
+    let a = new Date(y, m - 1, d), b = new Date(y + (m2 < m ? 1 : 0), m2 - 1, d2);
+    if (b < hoje){ a = new Date(a.getFullYear() + 1, m - 1, d); b = new Date(b.getFullYear() + 1, m2 - 1, d2) }
+    const dias = Math.round((a - hoje) / 864e5);
+    const lab = (m === m2 && d === d2) ? d + ' ' + MESC[m - 1] : (m === m2 ? d + ' a ' + d2 + ' ' + MESC[m - 1] : d + ' ' + MESC[m - 1] + ' a ' + d2 + ' ' + MESC[m2 - 1]);
+    it.push({a, dias, lab, k, t, festa});
+  };
+  Object.keys(V).forEach(k => { const f = V[k].fm; if (f) add(f[0], f[1], f[0], f[1], k, 'Dia de ' + V[k].nome, true) });
+  C.cal.forEach(c => add(c[0], c[1], c[2], c[3], c[4], c[5], false));
+  it.sort((p, q) => p.a - q.a);
+  const quando = x => x.dias < 0 ? 'acontecendo agora' : x.dias === 0 ? 'hoje' : x.dias === 1 ? 'amanhã' : 'em ' + x.dias + ' dias';
+  const li = (x, i) => '<li class="' + (i === 0 ? 'nx' : '') + (x.festa ? ' fe' : '') + '" data-k="' + x.k + '"><span class="dt">' + x.lab + '</span><span>' + esc(x.t) + '<small>' + quando(x) + '</small></span></li>';
+  card.innerHTML = '<div class="fx-ey">Calendário de festas</div><p class="fx-sm" style="margin-top:4px">As próximas datas das santas e dos santos da linha. Toque numa data para abrir a vela.</p>' +
+    '<ul class="fx-cal">' + it.slice(0, 6).map(li).join('') + '</ul>' +
+    '<details><summary>VER O ANO TODO</summary><div><ul class="fx-cal">' + it.slice(6).map((x, i) => li(x, i + 6)).join('') + '</ul></div></details>' +
+    (C.mensal ? '<details><summary>TODO MÊS E TODA SEMANA</summary><div><ul class="fx-cal">' + C.mensal.map(m => '<li data-k="' + m[0] + '"><span class="dt">' + esc(m[1]) + '</span><span>' + esc(m[2]) + '</span></li>').join('') + '</ul></div></details>' : '');
+  card.querySelectorAll('[data-k]').forEach(e => e.onclick = () => { if (location.hash === '#' + e.dataset.k) renderSua(); else location.hash = e.dataset.k; window.scrollTo({top: 0, behavior: 'smooth'}) });
+}
 function renderSua(){
   const host = $(C.hojeSel); if (!host) return;
   let card = $('#fx-sua'); if (!card){ card = document.createElement('div'); card.id = 'fx-sua'; card.className = 'fx-card'; const h2 = host.querySelector('h2'); host.insertBefore(card, h2 ? h2 : host.firstChild) }
@@ -502,18 +543,24 @@ function renderSua(){
     card.innerHTML = '<div class="fx-ey">A sua vela</div><p class="fx-sm" style="margin-top:4px">Toque no nome da sua vela para abrir a oração, a história e a novena dela.</p>' +
       '<div class="fx-chips">' + Object.keys(V).map(k => '<button type="button" data-v="' + k + '">' + esc(V[k].curto) + '</button>').join('') + '</div>';
     card.querySelectorAll('[data-v]').forEach(b => b.onclick = () => { location.hash = b.dataset.v });
+    renderCal();
     return;
   }
   try { LS.set('fxVela', id) } catch(e){}
-  card.innerHTML = '<div class="fx-sua"><img src="img/' + esc(v.img) + '" alt="' + esc(v.nome) + '"><div><div class="fx-ey">A sua vela</div><h3>' + esc(v.nome) + '</h3><div class="fx-festa">' + festaInfo(v.fm) + '</div></div></div>' +
+  card.innerHTML = '<div class="fx-sua"><img src="img/' + esc(v.img) + '" alt="' + esc(v.nome) + '"><div><div class="fx-ey">A sua vela</div><h3>' + esc(v.nome) + '</h3>' + (v.pad ? '<div class="fx-pad">' + esc(v.pad) + '</div>' : '') + '<div class="fx-festa">' + festaInfo(v.fm) + '</div>' + (C.chooser ? '<button type="button" class="fx-tr" data-troca>&#8644; Trocar de vela</button>' : '') + '</div></div>' +
     (v.oracao ? '<div class="fx-row"><button type="button" class="fx-b au" data-oplay>' + PLAY + ' OUVIR A ORAÇÃO</button></div>' +
       '<details><summary>' + esc(v.otit).toUpperCase() + '</summary><div class="fx-txt">' + esc(v.oracao) + '</div></details>' : '') +
-    '<details><summary>' + (v.nov ? 'A HISTÓRIA' : 'SOBRE ESTA VELA') + '</summary><div class="fx-hist">' + esc(v.hist) + '</div></details>' +
     (v.nov ? '<details id="fx-novd"' + (novState(id).done.length ? ' open' : '') + '><summary>' + esc(v.ntit).toUpperCase() + '</summary><div id="fx-novb"></div></details>' : '') +
+    '<details><summary>' + (v.nov ? 'A HISTÓRIA' : 'SOBRE ESTA VELA') + '</summary><div class="fx-hist">' + esc(v.hist) + '</div></details>' +
+    infoSec('CURIOSIDADES', (v.cur || []).map(t => '<li>' + esc(t) + '</li>')) +
+    infoSec('A IMAGEM E SEUS SÍMBOLOS', (v.sim || []).map(t => '<li><b>' + esc(t[0]) + '</b> — ' + esc(t[1]) + '</li>')) +
+    infoSec('DATAS E FESTAS', (v.fes || []).map(t => '<li><b>' + esc(t[0]) + '</b><br>' + esc(t[1]) + '</li>')) +
+    infoSec('ONDE A DEVOÇÃO É MAIS FORTE', (v.san || []).map(t => '<li><b>' + esc(t[0]) + '</b> — ' + esc(t[1]) + '</li>')) +
     '<div class="fx-row"><a class="fx-b" href="' + esc(v.url) + '" target="_blank" rel="noopener">VER O PRODUTO</a>' + (C.chooser ? '<button type="button" class="fx-b" data-troca>TROCAR DE VELA</button>' : '') + '</div>';
   const op = card.querySelector('[data-oplay]'); if (op) op.onclick = e => fxPlay(['c-' + id], e.currentTarget);
-  const tr = card.querySelector('[data-troca]'); if (tr) tr.onclick = () => { history.replaceState(null, '', location.pathname + location.search); renderSua() };
+  card.querySelectorAll('[data-troca]').forEach(tr => tr.onclick = () => { history.replaceState(null, '', location.pathname + location.search); renderSua(); const c = $('#fx-sua'); if (c) c.scrollIntoView({behavior: 'smooth', block: 'start'}) });
   if (v.nov) renderNov(card.querySelector('#fx-novb'), id, v);
+  renderCal();
 }
 if (Object.keys(V).length){
   if (!location.hash && C.chooser){ const last = LS.get('fxVela', null); if (last && V[last]) { try{ history.replaceState(null, '', '#' + last) }catch(e){} } }
