@@ -476,7 +476,7 @@ function stopOthers(){ try{ origStop && origStop() }catch(e){} try{ origLp && or
 function fxPlay(names, btn){
   const same = fxBtn === btn; fxStopOwn(); if (same) return;
   stopOthers(); fxQ = names.slice(); fxBtn = btn; btn.dataset.l = btn.dataset.l || btn.innerHTML; btn.innerHTML = '■ Parar';
-  const next = () => { if (!fxQ.length){ fxStopOwn(); return } const n = fxQ.shift(), vz = /^[hufsd]-/.test(n) ? 'k' : vozAtual(); fxA = new Audio('aud/' + vz + '/' + n + '.mp3'); fxA.onended = next; fxA.play().catch(() => { toast('Não consegui tocar o áudio. Toque de novo.'); fxStopOwn() }) };
+  const next = () => { if (!fxQ.length){ fxStopOwn(); return } const n = fxQ.shift(), vz = vozAtual(); fxA = new Audio('aud/' + vz + '/' + n + '.mp3'); fxA.onended = next; fxA.play().catch(() => { toast('Não consegui tocar o áudio. Toque de novo.'); fxStopOwn() }) };
   next();
 }
 const night = {};
