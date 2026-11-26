@@ -291,6 +291,9 @@ button.btn{border:none;cursor:pointer;width:100%}
 .fx-cal li.nx{background:var(--ivory);border:1px solid var(--gold);margin-bottom:4px}
 .fx-cal li.nx small{color:var(--gold);font-weight:700}
 
+.fx-ouv{flex:0 0 auto;min-height:36px;padding:7px 14px;margin:8px 0 6px;font-size:11px}
+.fx-hist .fx-ouv{display:flex;margin-bottom:10px}
+
 </style>
 </head><body>
 <div class="rays"></div><i class="spark" style="left:12%;top:90px"></i><i class="spark" style="left:30%;top:40px;animation-delay:1.4s"></i><i class="spark" style="left:78%;top:70px;animation-delay:.7s"></i><i class="spark" style="left:88%;top:150px;animation-delay:2.2s"></i><i class="spark" style="left:58%;top:30px;animation-delay:3.1s"></i>
@@ -527,7 +530,7 @@ function stopOthers(){ try{ origStop && origStop() }catch(e){} try{ origLp && or
 function fxPlay(names, btn){
   const same = fxBtn === btn; fxStopOwn(); if (same) return;
   stopOthers(); fxQ = names.slice(); fxBtn = btn; btn.dataset.l = btn.dataset.l || btn.innerHTML; btn.innerHTML = '■ Parar';
-  const next = () => { if (!fxQ.length){ fxStopOwn(); return } const n = fxQ.shift(); fxA = new Audio('aud/' + vozAtual() + '/' + n + '.mp3'); fxA.onended = next; fxA.play().catch(() => { toast('Não consegui tocar o áudio. Toque de novo.'); fxStopOwn() }) };
+  const next = () => { if (!fxQ.length){ fxStopOwn(); return } const n = fxQ.shift(), vz = /^[hufsd]-/.test(n) ? 'k' : vozAtual(); fxA = new Audio('aud/' + vz + '/' + n + '.mp3'); fxA.onended = next; fxA.play().catch(() => { toast('Não consegui tocar o áudio. Toque de novo.'); fxStopOwn() }) };
   next();
 }
 const night = {};
@@ -562,7 +565,8 @@ function renderNov(box, id, v){
   box.querySelector('[data-nok]').onclick = () => { const s = novState(id); if (!s.done.includes(cur)) s.done.push(cur); s.cur = Math.min(9, cur + 1); LS.set('fxNov_' + id, s); fxStopOwn(); toast(s.done.length >= 9 ? 'Novena concluída. Que a graça venha!' : 'Dia ' + cur + ' rezado. Amanhã, o ' + s.cur + 'º dia.'); renderNov(box, id, v) };
   const r = box.querySelector('[data-nreset]'); if (r) r.onclick = () => { LS.set('fxNov_' + id, {done: [], cur: 1}); renderNov(box, id, v) };
 }
-function infoSec(t, items){ return items.length ? '<details><summary>' + t + '</summary><div><ul class="fx-info">' + items.join('') + '</ul></div></details>' : '' }
+const OUV = k => '<button type="button" class="fx-b au fx-ouv" data-ouv="' + k + '">' + PLAY + ' OUVIR</button>';
+function infoSec(t, items, k){ return items.length ? '<details><summary>' + t + '</summary><div>' + (k ? OUV(k) : '') + '<ul class="fx-info">' + items.join('') + '</ul></div></details>' : '' }
 const MESC = ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
 function renderCal(){
   if (!C.cal) return;
@@ -601,17 +605,21 @@ function renderSua(){
     return;
   }
   try { LS.set('fxVela', id) } catch(e){}
+  const narr = ['h-' + id].concat(v.cur && v.cur.length ? ['u-' + id] : [], v.sim && v.sim.length ? ['s-' + id] : [], v.fes && v.fes.length ? ['f-' + id] : [], v.san && v.san.length ? ['d-' + id] : []);
   card.innerHTML = '<div class="fx-sua"><img src="img/' + esc(v.img) + '" alt="' + esc(v.nome) + '"><div><div class="fx-ey">A sua vela</div><h3>' + esc(v.nome) + '</h3>' + (v.pad ? '<div class="fx-pad">' + esc(v.pad) + '</div>' : '') + '<div class="fx-festa">' + festaInfo(v.fm) + '</div>' + (C.chooser ? '<button type="button" class="fx-tr" data-troca>&#8644; Trocar de vela</button>' : '') + '</div></div>' +
     (v.oracao ? '<div class="fx-row"><button type="button" class="fx-b au" data-oplay>' + PLAY + ' OUVIR A ORAÇÃO</button></div>' +
       '<details><summary>' + esc(v.otit).toUpperCase() + '</summary><div class="fx-txt">' + esc(v.oracao) + '</div></details>' : '') +
     (v.nov ? '<details id="fx-novd"' + (novState(id).done.length ? ' open' : '') + '><summary>' + esc(v.ntit).toUpperCase() + '</summary><div id="fx-novb"></div></details>' : '') +
-    '<details><summary>' + (v.nov ? 'A HISTÓRIA' : 'SOBRE ESTA VELA') + '</summary><div class="fx-hist">' + esc(v.hist) + '</div></details>' +
-    infoSec('CURIOSIDADES', (v.cur || []).map(t => '<li>' + esc(t) + '</li>')) +
-    infoSec('A IMAGEM E SEUS SÍMBOLOS', (v.sim || []).map(t => '<li><b>' + esc(t[0]) + '</b> — ' + esc(t[1]) + '</li>')) +
-    infoSec('DATAS E FESTAS', (v.fes || []).map(t => '<li><b>' + esc(t[0]) + '</b><br>' + esc(t[1]) + '</li>')) +
-    infoSec('ONDE A DEVOÇÃO É MAIS FORTE', (v.san || []).map(t => '<li><b>' + esc(t[0]) + '</b> — ' + esc(t[1]) + '</li>')) +
+    (narr.length > 1 ? '<div class="fx-row"><button type="button" class="fx-b dk" data-ouvtudo>' + PLAY + ' OUVIR TUDO SOBRE ' + esc(v.curto || v.nome).toUpperCase() + '</button></div>' : '') +
+    '<details><summary>' + (v.nov ? 'A HISTÓRIA' : 'SOBRE ESTA VELA') + '</summary><div class="fx-hist">' + OUV('h-' + id) + esc(v.hist) + '</div></details>' +
+    infoSec('CURIOSIDADES', (v.cur || []).map(t => '<li>' + esc(t) + '</li>'), 'u-' + id) +
+    infoSec('A IMAGEM E SEUS SÍMBOLOS', (v.sim || []).map(t => '<li><b>' + esc(t[0]) + '</b> — ' + esc(t[1]) + '</li>'), 's-' + id) +
+    infoSec('DATAS E FESTAS', (v.fes || []).map(t => '<li><b>' + esc(t[0]) + '</b><br>' + esc(t[1]) + '</li>'), 'f-' + id) +
+    infoSec('ONDE A DEVOÇÃO É MAIS FORTE', (v.san || []).map(t => '<li><b>' + esc(t[0]) + '</b> — ' + esc(t[1]) + '</li>'), 'd-' + id) +
     '<div class="fx-row"><a class="fx-b" href="' + esc(v.url) + '" target="_blank" rel="noopener">VER O PRODUTO</a>' + (C.chooser ? '<button type="button" class="fx-b" data-troca>TROCAR DE VELA</button>' : '') + '</div>';
   const op = card.querySelector('[data-oplay]'); if (op) op.onclick = e => fxPlay(['c-' + id], e.currentTarget);
+  card.querySelectorAll('[data-ouv]').forEach(b => b.onclick = e => { e.preventDefault(); fxPlay([b.dataset.ouv], b) });
+  const ot = card.querySelector('[data-ouvtudo]'); if (ot) ot.onclick = e => fxPlay(narr, e.currentTarget);
   card.querySelectorAll('[data-troca]').forEach(tr => tr.onclick = () => { history.replaceState(null, '', location.pathname + location.search); renderSua(); const c = $('#fx-sua'); if (c) c.scrollIntoView({behavior: 'smooth', block: 'start'}) });
   if (v.nov) renderNov(card.querySelector('#fx-novb'), id, v);
   renderCal();
