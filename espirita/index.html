@@ -611,7 +611,7 @@ function renderSua(){
       '<details><summary>' + esc(v.otit).toUpperCase() + '</summary><div class="fx-txt">' + esc(v.oracao) + '</div></details>' : '') +
     (v.nov ? '<details id="fx-novd"' + (novState(id).done.length ? ' open' : '') + '><summary>' + esc(v.ntit).toUpperCase() + '</summary><div id="fx-novb"></div></details>' : '') +
     (narr.length > 1 ? '<div class="fx-row"><button type="button" class="fx-b dk" data-ouvtudo>' + PLAY + ' OUVIR TUDO SOBRE ' + esc(v.curto || v.nome).toUpperCase() + '</button></div>' : '') +
-    '<details><summary>' + (v.nov ? 'A HISTÓRIA' : 'SOBRE ESTA VELA') + '</summary><div class="fx-hist">' + OUV('h-' + id) + esc(v.hist) + '</div></details>' +
+    '<details><summary>' + (v.nov ? 'A HISTÓRIA' : 'SOBRE ESTA IMAGEM') + '</summary><div class="fx-hist">' + OUV('h-' + id) + esc(v.hist) + '</div></details>' +
     infoSec('CURIOSIDADES', (v.cur || []).map(t => '<li>' + esc(t) + '</li>'), 'u-' + id) +
     infoSec('A IMAGEM E SEUS SÍMBOLOS', (v.sim || []).map(t => '<li><b>' + esc(t[0]) + '</b> — ' + esc(t[1]) + '</li>'), 's-' + id) +
     infoSec('DATAS E FESTAS', (v.fes || []).map(t => '<li><b>' + esc(t[0]) + '</b><br>' + esc(t[1]) + '</li>'), 'f-' + id) +
